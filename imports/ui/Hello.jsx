@@ -12,6 +12,7 @@ export const Hello = () => {
             <button onClick={increment}>Click Me</button>
             <p>
                 You've pressed the button
+                {' '}
                 {counter}
                 {' '}
                 times.
