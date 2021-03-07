@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 import { TasksCollection } from '/imports/api/TasksCollection';
-import { Task } from './Task';
+import { Task } from './Tasks';
 import { Hello } from "./Hello";
 
 export const App = () => {
