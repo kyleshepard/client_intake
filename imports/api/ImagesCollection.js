@@ -4,7 +4,7 @@ import { FilesCollection } from 'meteor/ostrio:files';
 const imageCollectionName = 'images';
 export const ImagesCollection = new FilesCollection({
     collectionName: 'Images',
-    allowClientCode: false, // Disallow remove files from Client
+    allowClientCode: true, // Allow remove files from Client
     onBeforeUpload(file) {
         // Allow upload files under 10MB, and only in png/jpg/jpeg formats
         if (file.size <= 10485760 && /png|jpg|jpeg/i.test(file.extension)) {
