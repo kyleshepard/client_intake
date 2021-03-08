@@ -5,12 +5,14 @@ import { ImagesCollection } from "../api/ImagesCollection";
 export const App = () => {
     const images = useTracker(() => ImagesCollection.find({}).fetch());
     const [image, setImage] = useState(undefined);
+    const [name, setName] = useState("");
     const onFileChange = (e) => {
         setImage(e.target.files[0]);
     };
     const onUpload = () => {
-        ImagesCollection.insert({ file: image });
+        ImagesCollection.insert({ file: image, meta: { name } });
         setImage(undefined);
+        setName("");
     };
     const remove = (item) => {
         ImagesCollection.remove({ _id: item._id });
@@ -20,6 +22,7 @@ export const App = () => {
         <div>
             <h1>Welcome to Meteor!</h1>
             <input type="file" onChange={onFileChange} />
+            <input onChange={(e) => setName(e.target.value)} value={name} />
             {image && <img alt="Awaiting Image upload" src={image && URL.createObjectURL(image)} style={{ height: 200, aspectRatio: 1 }} />}
             {image && (
                 <button onClick={onUpload}>
@@ -32,6 +35,7 @@ export const App = () => {
                     return (
                         <div key={item._id}>
                             <img src={x} style={{ width: 100, aspectRatio: 1 }} />
+                            {item.meta && item.meta.name}
                             <button onClick={() => remove(item)}>
                                 Delete
                             </button>
