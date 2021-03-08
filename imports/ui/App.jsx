@@ -22,9 +22,15 @@ export const App = () => {
         <div>
             <h1>Welcome to Meteor!</h1>
             <input type="file" onChange={onFileChange} />
-            <input onChange={(e) => setName(e.target.value)} value={name} />
-            {image && <img alt="Awaiting Image upload" src={image && URL.createObjectURL(image)} style={{ height: 200, aspectRatio: 1 }} />}
             {image && (
+                <img
+                    alt={name}
+                    src={image && URL.createObjectURL(image)}
+                    style={{ height: 200, aspectRatio: 1 }}
+                />
+            )}
+            {image && <input onChange={(e) => setName(e.target.value)} value={name} />}
+            {image && name && (
                 <button onClick={onUpload}>
                     Upload Image
                 </button>
