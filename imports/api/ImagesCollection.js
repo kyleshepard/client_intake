@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { FilesCollection } from 'meteor/ostrio:files';
 
 const imageCollectionName = 'images';
-const ImagesCollection = new FilesCollection({
+export const ImagesCollection = new FilesCollection({
     collectionName: 'Images',
     allowClientCode: false, // Disallow remove files from Client
     onBeforeUpload(file) {
@@ -19,5 +19,5 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-    Meteor.publish('imageCollectionName', () => ImagesCollection.find().cursor);
+    Meteor.publish(imageCollectionName, () => ImagesCollection.find().cursor);
 }
