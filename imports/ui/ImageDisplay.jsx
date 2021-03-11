@@ -29,7 +29,7 @@ export function ImageDisplay() {
                     style={{ height: 200, aspectRatio: 1 }}
                 />
             )}
-            {image && <input onChange={(e) => setName(e.target.value)} value={name} />}
+            {image && <input placeholder="metadata" onChange={(e) => setName(e.target.value)} value={name} />}
             {image && name && (
                 <button onClick={onUpload}>
                     Upload Image
@@ -37,10 +37,12 @@ export function ImageDisplay() {
             )}
             <ul>
                 {images.map((item) => {
-                    const x = ImagesCollection.findOne({ _id: item._id }).link('original', window.location.href);
+                    const link = ImagesCollection.findOne({ _id: item._id }).link('original', window.location.href);
                     return (
                         <div key={item._id}>
-                            <img src={x} style={{ width: 100, aspectRatio: 1 }} />
+                            <a href={link} target={'_blank'}>
+                            <img src={link} style={{ width: 100, aspectRatio: 1 }} />
+                            </a>
                             {item.meta && item.meta.name}
 
                             <button onClick={() => remove(item)}>
