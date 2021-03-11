@@ -1,5 +1,5 @@
 import { useTracker } from "meteor/react-meteor-data";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { ImagesCollection } from "../api/ImagesCollection";
 
 export function ImageDisplay() {
@@ -19,7 +19,7 @@ export function ImageDisplay() {
     };
 
     return (
-        <div>
+        <Fragment>
             <h1>Aiden's Image Upload Test</h1>
             <input type="file" onChange={onFileChange} />
             {image && (
@@ -51,6 +51,6 @@ export function ImageDisplay() {
                 })}
             </ul>
 
-        </div>
+        </Fragment>
     );
 }

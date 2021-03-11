@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { FilesCollection } from 'meteor/ostrio:files';
 
+// https://github.com/VeliovGroup/Meteor-Files/wiki
+
 const imageCollectionName = 'images';
 export const ImagesCollection = new FilesCollection({
     collectionName: 'Images',
