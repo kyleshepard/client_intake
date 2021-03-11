@@ -1,20 +1,20 @@
 import assert from "assert";
 
-describe("wr-client-intake, function () {
-  it("package.json has correct name", async function () {
-    const { name } = await import("../package.json");
-    assert.strictEqual(name, "wr-client-intake");
-  });
-
-  if (Meteor.isClient) {
-    it("client is not server", function () {
-      assert.strictEqual(Meteor.isServer, false);
+describe("wr-client-intake", () => {
+    it("package.json has correct name", async () => {
+        const { name } = await import("../package.json");
+        assert.strictEqual(name, "wr-client-intake");
     });
-  }
 
-  if (Meteor.isServer) {
-    it("server is not client", function () {
-      assert.strictEqual(Meteor.isClient, false);
-    });
-  }
+    if (Meteor.isClient) {
+        it("client is not server", () => {
+            assert.strictEqual(Meteor.isServer, false);
+        });
+    }
+
+    if (Meteor.isServer) {
+        it("server is not client", () => {
+            assert.strictEqual(Meteor.isClient, false);
+        });
+    }
 });
