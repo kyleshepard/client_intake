@@ -37,11 +37,12 @@ export const App = () => {
             )}
             <ul>
                 {images.map((item) => {
-                    const x = ImagesCollection.findOne({ _id: item._id }).link();
+                    const x = ImagesCollection.findOne({ _id: item._id }).link('original', window.location.href);
                     return (
                         <div key={item._id}>
                             <img src={x} style={{ width: 100, aspectRatio: 1 }} />
                             {item.meta && item.meta.name}
+
                             <button onClick={() => remove(item)}>
                                 Delete
                             </button>
