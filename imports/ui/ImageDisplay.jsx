@@ -1,36 +1,33 @@
 import { useTracker } from "meteor/react-meteor-data";
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { ImagesCollection } from "../api/ImagesCollection";
 
-export function ImageDisplay() {
-    const images = useTracker(() => ImagesCollection.find({}).fetch());
+export function ImageDisplay({ clientid }) {
+    const images = useTracker(() => ImagesCollection.find(clientid && { meta: { clientid: clientid } }).fetch());
     const [image, setImage] = useState(undefined);
-    const [name, setName] = useState("");
     const onFileChange = (e) => {
         setImage(e.target.files[0]);
     };
     const onUpload = () => {
-        ImagesCollection.insert({ file: image, meta: { name } });
+        ImagesCollection.insert({ file: image, meta: { clientid: clientid } });
         setImage(undefined);
-        setName("");
     };
     const remove = (item) => {
         ImagesCollection.remove({ _id: item._id });
     };
 
     return (
-        <div>
-            <h1>Aiden's Image Upload Test</h1>
+        <div style={{ display: "flex", flexDirection: 'row' }}>
+            {clientid}
             <input type="file" onChange={onFileChange} />
             {image && (
                 <img
-                    alt={name}
+                    alt="Image Missing"
                     src={image && URL.createObjectURL(image)}
                     style={{ height: 200, aspectRatio: 1 }}
                 />
             )}
-            {image && <input placeholder="metadata" onChange={(e) => setName(e.target.value)} value={name} />}
-            {image && name && (
+            {image && (
                 <button onClick={onUpload}>
                     Upload Image
                 </button>
@@ -40,10 +37,9 @@ export function ImageDisplay() {
                     const link = ImagesCollection.findOne({ _id: item._id }).link('original', window.location.href);
                     return (
                         <div key={item._id}>
-                            <a href={link} target={'_blank'}>
-                            <img src={link} style={{ width: 100, aspectRatio: 1 }} />
+                            <a href={link} target="_blank">
+                                <img src={link} style={{ width: 100, aspectRatio: 1 }} />
                             </a>
-                            {item.meta && item.meta.name}
 
                             <button onClick={() => remove(item)}>
                                 Delete
