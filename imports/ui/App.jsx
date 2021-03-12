@@ -5,6 +5,7 @@ import { TasksCollection } from '../api/TasksCollection';
 import { TaskForm } from './TaskForm.jsx';
 import { LoginForm } from './LoginForm.jsx';
 import { ImageDisplay } from "./ImageDisplay.jsx";
+import {documentFields} from "../api/formConstants";
 
 const toggleChecked = ({ _id, isChecked }) => {
     TasksCollection.update(_id, {
@@ -15,6 +16,7 @@ const toggleChecked = ({ _id, isChecked }) => {
 };
 
 export const App = () => {
+    console.log("FIELDS", documentFields);
     const user = useTracker(() => Meteor.user());
     const deleteTask = ({ _id }) => TasksCollection.remove(_id);
     const hideCompletedFilter = { isChecked: { $ne: true } };
