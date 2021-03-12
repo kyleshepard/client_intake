@@ -19,7 +19,7 @@ export function ImageDisplay() {
     };
 
     return (
-        <Fragment>
+        <div>
             <h1>Aiden's Image Upload Test</h1>
             <input type="file" onChange={onFileChange} />
             {image && (
@@ -53,6 +53,6 @@ export function ImageDisplay() {
                 })}
             </ul>
 
-        </Fragment>
+        </div>
     );
 }

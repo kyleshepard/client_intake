@@ -4,6 +4,7 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { TasksCollection } from '/imports/api/TasksCollection';
 import { TaskForm } from '/imports/ui/TaskForm';
 import { LoginForm } from './LoginForm';
+import {ImageDisplay} from "./ImageDisplay";
 
 const toggleChecked = ({_id, isChecked }) => {
     TasksCollection.update(_id, {
@@ -43,6 +44,7 @@ export const App = () => {
                     <ul>
                         { tasks.map(task => <Task key={task._id} task={ task } onCheckBoxClick={toggleChecked} onDeleteClick={deleteTask}/>)}
                     </ul>
+                    <ImageDisplay/>
                 </Fragment>
             ) : (
                 <LoginForm/>
