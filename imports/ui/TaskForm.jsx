@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
-import { TasksCollection } from '/imports/api/TasksCollection';
+import { TasksCollection } from '../api/TasksCollection';
 
 export const TaskForm = () => {
     const [text, setText] = useState("");
 
-    const handleSubmit = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-    
+
         if (!text) return;
-    
+
         TasksCollection.insert({
-          text: text.trim(),
-          createdAt: new Date()
+            text: text.trim(),
+            createdAt: new Date(),
         });
-    
+
         setText("");
-      };
+    };
 
     return (
         <form className="task-form" onSubmit={handleSubmit}>
-            <input type="text" placeholder="Type to add new animes" value={text} onChange={(e) => setText(e.target.value)}/>
+            <input type="text" placeholder="Type to add new animes" value={text} onChange={(e) => setText(e.target.value)} />
             <button type="submit">Add It!</button>
         </form>
     );

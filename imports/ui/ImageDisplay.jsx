@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import { ImagesCollection } from "../api/ImagesCollection";
 
 export function ImageDisplay({ clientid }) {
-    const images = useTracker(() => ImagesCollection.find(clientid && { meta: { clientid: clientid } }).fetch());
+    const images = useTracker(() => ImagesCollection.find(clientid && { meta: { clientid } }).fetch());
     const [image, setImage] = useState(undefined);
     const onFileChange = (e) => {
         setImage(e.target.files[0]);
     };
     const onUpload = () => {
-        ImagesCollection.insert({ file: image, meta: { clientid: clientid } });
+        ImagesCollection.insert({ file: image, meta: { clientid } });
         setImage(undefined);
     };
     const remove = (item) => {
@@ -22,7 +22,7 @@ export function ImageDisplay({ clientid }) {
             <input type="file" onChange={onFileChange} />
             {image && (
                 <img
-                    alt="Image Missing"
+                    alt="File Missing"
                     src={image && URL.createObjectURL(image)}
                     style={{ height: 200, aspectRatio: 1 }}
                 />
