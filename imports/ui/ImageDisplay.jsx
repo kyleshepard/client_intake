@@ -27,7 +27,7 @@ export function ImageDisplay({ clientid }) {
                 />
             )}
             {image && (
-                <button onClick={onUpload}>
+                <button type="button" onClick={onUpload}>
                     Upload Image
                 </button>
             )}
@@ -36,11 +36,11 @@ export function ImageDisplay({ clientid }) {
                     const link = ImagesCollection.findOne({ _id: item._id }).link('original', window.location.href);
                     return (
                         <div key={item._id}>
-                            <a href={link} target="_blank">
-                                <img src={link} style={{ width: 100, aspectRatio: 1 }} />
+                            <a href={link} target="_blank" rel="noreferrer">
+                                <img alt={link} src={link} style={{ width: 100, aspectRatio: 1 }} />
                             </a>
 
-                            <button onClick={() => remove(item)}>
+                            <button type="button" onClick={() => remove(item)}>
                                 Delete
                             </button>
                         </div>
