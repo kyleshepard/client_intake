@@ -86,10 +86,9 @@ function genBlankForm(form:Array<Field>) {
         default:
             obj[f._id] = undefined;
         }
-        console.log("Step One", f._id, obj, f);
         thisData = { ...thisData, ...obj };
     });
-    console.log("THISDATA", thisData);
+
     return thisData;
 }
 console.log("BLANK FORM", genBlankForm(documentFields));
