@@ -18,7 +18,6 @@ export function ImageDisplay({ clientid }) {
 
     return (
         <div style={{ display: "flex", flexDirection: 'row' }}>
-            {clientid}
             <input type="file" onChange={onFileChange} />
             {image && (
                 <img
