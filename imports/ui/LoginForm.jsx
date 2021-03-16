@@ -12,7 +12,8 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+
+import Paper from '@material-ui/core/Paper';
 
 function Copyright() {
     return (
@@ -20,16 +21,28 @@ function Copyright() {
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
                 Your Website
-            </Link>{' '}
+            </Link>
+            {' '}
             {new Date().getFullYear()}
-            {'.'}
+            .
         </Typography>
     );
 }
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        height: '100vh',
+    },
+    image: {
+        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor:
+            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+    },
     paper: {
-        marginTop: theme.spacing(8),
+        margin: theme.spacing(8, 4),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -58,108 +71,74 @@ export function LoginForm() {
         Meteor.loginWithPassword(username, password);
     };
     return (
-        <Container component="main" maxWidth="xs">
+        <Grid container component="main" className={classes.root}>
             <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <form className={classes.form} noValidate onSubmit={submit}>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        onChange={(e) => setPassword(e.target.value)}
+            <Grid item xs={false} sm={4} md={7} className={classes.image} />
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign in
+                    </Typography>
+                    <form className={classes.form} noValidate onSubmit={submit}>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            onChange={(e) => setPassword(e.target.value)}
 
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign In
-                    </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign In
+                        </Button>
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="#" variant="body2">
+                                    Forgot password?
+                                </Link>
+                            </Grid>
+                            <Grid item>
+                                <Link href="#" variant="body2">
+                                    Don't have an account? Sign Up
+                                </Link>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-            <Box mt={8}>
-                <Copyright />
-            </Box>
-        </Container>
+                        <Box mt={5}>
+                            <Copyright />
+                        </Box>
+                    </form>
+                </div>
+            </Grid>
+        </Grid>
     );
 }
-
-export const LoginForm2 = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-
-    const submit = (e) => {
-        e.preventDefault();
-
-        Meteor.loginWithPassword(username, password);
-    };
-
-    return (
-        <form onSubmit={submit} className="login-form">
-            <label htmlFor="username">Username</label>
-
-            <input
-                type="text"
-                placeholder="Username"
-                name="username"
-                required
-                onChange={(e) => setUsername(e.target.value)}
-            />
-
-            <label htmlFor="password">Password</label>
-
-            <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                required
-                onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <button type="submit">Log In</button>
-        </form>
-    );
-};
