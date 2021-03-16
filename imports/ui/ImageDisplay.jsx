@@ -1,6 +1,7 @@
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
 import { ImagesCollection } from "../api/ImagesCollection";
+import { Div, Input, Button, Ul, A } from '@material-ui/core';
 
 export function ImageDisplay({ clientid }) {
     const images = useTracker(() => ImagesCollection.find(clientid && { meta: { clientid } }).fetch());
@@ -17,8 +18,8 @@ export function ImageDisplay({ clientid }) {
     };
 
     return (
-        <div style={{ display: "flex", flexDirection: 'row' }}>
-            <input type="file" onChange={onFileChange} />
+        <Div style={{ display: "flex", flexDirection: 'row' }}>
+            <Input type="file" onChange={onFileChange} />
             {image && (
                 <img
                     alt="File Missing"
@@ -27,27 +28,27 @@ export function ImageDisplay({ clientid }) {
                 />
             )}
             {image && (
-                <button type="button" onClick={onUpload}>
+                <Button type="button" onClick={onUpload}>
                     Upload Image
-                </button>
+                </Button>
             )}
-            <ul>
+            <Ul>
                 {images.map((item) => {
                     const link = ImagesCollection.findOne({ _id: item._id }).link('original', window.location.href);
                     return (
-                        <div key={item._id}>
-                            <a href={link} target="_blank" rel="noreferrer">
+                        <Div key={item._id}>
+                            <A href={link} target="_blank" rel="noreferrer">
                                 <img alt={link} src={link} style={{ width: 100, aspectRatio: 1 }} />
-                            </a>
+                            </A>
 
-                            <button type="button" onClick={() => remove(item)}>
+                            <Button type="button" onClick={() => remove(item)}>
                                 Delete
-                            </button>
-                        </div>
+                            </Button>
+                        </Div>
                     );
                 })}
-            </ul>
+            </Ul>
 
-        </div>
+        </Div>
     );
 }
