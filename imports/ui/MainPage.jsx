@@ -4,7 +4,7 @@ import { ClientForm } from "./ClientForm";
 import { Client } from "./Client";
 import { documentFields } from "../api/formConstants";
 import { ClientsCollection } from "../api/ClientsCollection";
-import { H1, Div, Ul, Button } from '@material-ui/core';
+import { H1, Ul, Button } from '@material-ui/core';
 
 const toggleChecked = ({ _id, isChecked }) => {
     ClientsCollection.update(_id, {
@@ -32,11 +32,11 @@ export const MainPage = () => {
             </H1>
 
             <ClientForm />
-            <Div className="filter">
+            <div className="filter">
                 <Button onClick={() => setHideCompleted(!hideCompleted)}>
                     {hideCompleted ? 'Show All' : 'Hide Completed'}
                 </Button>
-            </Div>
+            </div>
             <Ul>
                 { tasks.map((task) => <Client key={task._id} task={task} onCheckBoxClick={toggleChecked} onDeleteClick={deleteClient} />)}
             </Ul>

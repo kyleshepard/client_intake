@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Form, Label, Input, Button } from '@material-ui/core';
+import { Label, Input, Button } from '@material-ui/core';
 
 export const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -13,7 +13,7 @@ export const LoginForm = () => {
     };
 
     return (
-        <Form onSubmit={submit} className="login-form">
+        <form onSubmit={submit} className="login-form">
             <Label htmlFor="username">Username</Label>
 
             <Input
@@ -35,6 +35,6 @@ export const LoginForm = () => {
             />
 
             <Button type="submit">Log In</Button>
-        </Form>
+        </form>
     );
 };
