@@ -1,7 +1,7 @@
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
 import { ImagesCollection } from "../api/ImagesCollection";
-import { Div, Input, Button, Ul, A } from '@material-ui/core';
+import { Input, Button, Ul, A } from '@material-ui/core';
 
 export function ImageDisplay({ clientid }) {
     const images = useTracker(() => ImagesCollection.find(clientid && { meta: { clientid } }).fetch());
@@ -18,7 +18,7 @@ export function ImageDisplay({ clientid }) {
     };
 
     return (
-        <Div style={{ display: "flex", flexDirection: 'row' }}>
+        <div style={{ display: "flex", flexDirection: 'row' }}>
             <Input type="file" onChange={onFileChange} />
             {image && (
                 <img
@@ -36,7 +36,7 @@ export function ImageDisplay({ clientid }) {
                 {images.map((item) => {
                     const link = ImagesCollection.findOne({ _id: item._id }).link('original', window.location.href);
                     return (
-                        <Div key={item._id}>
+                        <div key={item._id}>
                             <A href={link} target="_blank" rel="noreferrer">
                                 <img alt={link} src={link} style={{ width: 100, aspectRatio: 1 }} />
                             </A>
@@ -44,11 +44,11 @@ export function ImageDisplay({ clientid }) {
                             <Button type="button" onClick={() => remove(item)}>
                                 Delete
                             </Button>
-                        </Div>
+                        </div>
                     );
                 })}
             </Ul>
 
-        </Div>
+        </div>
     );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ClientsCollection } from '../api/ClientsCollection';
-import { Form, Input, Button } from '@material-ui/core';
+import { Input, Button } from '@material-ui/core';
 
 export const ClientForm = () => {
     const [text, setText] = useState("");
@@ -19,9 +19,9 @@ export const ClientForm = () => {
     };
 
     return (
-        <Form className="task-form" onSubmit={handleSubmit}>
+        <form className="task-form" onSubmit={handleSubmit}>
             <Input type="text" placeholder="Type to add new entries" value={text} onChange={(e) => setText(e.target.value)} />
             <Button type="submit">Add It!</Button>
-        </Form>
+        </form>
     );
 };
