@@ -1,7 +1,7 @@
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
 import { ImagesCollection } from "../api/ImagesCollection";
-import { Div, Input, Button, Ul, A } from '@material-ui/core';
+import { Div, Input, Button, Ul, A, Img } from '@material-ui/core';
 
 export function ImageDisplay({ clientid }) {
     const images = useTracker(() => ImagesCollection.find(clientid && { meta: { clientid } }).fetch());
@@ -21,7 +21,7 @@ export function ImageDisplay({ clientid }) {
         <Div style={{ display: "flex", flexDirection: 'row' }}>
             <Input type="file" onChange={onFileChange} />
             {image && (
-                <img
+                <Img
                     alt="File Missing"
                     src={image && URL.createObjectURL(image)}
                     style={{ height: 200, aspectRatio: 1 }}
@@ -38,7 +38,7 @@ export function ImageDisplay({ clientid }) {
                     return (
                         <Div key={item._id}>
                             <A href={link} target="_blank" rel="noreferrer">
-                                <img alt={link} src={link} style={{ width: 100, aspectRatio: 1 }} />
+                                <Img alt={link} src={link} style={{ width: 100, aspectRatio: 1 }} />
                             </A>
 
                             <Button type="button" onClick={() => remove(item)}>
