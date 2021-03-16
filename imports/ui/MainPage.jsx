@@ -25,6 +25,7 @@ export const MainPage = () => {
     }`;
     return (
         <>
+            <button onClick={Meteor.logout}>Log out</button>
             <h1>
                 Users
                 {pendingTasksTitle}
