@@ -28,7 +28,7 @@ export function ImageDisplay({ clientid }) {
                 />
             )}
             {image && (
-                <Button type="button" onClick={onUpload}>
+                <Button color="primary" type="button" onClick={onUpload}>
                     Upload Image
                 </Button>
             )}
