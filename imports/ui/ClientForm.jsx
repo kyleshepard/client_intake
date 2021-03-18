@@ -46,7 +46,7 @@ export const ClientForm = () => {
                     //add each one to our set of child fields
                     field.childFields.forEach(childField => {
                         // console.log(childField.name + " " + childField._id);
-                        console.log(`--${childField.name} is a child of ${field.name} and has ${ (childfield.childFields != void(0)) ? childField.childFields.length : 0} children itself`);
+                        console.log(`--${childField.name} is a child of ${field.name} and has ${ (childField.childFields != void(0)) ? childField.childFields.length : 0} children itself`);
                         
                         formData['childFormData'][childField._id] = recursive(childField);
                     });
