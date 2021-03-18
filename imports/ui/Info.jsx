@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
-import { LinksCollection } from '../api/links';
+import { TasksCollection } from '../api/TasksCollection';
 
 export const Info = () => {
-    const links = useTracker(() => LinksCollection.find().fetch());
+    const links = useTracker(() => TasksCollection.find().fetch());
 
     return (
         <div>
