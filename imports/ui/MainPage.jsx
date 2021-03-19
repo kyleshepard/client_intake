@@ -111,7 +111,6 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
         display: 'flex',
-        overflow: 'auto',
         flexDirection: 'column',
     },
     fixedHeight: {
@@ -199,7 +198,7 @@ export const MainPage = () => {
 
                         {/* Add New Clients */}
                         <Grid item xs={12}>
-                            <Paper className={classes.paper}>
+                            <Paper className={classes.paper} color="primary">
                                 <ClientForm />
                             </Paper>
                         </Grid>
@@ -210,7 +209,7 @@ export const MainPage = () => {
                                     Potential Clients
                                 </h1>
                                 <List style={{
-                                  width: '100%',
+                                    width: '100%',
                                 }}
                                 >
                                     { tasks.map((task) => <Client key={task._id} task={task} onCheckBoxClick={toggleChecked} onDeleteClick={deleteClient} />)}

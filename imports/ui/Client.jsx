@@ -11,13 +11,16 @@ export const Client = ({ task, onCheckBoxClick, onDeleteClick }) => (
         <Paper
             style={{
                 padding: 5,
-                width:'100%',
+                width: '100%',
             }}
             elevation={3}
         >
-            <Grid container spacing={2} direction="row"
-                  justify="center"
-                  alignItems="center"
+            <Grid
+                container
+                spacing={2}
+                direction="row"
+                justify="center"
+                alignItems="center"
             >
                 <Grid item sm={4}>
                     {task.text}
