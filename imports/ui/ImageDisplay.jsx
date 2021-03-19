@@ -1,7 +1,7 @@
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
-import { Input, Button } from '@material-ui/core';
 import { ImagesCollection } from "../api/ImagesCollection";
+import { Input, Button, Ul, A } from '@material-ui/core';
 
 export function ImageDisplay({ clientid }) {
     const images = useTracker(() => ImagesCollection.find(clientid && { meta: { clientid } }).fetch());
@@ -28,7 +28,7 @@ export function ImageDisplay({ clientid }) {
                 />
             )}
             {image && (
-                <Button color="primary" type="button" onClick={onUpload}>
+                <Button type="button" onClick={onUpload}>
                     Upload Image
                 </Button>
             )}
