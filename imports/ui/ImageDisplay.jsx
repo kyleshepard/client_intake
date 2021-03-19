@@ -19,7 +19,18 @@ export function ImageDisplay({ clientid }) {
 
     return (
         <div style={{ display: "flex", flexDirection: 'row' }}>
-            <Input type="file" onChange={onFileChange} />
+            <Button
+                color={"primary"}
+                variant="contained"
+                component="label"
+            >
+                Upload File
+                <input
+                    type="file"
+                    onChange={onFileChange}
+                    hidden
+                />
+            </Button>
             {image && (
                 <img
                     alt="File Missing"
