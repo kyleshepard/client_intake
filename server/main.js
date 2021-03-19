@@ -1,7 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { ClientsCollection } from "../imports/api/ClientsCollection";
+import { FormsCollection } from "../imports/api/FormsCollection";
 import { ImagesCollection } from "../imports/api/ImagesCollection";
+import { documentFields } from "../imports/api/formConstants";
+
 
 const insertClient = (taskText) => ClientsCollection.insert({ text: taskText });
 
@@ -16,4 +19,24 @@ Meteor.startup(() => {
             password: SEED_PASSWORD,
         });
     }
+    function uploadToMeteor(dataArray, collection, parentId) {
+        dataArray.forEach(({
+            description,
+            childFields,
+            name,
+            childFieldsUnique,
+            type,
+        }) => {
+            collection.insert({
+                description, parentId, name, childFieldsUnique, type,
+            },
+            (e, _id) => childFields && uploadToMeteor(childFields, collection, _id));
+        });
+    }
+ 
+    if(FormsCollection.find({}).fetch().length === 0){
+        uploadToMeteor(documentFields, FormsCollection);
+    }
+
+    console.log(FormsCollection.find({}).fetch());
 });

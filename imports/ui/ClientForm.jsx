@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ClientsCollection } from '../api/ClientsCollection';
 import { Input, Button } from '@material-ui/core';
+import { FormsCollection } from '../api/FormsCollection';
 
 export const ClientForm = () => {
     const [text, setText] = useState("");
@@ -10,10 +11,18 @@ export const ClientForm = () => {
 
         if (!text) return;
 
-        ClientsCollection.insert({
+        let client = {
             text: text.trim(),
-            createdAt: new Date(),
+            data: {},
+            createdAt: Date()
+        };
+
+        //initialize every piece of data as boolean. how do we take in tons of values programmatically?
+        FormsCollection.find({}).fetch().forEach(field => {
+            client['data'][field._id] = false;
         });
+
+        ClientsCollection.insert(client);
 
         setText("");
     };
