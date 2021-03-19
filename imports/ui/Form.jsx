@@ -21,7 +21,7 @@ export function Form({ clientId }) {
     return (
         <>
             <List>
-                {topLevelFields.map((fieldData) => <FormField key={fieldData._id} fieldData={fieldData} />)}
+                {topLevelFields.map((fieldData) => <FormField clientData={clientData} key={fieldData._id} fieldData={fieldData} />)}
             </List>
         </>
 

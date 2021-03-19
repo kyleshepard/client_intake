@@ -6,22 +6,32 @@ import { useTracker } from "meteor/react-meteor-data";
 import EditIcon from '@material-ui/icons/Edit';
 import { FormsCollection } from "../api/FormsCollection";
 import { fieldTypes } from "../api/formConstants";
+import { ClientsCollection } from "../api/ClientsCollection";
 
-export const FormField = ({ fieldData }) => {
+export const FormField = ({ fieldData, clientData }) => {
     const children = useTracker(() => FormsCollection.find({ parentId: fieldData._id }).fetch());
     let editor;
+    const value = clientData && clientData.data && clientData.data[fieldData._id];
+    const updateFunc = (newData) => {
+        const temp = clientData && clientData.data;
+        temp[fieldData._id] = newData;
+        console.log(temp[fieldData._id], value);
+        ClientsCollection.update({ _id: clientData._id }, {
+            $set: { data: temp },
+        });
+    };
     if (fieldData.type) {
         if (fieldData.type === fieldTypes.string) {
-            editor = <TextField />;
+            editor = <TextField value={value} onChange={(e) => updateFunc(e.target.value)} />;
         } else if (fieldData.type === fieldTypes.bool) {
-            editor = <Checkbox />;
+            editor = <Checkbox checked={value} onChange={() => updateFunc(!value)} />;
         }
     }
     return (
         <ListItem>
             <Paper style={{ padding: 5, width: '100%' }} elevation={9}>
                 <Grid container direction="column">
-                    <Grid item container direction="row" alignItems="center" justifyContent="center">
+                    <Grid item container direction="row" alignItems="center">
                         <Grid item>
                             <EditIcon />
                         </Grid>
@@ -34,7 +44,7 @@ export const FormField = ({ fieldData }) => {
                     </Grid>
                     <Grid item>
                         <List>
-                            {children.map((child) => <FormField key={child._id} fieldData={child} />)}
+                            {children.map((child) => <FormField clientData={clientData} key={child._id} fieldData={child} />)}
                         </List>
                     </Grid>
                 </Grid>
