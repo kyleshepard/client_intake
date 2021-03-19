@@ -12,7 +12,7 @@ export const FormField = ({ fieldData, clientData }) => {
     const children = useTracker(() => FormsCollection.find({ parentId: fieldData._id }).fetch());
     let editor;
     const value = clientData && clientData.data && clientData.data[fieldData._id];
-    const updateFunc = (newData) => {
+    const updateFunc = (newData) => {//TODO: this function should have a submit button instead of constantly updating the database
         const temp = clientData && clientData.data;
         temp[fieldData._id] = newData;
         console.log(temp[fieldData._id], value);
@@ -29,9 +29,9 @@ export const FormField = ({ fieldData, clientData }) => {
     }
     return (
         <ListItem>
-            <Paper style={{ padding: 5, width: '100%' }} elevation={9}>
+            <Paper style={{ padding: 5, width: '100%' }} elevation={3}>
                 <Grid container direction="column">
-                    <Grid item container direction="row" alignItems="center">
+                    <Grid item container direction="row" alignItems="center" spacing={1}>
                         <Grid item>
                             <EditIcon />
                         </Grid>
