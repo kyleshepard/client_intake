@@ -129,7 +129,6 @@ const toggleChecked = ({ _id, isChecked }) => {
 export const MainPage = () => {
     /// //
     // This part is for  logic
-    console.log("FIELDS", documentFields);
     const deleteClient = ({ _id }) => ClientsCollection.remove(_id);
     const hideCompletedFilter = { isChecked: { $ne: true } };
     const [hideCompleted, setHideCompleted] = useState(false);
@@ -212,7 +211,7 @@ export const MainPage = () => {
                                     width: '100%',
                                 }}
                                 >
-                                    { tasks.map((task) => <Client key={task._id} task={task} onCheckBoxClick={toggleChecked} onDeleteClick={deleteClient} />)}
+                                    { tasks.map((task) => <Client key={task._id} clientData={task} onCheckBoxClick={toggleChecked} onDeleteClick={deleteClient} />)}
                                 </List>
                             </Paper>
                         </Grid>

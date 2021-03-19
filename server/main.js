@@ -5,14 +5,12 @@ import { FormsCollection } from "../imports/api/FormsCollection";
 import { ImagesCollection } from "../imports/api/ImagesCollection";
 import { documentFields } from "../imports/api/formConstants";
 
-
 const insertClient = (taskText) => ClientsCollection.insert({ text: taskText });
 
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
 
 Meteor.startup(() => {
-    console.log(ImagesCollection);
     if (!Accounts.findUserByUsername(SEED_USERNAME)) {
         Accounts.createUser({
             username: SEED_USERNAME,
@@ -33,10 +31,8 @@ Meteor.startup(() => {
             (e, _id) => childFields && uploadToMeteor(childFields, collection, _id));
         });
     }
- 
-    if(FormsCollection.find({}).fetch().length === 0){
+
+    if (FormsCollection.find({}).fetch().length === 0) {
         uploadToMeteor(documentFields, FormsCollection);
     }
-
-    console.log(FormsCollection.find({}).fetch());
 });

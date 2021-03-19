@@ -1,11 +1,12 @@
 import React from 'react';
 import {
-    Input, Button, Checkbox, ListItem, Divider, Paper, Grid,
+    Input, Button, Checkbox, ListItem, Divider, Paper, Grid, Dialog,
 } from '@material-ui/core';
 import { theme } from "../api/theme";
 import { ImageDisplay } from "./ImageDisplay";
+import {FormDialog} from "./Form";
 
-export const Client = ({ task, onCheckBoxClick, onDeleteClick }) => (
+export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => (
 
     <ListItem>
         <Paper
@@ -23,13 +24,13 @@ export const Client = ({ task, onCheckBoxClick, onDeleteClick }) => (
                 alignItems="center"
             >
                 <Grid item sm={4}>
-                    {task.text}
+                    {clientData.text}
                 </Grid>
                 <Grid item sm={4}>
-                    <ImageDisplay clientid={task && task._id} />
+                    <FormDialog clientId={clientData && clientData._id} />
                 </Grid>
                 <Grid item sm={4}>
-                    <Button onClick={() => onDeleteClick(task)}>Delete Client</Button>
+                    <Button onClick={() => onDeleteClick(clientData)}>Delete Client</Button>
                 </Grid>
             </Grid>
         </Paper>

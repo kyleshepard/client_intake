@@ -77,18 +77,17 @@ function genBlankForm(form:Array<Field>) {
     form.forEach((f) => {
         const obj = f.childFields ? genBlankForm(f.childFields) : {};
         switch (f.type) {
-        case fieldTypes.bool:
-            obj[f._id] = false;
-            break;
-        case fieldTypes.string:
-            obj[f._id] = '';
-            break;
-        default:
-            obj[f._id] = undefined;
+            case fieldTypes.bool:
+                obj[f._id] = false;
+                break;
+            case fieldTypes.string:
+                obj[f._id] = '';
+                break;
+            default:
+                obj[f._id] = undefined;
         }
-        thisData = { ...thisData, ...obj };
+        thisData = {...thisData, ...obj};
     });
 
     return thisData;
 }
-console.log("BLANK FORM", genBlankForm(documentFields));
