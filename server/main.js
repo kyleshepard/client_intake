@@ -24,14 +24,16 @@ Meteor.startup(() => {
             name,
             childFieldsUnique,
             type,
+            primary,
         }) => {
             collection.insert({
-                description, parentId, name, childFieldsUnique, type,
+                description, parentId, name, childFieldsUnique, type, primary,
             },
             (e, _id) => childFields && uploadToMeteor(childFields, collection, _id));
         });
     }
 
+    FormsCollection.remove({})
     if (FormsCollection.find({}).fetch().length === 0) {
         uploadToMeteor(documentFields, FormsCollection);
     }

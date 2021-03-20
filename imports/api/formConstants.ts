@@ -8,6 +8,7 @@ export interface Field {
     type: fieldTypes,
     name: string,
     _id: string,
+    primary?:boolean,
     description?: string,
     childFields?: Array<this>,
     childFieldsUnique?: boolean, // If there are multiple subfields, if multiple of them can be selected at once
@@ -23,6 +24,7 @@ export const documentFields: Array<Field> = [
     {
         type: fieldTypes.string,
         name: "Full Name",
+        primary: true,
         _id: randString(),
     },
     {
@@ -77,16 +79,16 @@ function genBlankForm(form:Array<Field>) {
     form.forEach((f) => {
         const obj = f.childFields ? genBlankForm(f.childFields) : {};
         switch (f.type) {
-            case fieldTypes.bool:
-                obj[f._id] = false;
-                break;
-            case fieldTypes.string:
-                obj[f._id] = '';
-                break;
-            default:
-                obj[f._id] = undefined;
+        case fieldTypes.bool:
+            obj[f._id] = false;
+            break;
+        case fieldTypes.string:
+            obj[f._id] = '';
+            break;
+        default:
+            obj[f._id] = undefined;
         }
-        thisData = {...thisData, ...obj};
+        thisData = { ...thisData, ...obj };
     });
 
     return thisData;

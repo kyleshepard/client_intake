@@ -12,10 +12,9 @@ export const FormField = ({ fieldData, clientData }) => {
     const children = useTracker(() => FormsCollection.find({ parentId: fieldData._id }).fetch());
     let editor;
     const value = clientData && clientData.data && clientData.data[fieldData._id];
-    const updateFunc = (newData) => {//TODO: this function should have a submit button instead of constantly updating the database
+    const updateFunc = (newData) => { // TODO: this function should have a submit button instead of constantly updating the database
         const temp = clientData && clientData.data;
         temp[fieldData._id] = newData;
-        console.log(temp[fieldData._id], value);
         ClientsCollection.update({ _id: clientData._id }, {
             $set: { data: temp },
         });
