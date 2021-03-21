@@ -30,6 +30,7 @@ export function Form({ clientId }) {
 
 export function FormDialog({ clientId }) {
     const [open, setOpen] = React.useState(false);
+    const client = useTracker(() => ClientsCollection.findOne({_id: clientId}));
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -43,7 +44,10 @@ export function FormDialog({ clientId }) {
             </Button>
 
             <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-                <DialogTitle id="simple-dialog-title">Modify This Client</DialogTitle>
+                <DialogTitle id="simple-dialog-title">
+                    Modify This Client<br/>
+                    <b>{client.fullName}</b>
+                </DialogTitle>
                 <Form clientId={clientId} />
 
             </Dialog>
