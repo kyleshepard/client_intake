@@ -21,12 +21,12 @@ export const namesToBoolFields = (namesArray:Array<string>):Array<Field> => name
 // This constant defines the fields that are going to be used in our frontend.
 // This should probably be replaced by something more mutable.
 export const documentFields: Array<Field> = [
-    {
-        type: fieldTypes.string,
-        name: "Full Name",
-        primary: true,
-        _id: randString(),
-    },
+    // {
+    //     type: fieldTypes.string,
+    //     name: "Full Name",
+    //     primary: true,
+    //     _id: randString(),
+    // },
     {
         type: fieldTypes.bool,
         name: 'WR/USCIS Payment',
