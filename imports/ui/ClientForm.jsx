@@ -10,12 +10,14 @@ import { fieldTypes } from "../api/formConstants";
 
 export const ClientForm = () => {
     const [primaryData, setPrimaryData] = useState({});
+    const [fullName, setFullName] = useState("");
 
     const fields = useTracker(() => FormsCollection.find({ primary: true }).fetch());
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const client = {
+            fullName: fullName,
             data: {},
             createdAt: Date(),
         };
@@ -38,6 +40,7 @@ export const ClientForm = () => {
 
         ClientsCollection.insert(client);
         setPrimaryData({});
+        setFullName("");
     };
 
     const modVal = (id, newVal) => {
@@ -57,6 +60,17 @@ export const ClientForm = () => {
             >
                 <Grid item>
                     <PersonAddIcon />
+                </Grid>
+
+                <Grid key="Full Name" item>
+                    <TextField
+                        label="Full Name"
+                        value={fullName || ""}
+                        onChange={(e) => {
+                            e.preventDefault();
+                            setFullName(e.target.value);
+                        }}
+                    />
                 </Grid>
 
                 {fields.map((field) => (

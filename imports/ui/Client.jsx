@@ -25,6 +25,13 @@ export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => {
                     justify="center"
                     alignItems="center"
                 >
+
+                <Grid key="Full Name" item>
+                    <TextField
+                        label="Full Name"
+                        value={clientData.fullName}
+                    />
+                </Grid>
                     {fields.map((field) => (
                         <Grid key={field._id} item>
                             { (field.type === fieldTypes.string
