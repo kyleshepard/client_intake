@@ -18,11 +18,28 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import PersonIcon from '@material-ui/icons/Person';
 import { mainListItems, secondaryListItems } from "./dashboard_example/listItems";
 import { ClientForm } from "./ClientForm";
 import { Client } from "./Client";
 import { documentFields } from "../api/formConstants";
 import { ClientsCollection } from "../api/ClientsCollection";
+
+function ClientListItem({client}) {
+    // console.log(client._id);
+    return(
+    <ListItem button>
+        <ListItemIcon>
+            <PersonIcon />
+        </ListItemIcon>
+        <ListItemText primary={client.fullName} />
+    </ListItem>
+    );
+}
 
 function Copyright() {
     return (
@@ -188,7 +205,11 @@ export const MainPage = () => {
                 <Divider />
                 <List>{mainListItems}</List>
                 <Divider />
-                <List>{secondaryListItems}</List>
+                <List>
+                    <ListSubheader inset>Recently Added Clients</ListSubheader>
+                    { ClientsCollection.find({}, { sort: {createdAt: -1}, limit: 5}).fetch().map((client) => <ClientListItem key={client._id} client={client}/>) }
+                </List>
+
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
