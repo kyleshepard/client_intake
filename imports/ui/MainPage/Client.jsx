@@ -3,9 +3,9 @@ import {
     Input, Button, Checkbox, ListItem, Divider, Paper, Grid, Dialog, TextField, FormControlLabel,
 } from '@material-ui/core';
 import { useTracker } from "meteor/react-meteor-data";
-import { FormDialog } from "./Form";
-import { fieldTypes } from "../api/formConstants";
-import { FormsCollection } from "../api/FormsCollection";
+import { FormDialog } from "./FormDialogue";
+import { fieldTypes } from "../../api/formConstants";
+import { FormsCollection } from "../../api/FormsCollection";
 
 export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => {
     const fields = useTracker(() => FormsCollection.find({ primary: true }).fetch());

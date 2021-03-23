@@ -4,9 +4,9 @@ import {
 } from "@material-ui/core";
 import { useTracker } from "meteor/react-meteor-data";
 import EditIcon from '@material-ui/icons/Edit';
-import { FormsCollection } from "../api/FormsCollection";
-import { fieldTypes } from "../api/formConstants";
-import { ClientsCollection } from "../api/ClientsCollection";
+import { FormsCollection } from "../../api/FormsCollection";
+import { fieldTypes } from "../../api/formConstants";
+import { ClientsCollection } from "../../api/ClientsCollection";
 
 export const FormField = ({ fieldData, clientData }) => {
     const children = useTracker(() => FormsCollection.find({ parentId: fieldData._id }).fetch());
