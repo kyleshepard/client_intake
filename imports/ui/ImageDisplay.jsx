@@ -10,11 +10,11 @@ export function ImageDisplay({ clientid }) {
         setImage(e.target.files[0]);
     };
     const onUpload = () => {
-        ImagesCollection.insert({ file: image, meta: { clientid } });
+        Meteor.call('images.insert', { file: image, meta: { clientid } });
         setImage(undefined);
     };
     const remove = (item) => {
-        ImagesCollection.remove({ _id: item._id });
+        Meteor.call('images.insert', { _id: item._id });
     };
 
     return (

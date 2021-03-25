@@ -1,3 +1,4 @@
+// import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import {
     List, ListItem, Paper, Grid, Checkbox, TextField,
@@ -15,8 +16,8 @@ export const FormField = ({ fieldData, clientData }) => {
     const updateFunc = (newData) => { // TODO: this function should have a submit button instead of constantly updating the database
         const temp = clientData && clientData.data;
         temp[fieldData._id] = newData;
-        ClientsCollection.update({ _id: clientData._id }, {
-            $set: { data: temp },
+        Meteor.call('clients.set', clientData._id, {
+            data: temp
         });
     };
     if (fieldData.type) {
