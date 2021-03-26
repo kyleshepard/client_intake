@@ -3,16 +3,18 @@ import React, { useState } from "react";
 import {
     Button, CircularProgress, LinearProgress,
 } from '@material-ui/core';
-import { ImagesCollection } from "../../api/ImagesCollection";
+import { FormFilesCollection } from "../../api/FormFilesCollection";
 
 export function FileUpload({ clientId, fieldId }) {
-    const images = useTracker(() => ImagesCollection.find(clientId && { meta: { client_id: clientId, field_id: fieldId } }).fetch());
+    const images = useTracker(() => FormFilesCollection.find(
+        clientId && fieldId && { meta: { client_id: clientId, field_id: fieldId } },
+    ).fetch());
     const [uploading, setUploading] = useState(false);
     const [fileProgress, setFileProgress] = useState(0);
     const startUploading = () => { setUploading(true); setFileProgress(0); };
     const stopUploading = () => { setUploading(false); setFileProgress(0); };
     const onUpload = (e) => {
-        ImagesCollection.insert(
+        FormFilesCollection.insert(
             {
                 file: e.target.files[0],
                 meta: { client_id: clientId, field_id: fieldId }, // Defines which client and which field
@@ -24,7 +26,7 @@ export function FileUpload({ clientId, fieldId }) {
         );
     };
     const remove = (item) => {
-        ImagesCollection.remove({ _id: item._id });
+        FormFilesCollection.remove({ _id: item._id });
     };
 
     return (
@@ -44,10 +46,17 @@ export function FileUpload({ clientId, fieldId }) {
 
                 </Button>
             )}
-            {uploading && <CircularProgress color="primary" variant={fileProgress ? "determinate" : "indeterminate"} value={fileProgress} />}
+            {uploading
+            && (
+                <CircularProgress
+                    color="primary"
+                    variant={fileProgress ? "determinate" : "indeterminate"}
+                    value={fileProgress}
+                />
+            )}
             <ul>
                 {images.map((item) => {
-                    const link = ImagesCollection.findOne({ _id: item._id }).link('original', window.location.href);
+                    const link = FormFilesCollection.findOne({ _id: item._id }).link('original', window.location.href);
                     return (
                         <div key={item._id}>
                             <a href={link} target="_blank" rel="noreferrer">

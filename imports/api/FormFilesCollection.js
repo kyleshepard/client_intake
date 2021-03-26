@@ -4,7 +4,7 @@ import { FilesCollection } from 'meteor/ostrio:files';
 // https://github.com/VeliovGroup/Meteor-Files/wiki
 
 const imageCollectionName = 'images';
-export const ImagesCollection = new FilesCollection({
+export const FormFilesCollection = new FilesCollection({
     collectionName: 'Images',
     allowClientCode: true, // Allow remove files from Client
     onBeforeUpload(file) {
@@ -22,5 +22,5 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-    Meteor.publish(imageCollectionName, () => ImagesCollection.find().cursor);
+    Meteor.publish(imageCollectionName, () => FormFilesCollection.find().cursor);
 }

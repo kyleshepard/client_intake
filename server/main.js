@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { ClientsCollection } from "../imports/api/ClientsCollection";
 import { FormsCollection } from "../imports/api/FormsCollection";
-import { ImagesCollection } from "../imports/api/ImagesCollection";
+import { FormFilesCollection } from "../imports/api/FormFilesCollection";
 import { documentFields } from "../imports/api/formConstants";
 
 const insertClient = (taskText) => ClientsCollection.insert({ text: taskText });
