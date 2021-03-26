@@ -1,16 +1,18 @@
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
-import { ImagesCollection } from "../api/ImagesCollection";
-import { Input, Button, Ul, A } from '@material-ui/core';
+import {
+    Input, Button, Ul, A,
+} from '@material-ui/core';
+import { ImagesCollection } from "../../api/ImagesCollection";
 
-export function ImageDisplay({ clientid }) {
-    const images = useTracker(() => ImagesCollection.find(clientid && { meta: { clientid } }).fetch());
+export function FileUpload({ clientId, fieldId }) {
+    const images = useTracker(() => ImagesCollection.find(clientId && { meta: { client_id: clientId, field_id: fieldId } }).fetch());
     const [image, setImage] = useState(undefined);
     const onFileChange = (e) => {
         setImage(e.target.files[0]);
     };
     const onUpload = () => {
-        ImagesCollection.insert({ file: image, meta: { clientid } });
+        ImagesCollection.insert({ file: image, meta: { client_id: clientId, field_id: fieldId } }); // Defines which client and which field associated
         setImage(undefined);
     };
     const remove = (item) => {
@@ -20,7 +22,7 @@ export function ImageDisplay({ clientid }) {
     return (
         <div style={{ display: "flex", flexDirection: 'row' }}>
             <Button
-                color={"primary"}
+                color="primary"
                 variant="contained"
                 component="label"
             >

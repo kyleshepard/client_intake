@@ -24,10 +24,9 @@ Meteor.startup(() => {
             name,
             childFieldsUnique,
             type,
-            primary,
         }) => {
             collection.insert({
-                description, parentId, name, childFieldsUnique, type, primary,
+                description, parentId, name, childFieldsUnique, type,
             },
             (e, _id) => childFields && uploadToMeteor(childFields, collection, _id));
         });
