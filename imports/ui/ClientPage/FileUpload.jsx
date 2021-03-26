@@ -1,19 +1,27 @@
 import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
 import {
-    Input, Button, Ul, A,
+    Button, CircularProgress, LinearProgress,
 } from '@material-ui/core';
 import { ImagesCollection } from "../../api/ImagesCollection";
 
 export function FileUpload({ clientId, fieldId }) {
     const images = useTracker(() => ImagesCollection.find(clientId && { meta: { client_id: clientId, field_id: fieldId } }).fetch());
-    const [image, setImage] = useState(undefined);
-    const onFileChange = (e) => {
-        setImage(e.target.files[0]);
-    };
-    const onUpload = () => {
-        ImagesCollection.insert({ file: image, meta: { client_id: clientId, field_id: fieldId } }); // Defines which client and which field associated
-        setImage(undefined);
+    const [uploading, setUploading] = useState(false);
+    const [fileProgress, setFileProgress] = useState(0);
+    const startUploading = () => { setUploading(true); setFileProgress(0); };
+    const stopUploading = () => { setUploading(false); setFileProgress(0); };
+    const onUpload = (e) => {
+        ImagesCollection.insert(
+            {
+                file: e.target.files[0],
+                meta: { client_id: clientId, field_id: fieldId }, // Defines which client and which field
+                onBeforeUpload: () => { startUploading(); setFileProgress(0); return true; },
+                onUploaded: stopUploading,
+                onError: stopUploading,
+                onProgress: (v) => { setFileProgress(v); },
+            },
+        );
     };
     const remove = (item) => {
         ImagesCollection.remove({ _id: item._id });
@@ -21,30 +29,22 @@ export function FileUpload({ clientId, fieldId }) {
 
     return (
         <div style={{ display: "flex", flexDirection: 'row' }}>
-            <Button
-                color="primary"
-                variant="contained"
-                component="label"
-            >
-                Upload File
-                <input
-                    type="file"
-                    onChange={onFileChange}
-                    hidden
-                />
-            </Button>
-            {image && (
-                <img
-                    alt="File Missing"
-                    src={image && URL.createObjectURL(image)}
-                    style={{ height: 200, aspectRatio: 1 }}
-                />
-            )}
-            {image && (
-                <Button type="button" onClick={onUpload}>
-                    Upload Image
+            {!uploading && (
+                <Button
+                    color="primary"
+                    variant="contained"
+                    component="label"
+                >
+                    Upload File
+                    <input
+                        type="file"
+                        onChange={onUpload}
+                        hidden
+                    />
+
                 </Button>
             )}
+            {uploading && <CircularProgress color="primary" variant={fileProgress ? "determinate" : "indeterminate"} value={fileProgress} />}
             <ul>
                 {images.map((item) => {
                     const link = ImagesCollection.findOne({ _id: item._id }).link('original', window.location.href);

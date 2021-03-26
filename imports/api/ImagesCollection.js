@@ -8,11 +8,12 @@ export const ImagesCollection = new FilesCollection({
     collectionName: 'Images',
     allowClientCode: true, // Allow remove files from Client
     onBeforeUpload(file) {
-        // Allow upload files under 10MB, and only in png/jpg/jpeg formats
-        if (file.size <= 10485760 && /png|jpg|jpeg/i.test(file.extension)) {
+        // Allow upload files under 10MB
+        if (file.size <= 10485760) { // TODO: Idk if we need this
             return true;
         }
-        return 'Please upload image, with size equal or less than 10MB';
+        return true;
+        return 'Please upload file with size equal or less than 10MB';
     },
 });
 
