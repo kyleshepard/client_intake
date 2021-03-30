@@ -23,11 +23,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import PersonIcon from '@material-ui/icons/Person';
-import { mainListItems, secondaryListItems } from "./dashboard_example/listItems";
+import { mainListItems, secondaryListItems } from "../dashboard_example/listItems";
 import { ClientForm } from "./ClientForm";
 import { Client } from "./Client";
-import { documentFields } from "../api/formConstants";
-import { ClientsCollection } from "../api/ClientsCollection";
+import { documentFields } from "../../api/formConstants";
+import { ClientsCollection } from "../../api/ClientsCollection";
 
 function ClientListItem({client}) {
     // console.log(client._id);

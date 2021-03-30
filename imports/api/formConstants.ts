@@ -2,13 +2,13 @@
 export enum fieldTypes {
      none,
      string,
-     bool
+     bool,
+     file,
 }
 export interface Field {
     type: fieldTypes,
     name: string,
     _id: string,
-    primary?:boolean,
     description?: string,
     childFields?: Array<this>,
     childFieldsUnique?: boolean, // If there are multiple subfields, if multiple of them can be selected at once
@@ -21,12 +21,16 @@ export const namesToBoolFields = (namesArray:Array<string>):Array<Field> => name
 // This constant defines the fields that are going to be used in our frontend.
 // This should probably be replaced by something more mutable.
 export const documentFields: Array<Field> = [
-    // {
-    //     type: fieldTypes.string,
-    //     name: "Full Name",
-    //     primary: true,
-    //     _id: randString(),
-    // },
+    {
+        type: fieldTypes.file,
+        name: "File Upload_1",
+        _id: randString(),
+    },
+    {
+        type: fieldTypes.file,
+        name: "File Upload_2",
+        _id: randString(),
+    },
     {
         type: fieldTypes.bool,
         name: 'WR/USCIS Payment',

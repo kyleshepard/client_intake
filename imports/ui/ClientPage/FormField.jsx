@@ -5,9 +5,10 @@ import {
 } from "@material-ui/core";
 import { useTracker } from "meteor/react-meteor-data";
 import EditIcon from '@material-ui/icons/Edit';
-import { FormsCollection } from "../api/FormsCollection";
-import { fieldTypes } from "../api/formConstants";
-import { ClientsCollection } from "../api/ClientsCollection";
+import { FormsCollection } from "../../api/FormsCollection";
+import { fieldTypes } from "../../api/formConstants";
+import { ClientsCollection } from "../../api/ClientsCollection";
+import { FileUpload } from "./FileUpload";
 
 export const FormField = ({ fieldData, clientData }) => {
     const children = useTracker(() => FormsCollection.find({ parentId: fieldData._id }).fetch());
@@ -25,6 +26,8 @@ export const FormField = ({ fieldData, clientData }) => {
             editor = <TextField value={value} onChange={(e) => updateFunc(e.target.value)} />;
         } else if (fieldData.type === fieldTypes.bool) {
             editor = <Checkbox checked={value} onChange={() => updateFunc(!value)} />;
+        } else if (fieldData.type === fieldTypes.file) {
+            editor = <FileUpload clientId={clientData._id} fieldId={fieldData._id} />;
         }
     }
     return (
