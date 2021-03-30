@@ -12,6 +12,7 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import SignUp from './SignUp';
 
 import Paper from '@material-ui/core/Paper';
 
@@ -19,8 +20,8 @@ function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+            <Link color="inherit" href="https://worldreliefspokane.org/">
+                World Relief Spokane
             </Link>
             {' '}
             {new Date().getFullYear()}
@@ -88,10 +89,10 @@ export function LoginForm() {
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
                             autoFocus
                             onChange={(e) => setUsername(e.target.value)}
                         />
@@ -122,11 +123,11 @@ export function LoginForm() {
                             Sign In
                         </Button>
                         <Grid container>
-                            <Grid item xs>
+                            {/* <Grid item xs>
                                 <Link href="#" variant="body2">
                                     Forgot password?
                                 </Link>
-                            </Grid>
+                            </Grid> */}
                             <Grid item>
                                 <Link href="#" variant="body2">
                                     Don't have an account? Sign Up

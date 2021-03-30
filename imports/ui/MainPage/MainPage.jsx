@@ -1,33 +1,52 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems.jsx';
-import Deposits from './Deposits.jsx';
-import Orders from './Orders.jsx';
+import React, { useState } from "react";
+import { useTracker } from "meteor/react-meteor-data";
+import { Button, List } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import Badge from "@material-ui/core/Badge";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import Drawer from "@material-ui/core/Drawer";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import Divider from "@material-ui/core/Divider";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Box from "@material-ui/core/Box";
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import PersonIcon from '@material-ui/icons/Person';
+import { mainListItems, secondaryListItems } from "../dashboard_example/listItems";
+import { ClientForm } from "./ClientForm";
+import { Client } from "./Client";
+import { documentFields } from "../../api/formConstants";
+import { ClientsCollection } from "../../api/ClientsCollection";
+
+function ClientListItem({client}) {
+    // console.log(client._id);
+    return(
+    <ListItem button>
+        <ListItemIcon>
+            <PersonIcon />
+        </ListItemIcon>
+        <ListItemText primary={client.fullName} />
+    </ListItem>
+    );
+}
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+            <Link color="inherit" href="https://worldreliefspokane.org/">
+                World Relief Spokane
             </Link>
             {' '}
             {new Date().getFullYear()}
@@ -109,7 +128,6 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
         display: 'flex',
-        overflow: 'auto',
         flexDirection: 'column',
     },
     fixedHeight: {
@@ -117,7 +135,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Dashboard() {
+const toggleChecked = ({ _id, isChecked }) => {
+    Meteor.call('clients.set', _id, {
+            isChecked: !isChecked,
+        }
+    );
+};
+
+export const MainPage = () => {
+    /// //
+    // This part is for  logic
+    const deleteClient = ({ _id }) => Meteor.call('clients.remove',_id);
+    const hideCompletedFilter = { isChecked: { $ne: true } };
+    const [hideCompleted, setHideCompleted] = useState(false);
+    const tasks = useTracker(() => ClientsCollection.find(hideCompleted ? hideCompletedFilter : {}, { sort: { createdAt: -1 } }).fetch());
+    const pendingClientsCount = useTracker(() => ClientsCollection.find(hideCompletedFilter).count());
+    const pendingClientsTitle = `${
+        pendingClientsCount ? ` (${pendingClientsCount})` : ''
+    }`;
+
+    /// ////////////This part is for display
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -126,11 +163,9 @@ export default function Dashboard() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
                     <IconButton
@@ -150,6 +185,8 @@ export default function Dashboard() {
                             <NotificationsIcon />
                         </Badge>
                     </IconButton>
+                    <Button onClick={Meteor.logout} variant="contained">Log out</Button>
+
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -167,23 +204,35 @@ export default function Dashboard() {
                 <Divider />
                 <List>{mainListItems}</List>
                 <Divider />
-                <List>{secondaryListItems}</List>
+                <List>
+                    <ListSubheader inset>Recently Added Clients</ListSubheader>
+                    { ClientsCollection.find({}, { sort: {createdAt: -1}, limit: 5}).fetch().map((client) => <ClientListItem key={client._id} client={client}/>) }
+                </List>
+
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
 
-                        {/* Recent Deposits */}
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <Deposits />
+                        {/* Add New Clients */}
+                        <Grid item xs={12}>
+                            <Paper className={classes.paper} color="primary">
+                                <ClientForm />
                             </Paper>
                         </Grid>
-                        {/* Recent Orders */}
+                        {/* Display Clients */}
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <Orders />
+                                <h1>
+                                    Potential Clients
+                                </h1>
+                                <List style={{
+                                    width: '100%',
+                                }}
+                                >
+                                    { tasks.map((task) => <Client key={task._id} clientData={task} onCheckBoxClick={toggleChecked} onDeleteClick={deleteClient} />)}
+                                </List>
                             </Paper>
                         </Grid>
                     </Grid>
@@ -191,7 +240,9 @@ export default function Dashboard() {
                         <Copyright />
                     </Box>
                 </Container>
+
             </main>
         </div>
+
     );
-}
+};

@@ -1,17 +1,22 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
 
-const base_theme = createMuiTheme({
+const baseTheme = createMuiTheme({
     palette: {
+        common: { black: "#000", white: "#fff" },
+        background: {
+            paper: "#fff",
+            default: "#fafafa",
+        },
         primary: {
-            main: purple[500],
+            main: "#3f51b5",
         },
         secondary: {
-            main: green[500],
+            main: "#f50057",
+        },
+        error: {
+            main: "#f44336",
         },
     },
 });
 
-
-export const theme = responsiveFontSizes(base_theme);
+export const theme = responsiveFontSizes(baseTheme);

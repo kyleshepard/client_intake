@@ -1,19 +1,26 @@
 import React from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
-import { MuiThemeProvider } from "@material-ui/core";
+import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+} from "react-router-dom";
 import { LoginForm } from './LoginForm.jsx';
-import { MainPage } from "./MainPage.jsx";
+import { MainPage } from "./MainPage/MainPage.jsx";
 import { theme } from "../api/theme";
-import Dashboard from "./dashboard_example/Dashboard";
+import {Routing} from "./Routing";
 
 export const App = () => {
     const user = useTracker(() => Meteor.user());
     return (
         <div className="main">
-            <MuiThemeProvider theme={theme}>
 
+            <MuiThemeProvider theme={theme}>
+                <CssBaseline />
                 { user ? (
-                    <MainPage />
+                    <Routing />
                 ) : (
                     <LoginForm />
                 )}
