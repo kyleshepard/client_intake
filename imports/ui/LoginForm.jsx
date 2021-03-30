@@ -15,20 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import SignUp from './SignUp';
 
 import Paper from '@material-ui/core/Paper';
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://worldreliefspokane.org/">
-                World Relief Spokane
-            </Link>
-            {' '}
-            {new Date().getFullYear()}
-            .
-        </Typography>
-    );
-}
+import {Copyright} from "./Frequents";
 
 const useStyles = makeStyles((theme) => ({
     root: {
