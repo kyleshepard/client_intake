@@ -1,17 +1,9 @@
 import React from 'react';
-import {
-    Input, Button, Checkbox, ListItem, Divider, Paper, Grid, Dialog, TextField, FormControlLabel,
-} from '@material-ui/core';
-import { useTracker } from "meteor/react-meteor-data";
-import { useHistory } from "react-router-dom";
-import { fieldTypes } from "../../api/formConstants";
-import { FormsCollection } from "../../api/FormsCollection";
-
-const LinkButton = ({ to }) => {
-    const history = useHistory();
-
-    return Button({ onClick:()=>history.push(to), ...props });
-};
+import {Button, Checkbox, FormControlLabel, Grid, ListItem, Paper, TextField,} from '@material-ui/core';
+import {useTracker} from "meteor/react-meteor-data";
+import {fieldTypes} from "../../api/formConstants";
+import {FormsCollection} from "../../api/FormsCollection";
+import {LinkButton} from "../Frequents";
 
 export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => {
     const fields = useTracker(() => FormsCollection.find({ primary: true }).fetch());
