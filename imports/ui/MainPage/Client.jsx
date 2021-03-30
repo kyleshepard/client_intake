@@ -3,9 +3,15 @@ import {
     Input, Button, Checkbox, ListItem, Divider, Paper, Grid, Dialog, TextField, FormControlLabel,
 } from '@material-ui/core';
 import { useTracker } from "meteor/react-meteor-data";
-import { FormDialog } from "./FormDialogue";
+import { useHistory } from "react-router-dom";
 import { fieldTypes } from "../../api/formConstants";
 import { FormsCollection } from "../../api/FormsCollection";
+
+const LinkButton = ({ to }) => {
+    const history = useHistory();
+
+    return Button({ onClick:()=>history.push(to), ...props });
+};
 
 export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => {
     const fields = useTracker(() => FormsCollection.find({ primary: true }).fetch());
@@ -26,12 +32,12 @@ export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => {
                     alignItems="center"
                 >
 
-                <Grid key="Full Name" item>
-                    <TextField
-                        label="Full Name"
-                        value={clientData.fullName}
-                    />
-                </Grid>
+                    <Grid key="Full Name" item>
+                        <TextField
+                            label="Full Name"
+                            value={clientData.fullName}
+                        />
+                    </Grid>
                     {fields.map((field) => (
                         <Grid key={field._id} item>
                             { (field.type === fieldTypes.string
@@ -53,7 +59,7 @@ export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => {
                         </Grid>
                     ))}
                     <Grid item sm={4}>
-                        <FormDialog clientId={clientData && clientData._id} />
+                        <LinkButton to={`/client/${clientData._id}`}>Open Client</LinkButton>
                     </Grid>
                     <Grid item sm={4}>
                         <Button onClick={() => onDeleteClick(clientData)}>Delete Client</Button>
