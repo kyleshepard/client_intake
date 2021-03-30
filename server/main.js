@@ -6,7 +6,7 @@ import { FormFilesCollection } from "../imports/api/FormFilesCollection";
 import { documentFields } from "../imports/api/formConstants";
 import '/imports/api/clientsMethods';
 import '/imports/api/formsMethods';
-import '/imports/api/imagesMethods';
+// import '/imports/api/attachmentsMethods';
 
 const insertClient = (taskText) => ClientsCollection.insert({ text: taskText });
 
