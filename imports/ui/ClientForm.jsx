@@ -21,7 +21,7 @@ export const ClientForm = () => {
     return (
         <form className="task-form" onSubmit={handleSubmit}>
             <Input type="text" placeholder="Type to add new entries" value={text} onChange={(e) => setText(e.target.value)} />
-            <Button type="submit">Add It!</Button>
+            <Button type="submit" variant="text" >Add It!</Button>
         </form>
     );
 };

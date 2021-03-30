@@ -32,14 +32,14 @@ export function ImageDisplay({ clientid }) {
                     Upload Image
                 </Button>
             )}
-            <Ul>
+            <ul>
                 {images.map((item) => {
                     const link = ImagesCollection.findOne({ _id: item._id }).link('original', window.location.href);
                     return (
                         <div key={item._id}>
-                            <A href={link} target="_blank" rel="noreferrer">
+                            <a href={link} target="_blank" rel="noreferrer">
                                 <img alt={link} src={link} style={{ width: 100, aspectRatio: 1 }} />
-                            </A>
+                            </a>
 
                             <Button type="button" onClick={() => remove(item)}>
                                 Delete
@@ -47,7 +47,7 @@ export function ImageDisplay({ clientid }) {
                         </div>
                     );
                 })}
-            </Ul>
+            </ul>
 
         </div>
     );
