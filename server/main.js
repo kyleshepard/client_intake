@@ -4,6 +4,9 @@ import { ClientsCollection } from "../imports/api/ClientsCollection";
 import { FormsCollection } from "../imports/api/FormsCollection";
 import { FormFilesCollection } from "../imports/api/FormFilesCollection";
 import { documentFields } from "../imports/api/formConstants";
+import '/imports/api/clientsMethods';
+import '/imports/api/formsMethods';
+// import '/imports/api/attachmentsMethods';
 
 const insertClient = (taskText) => ClientsCollection.insert({ text: taskText });
 
@@ -32,7 +35,7 @@ Meteor.startup(() => {
         });
     }
 
-    FormsCollection.remove({})
+    Meteor.call('forms.remove',{});
     if (FormsCollection.find({}).fetch().length === 0) {
         uploadToMeteor(documentFields, FormsCollection);
     }

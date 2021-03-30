@@ -136,17 +136,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const toggleChecked = ({ _id, isChecked }) => {
-    ClientsCollection.update(_id, {
-        $set: {
+    Meteor.call('clients.set', _id, {
             isChecked: !isChecked,
-        },
-    });
+        }
+    );
 };
 
 export const MainPage = () => {
     /// //
     // This part is for  logic
-    const deleteClient = ({ _id }) => ClientsCollection.remove(_id);
+    const deleteClient = ({ _id }) => Meteor.call('clients.remove',_id);
     const hideCompletedFilter = { isChecked: { $ne: true } };
     const [hideCompleted, setHideCompleted] = useState(false);
     const tasks = useTracker(() => ClientsCollection.find(hideCompleted ? hideCompletedFilter : {}, { sort: { createdAt: -1 } }).fetch());
