@@ -8,10 +8,27 @@ const baseTheme = createMuiTheme({
             default: "#fafafa",
         },
         primary: {
-            main: "#3f51b5",
+            // 1 - blue
+            //main: "#3F51B5",
+
+            // 2 - green
+            main: "#1FA504",
+
+            // 3 - lighter blue
+            //main: "#007fff",
+
+            // 4 - yellow
+            //main: "#E6E602",
+
+            // 5 - orange
+            //main: "#C58403",
         },
         secondary: {
-            main: "#f50057",
+            // 1 - red
+            main: "#FF0000",
+
+            //2 - orange
+            //main: "#FF9500",
         },
         error: {
             main: "#f44336",

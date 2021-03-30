@@ -133,6 +133,12 @@ export function LoginForm() {
                                     Don't have an account? Sign Up
                                 </Link>
                             </Grid>
+                            <Button
+                                size="small"
+                                color="primary"
+                            >
+                                Theme
+                            </Button>
                         </Grid>
                         <Box mt={5}>
                             <Copyright />
