@@ -4,10 +4,10 @@ import {
 } from '@material-ui/core';
 import { useTracker } from "meteor/react-meteor-data";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import { ClientsCollection } from '../api/ClientsCollection';
+// import { ClientsCollection } from '../api/ClientsCollection';
 import { Meteor } from 'meteor/meteor';
-import { FormsCollection } from '../api/FormsCollection';
-import { fieldTypes } from "../api/formConstants";
+import { FormsCollection } from '../../api/FormsCollection';
+import { fieldTypes } from "../../api/formConstants";
 
 export const ClientForm = () => {
     const [primaryData, setPrimaryData] = useState({});
