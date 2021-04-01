@@ -23,6 +23,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import PersonIcon from '@material-ui/icons/Person';
+import Tooltip from '@material-ui/core/Tooltip';
 import { mainListItems, secondaryListItems } from "../dashboard_example/listItems";
 import { ClientForm } from "./ClientForm";
 import { Client } from "./Client";
@@ -169,18 +170,21 @@ export const MainPage = () => {
         <div className={classes.root}>
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+                    <Tooltip title="View Sidebar" placement="right">
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    </Tooltip>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         Dashboard
                     </Typography>
+
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
                             <NotificationsIcon />
@@ -203,7 +207,7 @@ export const MainPage = () => {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>{mainListItems}</List>
+                <List>{mainListItems({open})}</List>
                 <Divider />
                 <List>
                     <ListSubheader inset>Recently Added Clients</ListSubheader>

@@ -10,24 +10,31 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import PersonIcon from '@material-ui/icons/Person';
+import Tooltip from '@material-ui/core/Tooltip'
 
-export const mainListItems = (
+export const mainListItems = ({open})=> (
     <div>
         <ListItem button>
             <ListItemIcon>
-                <PeopleIcon />
+                <Tooltip title={open ? "" : "Clients"} placement="right">
+                    <PeopleIcon />
+                </Tooltip>
             </ListItemIcon>
             <ListItemText primary="Clients" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>
-                <BarChartIcon />
+                <Tooltip title={open ? "" : "Users"} placement="right">
+                    <BarChartIcon />
+                </Tooltip>
             </ListItemIcon>
             <ListItemText primary="Software Users" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>
-                <LayersIcon />
+                <Tooltip title={open ? "" : "Forms"} placement="right">
+                    <LayersIcon />
+                </Tooltip>
             </ListItemIcon>
             <ListItemText primary="Form Editor" />
         </ListItem>
