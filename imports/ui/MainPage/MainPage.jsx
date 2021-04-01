@@ -30,12 +30,15 @@ import { Client } from "./Client";
 import { documentFields } from "../../api/formConstants";
 import { ClientsCollection } from "../../api/ClientsCollection";
 
-function ClientListItem({client}) {
+function ClientListItem({client, open}) {
     // console.log(client._id);
+    console.log(client.fullName)
     return(
     <ListItem button>
         <ListItemIcon>
-            <PersonIcon />
+            <Tooltip title={open ? "" : client.fullName} placement="right">
+                <PersonIcon />
+            </Tooltip>
         </ListItemIcon>
         <ListItemText primary={client.fullName} />
     </ListItem>
@@ -211,7 +214,7 @@ export const MainPage = () => {
                 <Divider />
                 <List>
                     <ListSubheader inset>Recently Added Clients</ListSubheader>
-                    { ClientsCollection.find({}, { sort: {createdAt: -1}, limit: 5}).fetch().map((client) => <ClientListItem key={client._id} client={client}/>) }
+                    { ClientsCollection.find({}, { sort: {createdAt: -1}, limit: 5}).fetch().map((client) => <ClientListItem key={client._id} client={client} open={open}/>) }
                 </List>
 
             </Drawer>
