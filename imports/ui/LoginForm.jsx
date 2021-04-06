@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import SignUp from './SignUp';
 
-import Image from '../assets/Spokane_logo_4C.PNG';
+//import Image from '../assets/Spokane_logo_4C.PNG';
 
 import Paper from '@material-ui/core/Paper';
 
@@ -38,10 +38,11 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
     },
     image: {
-        backgroundImage: `url(${Image})`,
+        backgroundImage: 'url(/assets/Spokane_logo_4C.PNG)',
+        //backgroundImage: 'url(/assets/ILS%20logo%20v3.png)',
         backgroundRepeat: 'no-repeat',
-        backgroundColor:
-            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+        backgroundColor: '#E0FEFF', //'#CDFFD4',
+            //theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     },
