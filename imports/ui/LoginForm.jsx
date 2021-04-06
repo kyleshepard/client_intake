@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import SignUp from './SignUp';
 
+import Image from '../assets/Spokane_logo_4C.PNG';
+
 import Paper from '@material-ui/core/Paper';
 
 function Copyright() {
@@ -30,12 +32,13 @@ function Copyright() {
     );
 }
 
+// const _image = require('../assets/Spokane_logo_4C.PNG');
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '100vh',
     },
     image: {
-        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundImage: `url(${Image})`,
         backgroundRepeat: 'no-repeat',
         backgroundColor:
             theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -123,22 +126,17 @@ export function LoginForm() {
                             Sign In
                         </Button>
                         <Grid container>
-                            {/* <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid> */}
-                            <Grid item>
+                            <Grid container justify="space-between">
                                 <Link href="#" variant="body2">
                                     Don't have an account? Sign Up
                                 </Link>
+                                <Button
+                                    size="small"
+                                    color="primary"
+                                >
+                                    Theme
+                                </Button>
                             </Grid>
-                            <Button
-                                size="small"
-                                color="primary"
-                            >
-                                Theme
-                            </Button>
                         </Grid>
                         <Box mt={5}>
                             <Copyright />
