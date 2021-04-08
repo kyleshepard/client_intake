@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
     },
     image: {
-        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundImage: 'url(/assets/Spokane_logo_4C.PNG)',
         backgroundRepeat: 'no-repeat',
-        backgroundColor:
-            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+        backgroundColor: '#E0FEFF',
+            //theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     },
@@ -117,15 +117,18 @@ export function LoginForm() {
                             Sign In
                         </Button>
                         <Grid container>
-                            {/* <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid> */}
-                            <Grid item>
+                            <Grid container justify="space-between">
                                 <Link href="#" variant="body2">
                                     Don't have an account? Sign Up
                                 </Link>
+                                {/*
+                                <Button
+                                    size="small"
+                                    color="primary"
+                                >
+                                    Theme
+                                </Button>
+                                */}
                             </Grid>
                         </Grid>
                         <Box mt={5}>
