@@ -5,9 +5,9 @@ import { FormsCollection } from "../imports/api/FormsCollection";
 import { FormFilesCollection } from "../imports/api/FormFilesCollection";
 import { documentFields } from "../imports/api/formConstants";
 import "./userConfig";
-import '/imports/api/clientsMethods';
-import '/imports/api/formsMethods';
-import '/imports/api/usersMethods';
+import '/imports/db/clientsMethods';
+import '/imports/db/formsMethods';
+import '/imports/db/usersMethods';
 // import '/imports/api/attachmentsMethods';
 
 const insertClient = (taskText) => ClientsCollection.insert({ text: taskText });

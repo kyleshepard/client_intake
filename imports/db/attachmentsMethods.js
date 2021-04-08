@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { AttachmentsCollection } from "./AttachmentsCollection";
+import { AttachmentsCollection } from "/imports/api//AttachmentsCollection";
 
 Meteor.methods({
     'attachments.insert'(attachment){
