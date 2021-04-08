@@ -114,12 +114,14 @@ export function LoginForm() {
                                 <Link href="#" variant="body2">
                                     Don't have an account? Sign Up
                                 </Link>
+                                {/*
                                 <Button
                                     size="small"
                                     color="primary"
                                 >
                                     Theme
                                 </Button>
+                                */}
                             </Grid>
                         </Grid>
                         <Box mt={5}>
