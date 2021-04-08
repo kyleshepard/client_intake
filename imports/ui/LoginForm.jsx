@@ -14,8 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import SignUp from './SignUp';
 
-//import Image from '../assets/Spokane_logo_4C.PNG';
-
 import Paper from '@material-ui/core/Paper';
 
 function Copyright() {
@@ -32,16 +30,14 @@ function Copyright() {
     );
 }
 
-// const _image = require('../assets/Spokane_logo_4C.PNG');
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '100vh',
     },
     image: {
         backgroundImage: 'url(/assets/Spokane_logo_4C.PNG)',
-        //backgroundImage: 'url(/assets/ILS%20logo%20v3.png)',
         backgroundRepeat: 'no-repeat',
-        backgroundColor: '#E0FEFF', //'#CDFFD4',
+        backgroundColor: '#E0FEFF',
             //theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
