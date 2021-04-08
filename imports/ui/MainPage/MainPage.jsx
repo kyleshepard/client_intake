@@ -146,13 +146,25 @@ export const MainPage = () => {
     /// //
     // This part is for  logic
     const deleteClient = ({ _id }) => Meteor.call('clients.remove',_id);
-    const hideCompletedFilter = { isChecked: { $ne: true } };
-    const [hideCompleted, setHideCompleted] = useState(false);
-    const tasks = useTracker(() => ClientsCollection.find(hideCompleted ? hideCompletedFilter : {}, { sort: { createdAt: -1 } }).fetch());
-    const pendingClientsCount = useTracker(() => ClientsCollection.find(hideCompletedFilter).count());
-    const pendingClientsTitle = `${
-        pendingClientsCount ? ` (${pendingClientsCount})` : ''
-    }`;
+    // const { clients, expiring, isLoading } = useTracker(() => {
+    const { clients, isLoading } = useTracker(() => {
+        // const noData = { clients: [], expiring: []};
+        const noData = { clients: []};
+
+        if(!Meteor.user()){
+            return noData;
+        }
+
+        const handler = Meteor.subscribe('clients');
+        if(!handler.ready()){
+            return { ...noData, isLoading: true };
+        }
+
+        var clients = ClientsCollection.find({}, { sort: { createdAt: -1 } }).fetch();
+        var expiring = [];
+        // var expiring = ClientsCollection.find({ modifiedAt: { "$gte" : moment().subtract(1, "months").toDate()} }, { sort: { modifiedAt: -1 } }).fetch();
+        return { clients };
+    });
 
     /// ////////////This part is for display
     const classes = useStyles();
@@ -206,7 +218,7 @@ export const MainPage = () => {
                 <Divider />
                 <List>
                     <ListSubheader inset>Recently Added Clients</ListSubheader>
-                    { ClientsCollection.find({}, { sort: {createdAt: -1}, limit: 5}).fetch().map((client) => <ClientListItem key={client._id} client={client}/>) }
+                    {/* { ClientsCollection.find({}, { sort: {createdAt: -1}, limit: 5}).fetch().map((client) => <ClientListItem key={client._id} client={client}/>) } */}
                 </List>
 
             </Drawer>
@@ -231,7 +243,7 @@ export const MainPage = () => {
                                     width: '100%',
                                 }}
                                 >
-                                    { tasks.map((task) => <Client key={task._id} clientData={task} onCheckBoxClick={toggleChecked} onDeleteClick={deleteClient} />)}
+                                    { isLoading ? <h2>Loading</h2> : clients.map((client) => <Client key={client._id} clientData={client} onCheckBoxClick={toggleChecked} onDeleteClick={deleteClient} />)}
                                 </List>
                             </Paper>
                         </Grid>

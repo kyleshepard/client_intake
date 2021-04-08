@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Copyright } from "./Frequents";
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,12 +36,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SignUp = () => {
+  const history = useHistory();
   const classes = useStyles();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const submit = (e) =>{
     e.preventDefault();
@@ -53,14 +56,8 @@ export const SignUp = () => {
         username,
         password
       );
-    //   Accounts.createUser({
-    //     fname: firstName,
-    //     lname: lastName,
-    //     username: username,
-    //     password: password,
-    //     isActive: false,
-    //     isAdmin: false
-    // });
+      setHasSubmitted(true);
+      // return <Redirect exact to="/home" />;
     }
     catch (error){
       alert(error);
@@ -70,7 +67,10 @@ export const SignUp = () => {
     setUsername("");
     setPassword("");
   }
-
+  if(hasSubmitted){
+    // <Redirect exact to="/" />;
+    history.push("/");
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -92,7 +92,7 @@ export const SignUp = () => {
                 fullWidth
                 id="firstName"
                 label="First Name"
-                // value={firstName || ""}
+                value={firstName || ""}
                 onChange={(e) => { setFirstName(e.target.value); }}
                 autoFocus
               />
@@ -106,7 +106,7 @@ export const SignUp = () => {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
-                // value={userData['lastName'] || ""}
+                value={lastName || ""}
                 onChange={(e) => { setLastName(e.target.value); }}
               />
             </Grid>
@@ -119,7 +119,7 @@ export const SignUp = () => {
                 label="Username"
                 name="username"
                 autoComplete="username"
-                // value={userData['username'] || ""}
+                value={username || ""}
                 onChange={(e) => { setUsername(e.target.value); }}
               />
             </Grid>
@@ -133,7 +133,7 @@ export const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                // value={userData['password'] || ""}
+                value={password || ""}
                 onChange={(e) => { setPassword(e.target.value); }}
               />
             </Grid>
@@ -155,7 +155,7 @@ export const SignUp = () => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link /*href="#"*/ variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
