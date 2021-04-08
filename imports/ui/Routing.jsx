@@ -1,4 +1,4 @@
-import React, {createContext, useContext} from 'react';
+import React, { createContext, useContext } from 'react';
 import {
     BrowserRouter as Router, Route, Switch, Redirect,
 } from "react-router-dom";
@@ -25,15 +25,12 @@ function ProvideUser({ children }) {
 
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
-function PrivateRoute({ children, ...rest }) {
-    console.log("PRIVATE ROUTE");
+function PrivateRoute({ children, authUser = (user, location) => user, ...rest }) {
     const user = useUser();
-    console.log("USER", user);
     return (
-
         <Route
             {...rest}
-            render={({ location }) => (user ? (
+            render={({ location }) => (authUser(user, location) ? (
                 children
             ) : (
                 <Redirect
@@ -47,32 +44,29 @@ function PrivateRoute({ children, ...rest }) {
     );
 }
 
-export const Routing = () => {
-    const x = 1;
-    return (
-        <ProvideUser>
-            <Router>
-                <Switch>
-                    <Route path="/about">
-                        About
-                    </Route>
-                    <Route path="/users">
-                        Users
-                    </Route>
-                    <Route path="/client/:clientId">
-                        <Form />
-                    </Route>
-                    <Route path="/login">
-                        <LoginForm />
-                    </Route>
-                    <PrivateRoute exact path="/">
-                        <MainPage />
-                    </PrivateRoute>
-                    <Route path="*">
-                        404 No Page Found
-                    </Route>
-                </Switch>
-            </Router>
-        </ProvideUser>
-    );
-};
+export const Routing = () => (
+    <ProvideUser>
+        <Router>
+            <Switch>
+                <Route path="/about">
+                    About
+                </Route>
+                <PrivateRoute path="/users">
+                    Users
+                </PrivateRoute>
+                <PrivateRoute path="/client/:clientId">
+                    <Form />
+                </PrivateRoute>
+                <Route path="/login">
+                    <LoginForm />
+                </Route>
+                <PrivateRoute exact path="/">
+                    <MainPage />
+                </PrivateRoute>
+                <Route path="*">
+                    404 No Page Found
+                </Route>
+            </Switch>
+        </Router>
+    </ProvideUser>
+);

@@ -55,13 +55,12 @@ export function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const user = useTracker(() => Meteor.user());
     const submit = (e) => {
         e.preventDefault();
 
         Meteor.loginWithPassword(username, password);
     };
-    const hist = useHistory();
+    const user = useTracker(() => Meteor.user());
     if (user) {
         return <Redirect exact to="/" />;
     }

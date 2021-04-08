@@ -6,7 +6,7 @@ import { theme } from "../api/theme";
 import { Routing } from "./Routing.jsx";
 
 export const App = () => {
-    const logging = useTracker(()=>Meteor.loggingIn())
+    const logging = useTracker(() => Meteor.loggingIn());
     return (
         <div className="main">
             {!logging

@@ -171,7 +171,7 @@ export const MainPage = () => {
                             <NotificationsIcon />
                         </Badge>
                     </IconButton>
-                    <Button onClick={Meteor.logout} variant="contained">Log out</Button>
+                    <Button onClick={() => Meteor.logout()} variant="contained">Log out</Button>
 
                 </Toolbar>
             </AppBar>
