@@ -4,8 +4,8 @@ import {
 } from "react-router-dom";
 import { useTracker } from "meteor/react-meteor-data";
 import { MainPage } from "./MainPage/MainPage.jsx";
-import { Form } from "./ClientPage/Form.jsx";
 import { LoginForm } from "./LoginForm.jsx";
+import {ClientPage} from "./ClientPage/ClientPage";
 
 const authContext = createContext(null);
 
@@ -55,7 +55,7 @@ export const Routing = () => (
                     Users
                 </PrivateRoute>
                 <PrivateRoute path="/client/:clientId">
-                    <Form />
+                    <ClientPage />
                 </PrivateRoute>
                 <Route path="/login">
                     <LoginForm />

@@ -1,19 +1,7 @@
 import React, { useState } from "react";
 import { useTracker } from "meteor/react-meteor-data";
-import { Button, List } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
+import { List } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Badge from "@material-ui/core/Badge";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import Drawer from "@material-ui/core/Drawer";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import Divider from "@material-ui/core/Divider";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -21,26 +9,11 @@ import Box from "@material-ui/core/Box";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import PersonIcon from '@material-ui/icons/Person';
-import { mainListItems, secondaryListItems } from "../dashboard_example/listItems";
 import { ClientForm } from "./ClientForm";
 import { Client } from "./Client";
-import { documentFields } from "../../api/formConstants";
 import { ClientsCollection } from "../../api/ClientsCollection";
-import { Copyright } from "../Frequents";
-
-function ClientListItem({ client }) {
-    // console.log(client._id);
-    return (
-        <ListItem button>
-            <ListItemIcon>
-                <PersonIcon />
-            </ListItemIcon>
-            <ListItemText primary={client.fullName} />
-        </ListItem>
-    );
-}
+import { Copyright, NavBar } from "../Frequents";
 
 const drawerWidth = 240;
 
@@ -152,82 +125,30 @@ export const MainPage = () => {
 
     return (
         <div className={classes.root}>
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-                <Toolbar className={classes.toolbar}>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
-                    </Typography>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
-                    <Button onClick={() => Meteor.logout()} variant="contained">Log out</Button>
+            <NavBar>
 
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbarIcon}>
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>{mainListItems}</List>
-                <Divider />
-                <List>
-                    <ListSubheader inset>Recently Added Clients</ListSubheader>
-                    { ClientsCollection.find({}, { sort: { createdAt: -1 }, limit: 5 }).fetch().map((client) => <ClientListItem key={client._id} client={client} />) }
-                </List>
+                {/* Add New Clients */}
+                <Grid item xs={12}>
+                    <Paper className={classes.paper} color="primary">
+                        <ClientForm />
+                    </Paper>
+                </Grid>
+                {/* Display Clients */}
+                <Grid item xs={12}>
+                    <Paper className={classes.paper}>
+                        <h1>
+                            Potential Clients
+                        </h1>
+                        <List style={{
+                            width: '100%',
+                        }}
+                        >
+                            { tasks.map((task) => <Client key={task._id} clientData={task} onCheckBoxClick={toggleChecked} onDeleteClick={deleteClient} />)}
+                        </List>
+                    </Paper>
+                </Grid>
 
-            </Drawer>
-            <main className={classes.content}>
-                <div className={classes.appBarSpacer} />
-                <Container maxWidth="lg" className={classes.container}>
-                    <Grid container spacing={3}>
-
-                        {/* Add New Clients */}
-                        <Grid item xs={12}>
-                            <Paper className={classes.paper} color="primary">
-                                <ClientForm />
-                            </Paper>
-                        </Grid>
-                        {/* Display Clients */}
-                        <Grid item xs={12}>
-                            <Paper className={classes.paper}>
-                                <h1>
-                                    Potential Clients
-                                </h1>
-                                <List style={{
-                                    width: '100%',
-                                }}
-                                >
-                                    { tasks.map((task) => <Client key={task._id} clientData={task} onCheckBoxClick={toggleChecked} onDeleteClick={deleteClient} />)}
-                                </List>
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                    <Box pt={4}>
-                        <Copyright />
-                    </Box>
-                </Container>
-
-            </main>
+            </NavBar>
         </div>
 
     );
