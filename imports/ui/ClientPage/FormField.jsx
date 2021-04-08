@@ -5,9 +5,9 @@ import {
 } from "@material-ui/core";
 import { useTracker } from "meteor/react-meteor-data";
 import EditIcon from '@material-ui/icons/Edit';
-import { FormsCollection } from "../../api/FormsCollection";
+import { FormsCollection } from "/imports/db/FormsCollection";
 import { fieldTypes } from "../../api/formConstants";
-import { ClientsCollection } from "../../api/ClientsCollection";
+import { ClientsCollection } from "/imports/db/ClientsCollection";
 import { FileUpload } from "./FileUpload";
 
 export const FormField = ({ fieldData, clientData }) => {

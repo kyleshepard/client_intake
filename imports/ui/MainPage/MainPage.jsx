@@ -26,8 +26,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import { mainListItems, secondaryListItems } from "../dashboard_example/listItems";
 import { ClientForm } from "./ClientForm";
 import { Client } from "./Client";
-import { documentFields } from "../../api/formConstants";
-import { ClientsCollection } from "../../api/ClientsCollection";
+import { documentFields } from "/imports/api/formConstants";
+import { ClientsCollection } from "/imports/db/ClientsCollection";
 
 function ClientListItem({client}) {
     // console.log(client._id);

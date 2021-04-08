@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { ClientsCollection } from "./ClientsCollection";
+import { ClientsCollection } from "/imports/db/ClientsCollection";
 
 Meteor.methods({
     'clients.insert'(client){

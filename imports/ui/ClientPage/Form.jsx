@@ -1,8 +1,8 @@
 import { useTracker } from "meteor/react-meteor-data";
 import { List, Typography, ListSubheader } from "@material-ui/core";
 import React from "react";
-import { ClientsCollection } from "../../api/ClientsCollection";
-import { FormsCollection } from "../../api/FormsCollection";
+import { ClientsCollection } from "/imports/db/ClientsCollection";
+import { FormsCollection } from "/imports/db/FormsCollection";
 import { FormField } from "./FormField";
 
 export function Form({ clientId }) {

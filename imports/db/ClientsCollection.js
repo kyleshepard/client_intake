@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { FormFilesCollection } from "./FormFilesCollection";
+import { FormFilesCollection } from "/imports/db/FormFilesCollection";
 
 export const ClientsCollection = new Mongo.Collection('clients');
 

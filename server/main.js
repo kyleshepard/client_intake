@@ -1,13 +1,15 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { ClientsCollection } from "../imports/api/ClientsCollection";
-import { FormsCollection } from "../imports/api/FormsCollection";
-import { FormFilesCollection } from "../imports/api/FormFilesCollection";
+import { ClientsCollection } from "../imports/db/ClientsCollection";
+import { FormsCollection } from "/imports/db/FormsCollection";
+import { FormFilesCollection } from "/imports/db/FormFilesCollection";
 import { documentFields } from "../imports/api/formConstants";
 import "./userConfig";
 import '/imports/api/clientsMethods';
 import '/imports/api/formsMethods';
 import '/imports/api/usersMethods';
+import '/imports/api/clientsPublications';
+
 // import '/imports/api/attachmentsMethods';
 
 const insertClient = (taskText) => ClientsCollection.insert({ text: taskText });

@@ -5,7 +5,7 @@ import {
 import { useTracker } from "meteor/react-meteor-data";
 import { FormDialog } from "./FormDialogue";
 import { fieldTypes } from "../../api/formConstants";
-import { FormsCollection } from "../../api/FormsCollection";
+import { FormsCollection } from "/imports/db/FormsCollection";
 
 export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => {
     const fields = useTracker(() => FormsCollection.find({ primary: true }).fetch());

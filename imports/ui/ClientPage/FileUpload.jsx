@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import {
     Button, CircularProgress, LinearProgress,
 } from '@material-ui/core';
-import { FormFilesCollection } from "../../api/FormFilesCollection";
+import { FormFilesCollection } from "/imports/db/FormFilesCollection";
 
 export function FileUpload({ clientId, fieldId }) {
     const images = useTracker(() => FormFilesCollection.find(
