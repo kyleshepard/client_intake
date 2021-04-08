@@ -8,9 +8,8 @@ import "./userConfig";
 import '/imports/api/clientsMethods';
 import '/imports/api/formsMethods';
 import '/imports/api/usersMethods';
+import '/imports/api/attachmentsMethods';
 import '/imports/api/clientsPublications';
-
-// import '/imports/api/attachmentsMethods';
 
 const insertClient = (taskText) => ClientsCollection.insert({ text: taskText });
 

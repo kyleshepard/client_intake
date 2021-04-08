@@ -3,10 +3,10 @@ import { check } from 'meteor/check';
 import { AttachmentsCollection } from "/imports/db/AttachmentsCollection";
 
 Meteor.methods({
-    'attachments.insert'(attachment){
+    'attachments.insert': (attachment) => {
         AttachmentsCollection.insert(attachment);
     },
-    'attachments.remove'(_id){
+    'attachments.remove': (_id) => {
         AttachmentsCollection.remove(_id);
-    }
+    },
 });

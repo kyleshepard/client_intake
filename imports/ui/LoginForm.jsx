@@ -12,33 +12,22 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import { Redirect, useHistory } from "react-router-dom";
+import { useTracker } from 'meteor/react-meteor-data';
 import SignUp from './SignUp';
 
-import Paper from '@material-ui/core/Paper';
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://worldreliefspokane.org/">
-                World Relief Spokane
-            </Link>
-            {' '}
-            {new Date().getFullYear()}
-            .
-        </Typography>
-    );
-}
+import { Copyright } from "./Frequents";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '100vh',
     },
     image: {
-        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundImage: 'url(/assets/Spokane_logo_4C.PNG)',
         backgroundRepeat: 'no-repeat',
-        backgroundColor:
-            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+        backgroundColor: '#E0FEFF',
+            //theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     },
@@ -71,7 +60,12 @@ export function LoginForm() {
 
         Meteor.loginWithPassword(username, password);
     };
+    const user = useTracker(() => Meteor.user());
+    if (user) {
+        return <Redirect exact to="/" />;
+    }
     return (
+
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
             <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -123,15 +117,18 @@ export function LoginForm() {
                             Sign In
                         </Button>
                         <Grid container>
-                            {/* <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid> */}
-                            <Grid item>
-                                <Link href="/signup" variant="body2">
+                            <Grid container justify="space-between">
+                                <Link href="signup" variant="body2">
                                     Don't have an account? Sign Up
                                 </Link>
+                                {/*
+                                <Button
+                                    size="small"
+                                    color="primary"
+                                >
+                                    Theme
+                                </Button>
+                                */}
                             </Grid>
                         </Grid>
                         <Box mt={5}>

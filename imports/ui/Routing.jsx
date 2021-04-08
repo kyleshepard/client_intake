@@ -1,12 +1,51 @@
-import React from 'react';
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { MainPage } from "./MainPage/MainPage";
-import { SignUp } from "./SignUp";
+import React, { createContext, useContext } from 'react';
+import {
+    BrowserRouter as Router, Route, Switch, Redirect,
+} from "react-router-dom";
+import { useTracker } from "meteor/react-meteor-data";
+import { MainPage } from "./MainPage/MainPage.jsx";
+import { LoginForm } from "./LoginForm.jsx";
+import { ClientPage } from "./ClientPage/ClientPage";
 
-export const Routing = () => {
-    const x = 1;
+const authContext = createContext(null);
+
+function useUser() {
+    return useContext(authContext);
+}
+
+function ProvideUser({ children }) {
+    const user = useTracker(() => Meteor.user());
+    console.log("USER2", user);
     return (
+        <authContext.Provider value={user}>
+            {children}
+        </authContext.Provider>
+    );
+}
+
+// A wrapper for <Route> that redirects to the login
+// screen if you're not yet authenticated.
+function PrivateRoute({ children, authUser = (user, location) => user, ...rest }) {
+    const user = useUser();
+    return (
+        <Route
+            {...rest}
+            render={({ location }) => (authUser(user, location) ? (
+                children
+            ) : (
+                <Redirect
+                    to={{
+                        pathname: "/login",
+                        state: { from: location },
+                    }}
+                />
+            ))}
+        />
+    );
+}
+
+export const Routing = () => (
+    <ProvideUser>
         <Router>
             <Switch>
                 <Route path="/about">
@@ -15,16 +54,25 @@ export const Routing = () => {
                 <Route exact path="/signup">
                     <SignUp />
                 </Route>
-                <Route path="/users">
+                <PrivateRoute path="/forms">
+                    Forms
+                </PrivateRoute>
+                <PrivateRoute path="/users">
                     Users
+                </PrivateRoute>
+                <PrivateRoute path="/client/:clientId">
+                    <ClientPage />
+                </PrivateRoute>
+                <Route path="/login">
+                    <LoginForm />
                 </Route>
-                <Route exact path="/">
+                <PrivateRoute exact path="/">
                     <MainPage />
-                </Route>
+                </PrivateRoute>
                 <Route path="*">
                     404 No Page Found
                 </Route>
             </Switch>
         </Router>
-    )
-};
+    </ProvideUser>
+);
