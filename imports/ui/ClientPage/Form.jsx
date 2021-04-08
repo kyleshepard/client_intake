@@ -8,7 +8,6 @@ import { FormField } from "./FormField";
 
 export function Form() {
     const { clientId } = useParams();
-    console.log("ID", clientId);
     const clientData = useTracker(() => ClientsCollection.findOne({ _id: clientId }));
     const topLevelFields = useTracker(() => FormsCollection.find({ parentId: undefined }).fetch());
     return clientData ? (

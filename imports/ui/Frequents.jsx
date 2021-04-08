@@ -24,6 +24,9 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
+import PeopleIcon from "@material-ui/icons/People";
+import BarChartIcon from "@material-ui/icons/BarChart";
+import LayersIcon from "@material-ui/icons/Layers";
 import { ClientsCollection } from "../api/ClientsCollection";
 import { mainListItems } from "./dashboard_example/listItems";
 import { ClientForm } from "./MainPage/ClientForm";
@@ -141,76 +144,94 @@ export const NavBar = ({ children }) => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    const history = useHistory();
+
+    const ClientListItem = ({ client }) =>
+        // console.log(client._id);
+        (
+            <ListItem button onClick={() => history.push(`/client/${client._id}`)}>
+                <ListItemIcon>
+                    <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary={client.fullName} />
+            </ListItem>
+        );
 
     return (
-        <>
-            <div className={classes.root}>
-                <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-                    <Toolbar className={classes.toolbar}>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                            Dashboard
-                        </Typography>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                        <Button onClick={() => Meteor.logout()} variant="contained">Log out</Button>
+        <div className={classes.root}>
+            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+                <Toolbar className={classes.toolbar}>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                        Dashboard
+                    </Typography>
+                    <IconButton color="inherit">
+                        <Badge badgeContent={4} color="secondary">
+                            <NotificationsIcon />
+                        </Badge>
+                    </IconButton>
+                    <Button onClick={() => Meteor.logout()} variant="contained">Log out</Button>
 
-                    </Toolbar>
-                </AppBar>
-                <Drawer
-                    variant="permanent"
-                    classes={{
-                        paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-                    }}
-                    open={open}
-                >
-                    <div className={classes.toolbarIcon}>
-                        <IconButton onClick={handleDrawerClose}>
-                            <ChevronLeftIcon />
-                        </IconButton>
+                </Toolbar>
+            </AppBar>
+            <Drawer
+                variant="permanent"
+                classes={{
+                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+                }}
+                open={open}
+            >
+                <div className={classes.toolbarIcon}>
+                    <IconButton onClick={handleDrawerClose}>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </div>
+                <Divider />
+                <List>
+                    <div>
+                        <ListItem button onClick={() => history.push(`/`)}>
+                            <ListItemIcon>
+                                <PeopleIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Clients" />
+                        </ListItem>
+                        <ListItem button onClick={() => history.push(`/users`)}>
+                            <ListItemIcon>
+                                <BarChartIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Software Users" />
+                        </ListItem>
+                        <ListItem button onClick={() => history.push(`/forms`)}>
+                            <ListItemIcon>
+                                <LayersIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Form Editor" />
+                        </ListItem>
                     </div>
-                    <Divider />
-                    <List>{mainListItems}</List>
-                    <Divider />
-                    <List>
-                        <ListSubheader inset>Recently Added Clients</ListSubheader>
-                        {ClientsCollection.find({}, { sort: { createdAt: -1 }, limit: 5 }).fetch().map((client) => <ClientListItem key={client._id} client={client} />)}
-                    </List>
-
-                </Drawer>
-                <main className={classes.content}>
-                    <div className={classes.appBarSpacer} />
-                    <Container maxWidth="lg" className={classes.container}>
-                        <Grid container spacing={3}>
-                            {children}
-                        </Grid>
-                    </Container>
-                </main>
-            </div>
-
-        </>
+                </List>
+                <Divider />
+                <List>
+                    <ListSubheader inset>Recently Added Clients</ListSubheader>
+                    {ClientsCollection.find({}, { sort: { createdAt: -1 }, limit: 5 }).fetch()
+                        .map((client) => <ClientListItem key={client._id} client={client} />)}
+                </List>
+            </Drawer>
+            <main className={classes.content}>
+                <div className={classes.appBarSpacer} />
+                <Container maxWidth="lg" className={classes.container}>
+                    <Grid container spacing={3}>
+                        {children}
+                    </Grid>
+                </Container>
+            </main>
+        </div>
     );
 };
-
-function ClientListItem({ client }) {
-    // console.log(client._id);
-    return (
-        <ListItem button>
-            <ListItemIcon>
-                <PersonIcon />
-            </ListItemIcon>
-            <ListItemText primary={client.fullName} />
-        </ListItem>
-    );
-}
