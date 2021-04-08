@@ -12,10 +12,12 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import { Redirect, useHistory } from "react-router-dom";
+import { useTracker } from 'meteor/react-meteor-data';
 import SignUp from './SignUp';
 
-import Paper from '@material-ui/core/Paper';
-import {Copyright} from "./Frequents";
+import { Copyright } from "./Frequents";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -53,12 +55,18 @@ export function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const user = useTracker(() => Meteor.user());
     const submit = (e) => {
         e.preventDefault();
 
         Meteor.loginWithPassword(username, password);
     };
+    const hist = useHistory();
+    if (user) {
+        return <Redirect exact to="/" />;
+    }
     return (
+
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
             <Grid item xs={false} sm={4} md={7} className={classes.image} />

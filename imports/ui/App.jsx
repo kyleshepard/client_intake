@@ -6,18 +6,18 @@ import { theme } from "../api/theme";
 import { Routing } from "./Routing.jsx";
 
 export const App = () => {
-    const user = useTracker(() => Meteor.user());
+    const logging = useTracker(()=>Meteor.loggingIn())
     return (
         <div className="main">
+            {!logging
+            && (
+                <MuiThemeProvider theme={theme}>
+                    <CssBaseline />
 
-            <MuiThemeProvider theme={theme}>
-                <CssBaseline />
-                { user ? (
                     <Routing />
-                ) : (
-                    <LoginForm />
-                )}
-            </MuiThemeProvider>
+
+                </MuiThemeProvider>
+            )}
         </div>
     );
 };
