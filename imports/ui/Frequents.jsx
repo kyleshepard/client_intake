@@ -28,9 +28,9 @@ import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import { ClientsCollection } from "../api/ClientsCollection";
-import { mainListItems } from "./dashboard_example/listItems";
 import { ClientForm } from "./MainPage/ClientForm";
 import { Client } from "./MainPage/Client";
+import Tooltip from "@material-ui/core/Tooltip";
 
 export function Copyright() {
     return (
@@ -151,7 +151,9 @@ export const NavBar = ({ children }) => {
         (
             <ListItem button onClick={() => history.push(`/client/${client._id}`)}>
                 <ListItemIcon>
-                    <PersonIcon />
+                    <Tooltip title={open ? "" : client.fullName} placement="right">
+                        <PersonIcon />
+                    </Tooltip>
                 </ListItemIcon>
                 <ListItemText primary={client.fullName} />
             </ListItem>
@@ -161,24 +163,27 @@ export const NavBar = ({ children }) => {
         <div className={classes.root}>
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+                    <Tooltip title="View Sidebar" placement="right">
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    </Tooltip>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         Dashboard
                     </Typography>
+
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
                             <NotificationsIcon />
                         </Badge>
                     </IconButton>
-                    <Button onClick={() => Meteor.logout()} variant="contained">Log out</Button>
+                    <Button onClick={Meteor.logout} variant="contained">Log out</Button>
 
                 </Toolbar>
             </AppBar>
@@ -199,19 +204,25 @@ export const NavBar = ({ children }) => {
                     <div>
                         <ListItem button onClick={() => history.push(`/`)}>
                             <ListItemIcon>
-                                <PeopleIcon />
+                                <Tooltip title={open ? "" : "Clients"} placement="right">
+                                    <PeopleIcon />
+                                </Tooltip>
                             </ListItemIcon>
                             <ListItemText primary="Clients" />
                         </ListItem>
                         <ListItem button onClick={() => history.push(`/users`)}>
                             <ListItemIcon>
-                                <BarChartIcon />
+                                <Tooltip title={open ? "" : "Users"} placement="right">
+                                    <BarChartIcon />
+                                </Tooltip>
                             </ListItemIcon>
                             <ListItemText primary="Software Users" />
                         </ListItem>
                         <ListItem button onClick={() => history.push(`/forms`)}>
                             <ListItemIcon>
-                                <LayersIcon />
+                                <Tooltip title={open ? "" : "Forms"} placement="right">
+                                    <LayersIcon />
+                                </Tooltip>
                             </ListItemIcon>
                             <ListItemText primary="Form Editor" />
                         </ListItem>
