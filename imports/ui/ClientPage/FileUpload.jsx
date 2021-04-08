@@ -56,7 +56,7 @@ export function FileUpload({ clientId, fieldId }) {
             )}
             <ul>
                 {images.map((item) => {
-                    const link = FormFilesCollection.findOne({ _id: item._id }).link('original', window.location.href);
+                    const link = FormFilesCollection.findOne({ _id: item._id }).link('original', window.origin);
                     return (
                         <div key={item._id}>
                             <a href={link} target="_blank" rel="noreferrer">

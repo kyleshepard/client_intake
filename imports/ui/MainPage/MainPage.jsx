@@ -28,30 +28,17 @@ import { ClientForm } from "./ClientForm";
 import { Client } from "./Client";
 import { documentFields } from "../../api/formConstants";
 import { ClientsCollection } from "../../api/ClientsCollection";
+import { Copyright } from "../Frequents";
 
-function ClientListItem({client}) {
+function ClientListItem({ client }) {
     // console.log(client._id);
-    return(
-    <ListItem button>
-        <ListItemIcon>
-            <PersonIcon />
-        </ListItemIcon>
-        <ListItemText primary={client.fullName} />
-    </ListItem>
-    );
-}
-
-function Copyright() {
     return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://worldreliefspokane.org/">
-                World Relief Spokane
-            </Link>
-            {' '}
-            {new Date().getFullYear()}
-            .
-        </Typography>
+        <ListItem button>
+            <ListItemIcon>
+                <PersonIcon />
+            </ListItemIcon>
+            <ListItemText primary={client.fullName} />
+        </ListItem>
     );
 }
 
@@ -137,15 +124,14 @@ const useStyles = makeStyles((theme) => ({
 
 const toggleChecked = ({ _id, isChecked }) => {
     Meteor.call('clients.set', _id, {
-            isChecked: !isChecked,
-        }
-    );
+        isChecked: !isChecked,
+    });
 };
 
 export const MainPage = () => {
     /// //
     // This part is for  logic
-    const deleteClient = ({ _id }) => Meteor.call('clients.remove',_id);
+    const deleteClient = ({ _id }) => Meteor.call('clients.remove', _id);
     const hideCompletedFilter = { isChecked: { $ne: true } };
     const [hideCompleted, setHideCompleted] = useState(false);
     const tasks = useTracker(() => ClientsCollection.find(hideCompleted ? hideCompletedFilter : {}, { sort: { createdAt: -1 } }).fetch());
@@ -206,7 +192,7 @@ export const MainPage = () => {
                 <Divider />
                 <List>
                     <ListSubheader inset>Recently Added Clients</ListSubheader>
-                    { ClientsCollection.find({}, { sort: {createdAt: -1}, limit: 5}).fetch().map((client) => <ClientListItem key={client._id} client={client}/>) }
+                    { ClientsCollection.find({}, { sort: { createdAt: -1 }, limit: 5 }).fetch().map((client) => <ClientListItem key={client._id} client={client} />) }
                 </List>
 
             </Drawer>

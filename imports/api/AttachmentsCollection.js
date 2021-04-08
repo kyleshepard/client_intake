@@ -5,11 +5,15 @@ import { FilesCollection } from 'meteor/ostrio:files';
 
 const attachmentsCollectionName = 'files';
 export const AttachmentsCollection = new FilesCollection({
-    collectionName: 'Images',
+    collectionName: 'files',
     allowClientCode: true, // Allow remove files from Client
     onBeforeUpload(file) {
-        // Allow any upload. TODO: research if this is risky
-        return true;
+        // Allow upload files under 16MB,
+        const megabyte = 2 ** 20;
+        if (file.size <= 32 * megabyte) {
+            return true;
+        }
+        return false;
     },
 });
 
@@ -18,5 +22,11 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+    // Deny all client-side updates on the Lists collection
+    AttachmentsCollection.deny({
+        insert() { return true; },
+        update() { return true; },
+        remove() { return true; },
+    });
     Meteor.publish(attachmentsCollectionName, () => AttachmentsCollection.find().cursor);
 }
