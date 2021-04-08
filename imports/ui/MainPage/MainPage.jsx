@@ -105,23 +105,10 @@ export const MainPage = () => {
     /// //
     // This part is for  logic
     const deleteClient = ({ _id }) => Meteor.call('clients.remove', _id);
-    const hideCompletedFilter = { isChecked: { $ne: true } };
-    const [hideCompleted, setHideCompleted] = useState(false);
-    const tasks = useTracker(() => ClientsCollection.find(hideCompleted ? hideCompletedFilter : {}, { sort: { createdAt: -1 } }).fetch());
-    const pendingClientsCount = useTracker(() => ClientsCollection.find(hideCompletedFilter).count());
-    const pendingClientsTitle = `${
-        pendingClientsCount ? ` (${pendingClientsCount})` : ''
-    }`;
+    const tasks = useTracker(() => ClientsCollection.find({}, { sort: { createdAt: -1 } }).fetch());
 
     /// ////////////This part is for display
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
 
     return (
         <div className={classes.root}>
