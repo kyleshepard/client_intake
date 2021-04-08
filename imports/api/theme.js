@@ -12,10 +12,10 @@ const baseTheme = createMuiTheme({
             //main: "#3F51B5",
 
             // 2 - green
-            main: "#1FA504",
+            //main: "#1FA504",
 
             // 3 - lighter blue
-            //main: "#007fff",
+            main: "#007fff",
 
             // 4 - yellow
             //main: "#E6E602",
