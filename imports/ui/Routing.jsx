@@ -2,6 +2,7 @@ import React from 'react';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { MainPage } from "./MainPage/MainPage";
+import { SignUp } from "./SignUp";
 
 export const Routing = () => {
     const x = 1;
@@ -10,6 +11,9 @@ export const Routing = () => {
             <Switch>
                 <Route path="/about">
                     About
+                </Route>
+                <Route exact path="/signup">
+                    <SignUp />
                 </Route>
                 <Route path="/users">
                     Users

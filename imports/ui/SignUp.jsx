@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,20 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
-function Copyright() {
-  return (
-      <Typography variant="body2" color="textSecondary" align="center">
-          {'Copyright © '}
-          <Link color="inherit" href="https://worldreliefspokane.org/">
-              World Relief Spokane
-          </Link>
-          {' '}
-          {new Date().getFullYear()}
-          .
-      </Typography>
-  );
-}
+import { Copyright } from "./Frequents";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,8 +34,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export const SignUp = () => {
   const classes = useStyles();
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submit = (e) =>{
+    e.preventDefault();
+    // console.log(userData);
+    // alert(password);
+    try{
+      Meteor.call('users.register',
+        firstName,
+        lastName,
+        username,
+        password
+      );
+    //   Accounts.createUser({
+    //     fname: firstName,
+    //     lname: lastName,
+    //     username: username,
+    //     password: password,
+    //     isActive: false,
+    //     isAdmin: false
+    // });
+    }
+    catch (error){
+      alert(error);
+    }
+    setFirstName("");
+    setLastName("");
+    setUsername("");
+    setPassword("");
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -60,7 +81,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={submit} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -71,6 +92,8 @@ export default function SignUp() {
                 fullWidth
                 id="firstName"
                 label="First Name"
+                // value={firstName || ""}
+                onChange={(e) => { setFirstName(e.target.value); }}
                 autoFocus
               />
             </Grid>
@@ -83,6 +106,8 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                // value={userData['lastName'] || ""}
+                onChange={(e) => { setLastName(e.target.value); }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -90,10 +115,12 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                // value={userData['username'] || ""}
+                onChange={(e) => { setUsername(e.target.value); }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -106,14 +133,16 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                // value={userData['password'] || ""}
+                onChange={(e) => { setPassword(e.target.value); }}
               />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Button
             type="submit"

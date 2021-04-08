@@ -4,8 +4,10 @@ import { ClientsCollection } from "../imports/api/ClientsCollection";
 import { FormsCollection } from "../imports/api/FormsCollection";
 import { FormFilesCollection } from "../imports/api/FormFilesCollection";
 import { documentFields } from "../imports/api/formConstants";
+import "./userConfig";
 import '/imports/api/clientsMethods';
 import '/imports/api/formsMethods';
+import '/imports/api/usersMethods';
 // import '/imports/api/attachmentsMethods';
 
 const insertClient = (taskText) => ClientsCollection.insert({ text: taskText });
@@ -18,8 +20,11 @@ Meteor.startup(() => {
         Accounts.createUser({
             username: SEED_USERNAME,
             password: SEED_PASSWORD,
+            isActive: true,
+            isAdmin: true
         });
     }
+    
     function uploadToMeteor(dataArray, collection, parentId) {
         dataArray.forEach(({
             description,
