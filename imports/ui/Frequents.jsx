@@ -27,7 +27,7 @@ import Box from "@material-ui/core/Box";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
-import { ClientsCollection } from "../api/ClientsCollection";
+import { ClientsCollection } from "/imports/db/ClientsCollection";
 import { ClientForm } from "./MainPage/ClientForm";
 import { Client } from "./MainPage/Client";
 import Tooltip from "@material-ui/core/Tooltip";

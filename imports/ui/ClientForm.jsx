@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ClientsCollection } from '../api/ClientsCollection';
+import { ClientsCollection } from 'imports/db/ClientsCollection';
 import { Input, Button } from '@material-ui/core';
 
 export const ClientForm = () => {

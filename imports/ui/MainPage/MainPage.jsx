@@ -12,9 +12,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import { ClientForm } from "./ClientForm";
 import { Client } from "./Client";
-<<<<<<< HEAD
 import { documentFields } from "/imports/api/formConstants";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
+import { Copyright, NavBar } from "../Frequents";
 
 function ClientListItem({client}) {
     // console.log(client._id);
@@ -27,24 +27,6 @@ function ClientListItem({client}) {
     </ListItem>
     );
 }
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://worldreliefspokane.org/">
-                World Relief Spokane
-            </Link>
-            {' '}
-            {new Date().getFullYear()}
-            .
-        </Typography>
-    );
-}
-=======
-import { ClientsCollection } from "../../api/ClientsCollection";
-import { Copyright, NavBar } from "../Frequents";
->>>>>>> master
 
 const drawerWidth = 240;
 

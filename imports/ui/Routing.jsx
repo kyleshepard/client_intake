@@ -5,6 +5,7 @@ import {
 import { useTracker } from "meteor/react-meteor-data";
 import { MainPage } from "./MainPage/MainPage.jsx";
 import { LoginForm } from "./LoginForm.jsx";
+import { SignUp } from "./SignUp";
 import { ClientPage } from "./ClientPage/ClientPage";
 
 const authContext = createContext(null);
