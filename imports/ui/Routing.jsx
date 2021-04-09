@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { MainPage } from "./MainPage/MainPage.jsx";
 import {Form} from "./ClientPage/Form.jsx";
+import {UserForm} from "./UserPage/UserForm.jsx";
 
 export const Routing = () => {
     const x = 1;
@@ -12,7 +13,7 @@ export const Routing = () => {
                     About
                 </Route>
                 <Route path="/users">
-                    Users
+                    <UserForm />
                 </Route>
                 <Route path="/client/:clientId">
                     <Form/>
