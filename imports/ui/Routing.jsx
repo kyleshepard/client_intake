@@ -9,6 +9,8 @@ import { SignUp } from "./SignUp";
 import { ClientPage } from "./ClientPage/ClientPage";
 
 const authContext = createContext(null);
+import {Form} from "./ClientPage/Form.jsx";
+import {UserForm} from "./UserPage/UserForm.jsx";
 
 function useUser() {
     return useContext(authContext);
@@ -52,6 +54,8 @@ export const Routing = () => (
                 <Route path="/about">
                     About
                 </Route>
+                <Route path="/users">
+                    <UserForm />
                 <Route exact path="/signup">
                     <SignUp />
                 </Route>
