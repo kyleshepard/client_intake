@@ -16,15 +16,15 @@ import { documentFields } from "/imports/api/formConstants";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
 import { Copyright, NavBar } from "../Frequents";
 
-function ClientListItem({client}) {
+function ClientListItem({ client }) {
     // console.log(client._id);
-    return(
-    <ListItem button>
-        <ListItemIcon>
-            <PersonIcon />
-        </ListItemIcon>
-        <ListItemText primary={client.fullName} />
-    </ListItem>
+    return (
+        <ListItem button>
+            <ListItemIcon>
+                <PersonIcon />
+            </ListItemIcon>
+            <ListItemText primary={client.fullName} />
+        </ListItem>
     );
 }
 
@@ -117,23 +117,23 @@ const toggleChecked = ({ _id, isChecked }) => {
 export const MainPage = () => {
     /// //
     // This part is for  logic
-    const deleteClient = ({ _id }) => Meteor.call('clients.remove',_id);
+    const deleteClient = ({ _id }) => Meteor.call('clients.remove', _id);
     // const { clients, expiring, isLoading } = useTracker(() => {
     const { clients, isLoading } = useTracker(() => {
         // const noData = { clients: [], expiring: []};
-        const noData = { clients: []};
+        const noData = { clients: [] };
 
-        if(!Meteor.user()){
+        if (!Meteor.user()) {
             return noData;
         }
 
         const handler = Meteor.subscribe('clients');
-        if(!handler.ready()){
+        if (!handler.ready()) {
             return { ...noData, isLoading: true };
         }
 
-        var clients = ClientsCollection.find({}, { sort: { createdAt: -1 } }).fetch();
-        var expiring = [];
+        const clients = ClientsCollection.find({}, { sort: { createdAt: -1 } }).fetch();
+        const expiring = [];
         // var expiring = ClientsCollection.find({ modifiedAt: { "$gte" : moment().subtract(1, "months").toDate()} }, { sort: { modifiedAt: -1 } }).fetch();
         return { clients };
     });

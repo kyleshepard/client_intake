@@ -12,7 +12,6 @@ export const FormFilesCollection = new FilesCollection({
         if (file.size <= 10485760) { // TODO: Idk if we need this
             return true;
         }
-        return true;
         return 'Please upload file with size equal or less than 10MB';
     },
 });
