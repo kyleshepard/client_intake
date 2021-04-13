@@ -20,7 +20,7 @@ export function Form() {
         return { clientData: ClientsCollection.findOne({ _id: clientId }) };
     });
     console.log("CLIENT", clientId, clientData, ClientsCollection.find({}).fetch());
-    const { topLevelFields } = useTracker(() => {
+    const { topLevelFields, isLoading } = useTracker(() => {
         const noData = { topLevelFields: undefined };
         if (!Meteor.user()) {
             return noData;
@@ -29,14 +29,14 @@ export function Form() {
         if (!handler.ready()) {
             return { ...noData, isLoading: true };
         }
-        return { topLevelFields: FormsCollection.find({ parentId: undefined }).fetch() };
+        return { topLevelFields: FormsCollection.find({ parentId: undefined }).fetch(), isLoading: false };
     });
     return clientData ? (
         <>
 
             <List>
                 <Typography variant="h4">{clientData.fullName}</Typography>
-                {topLevelFields.map((fieldData) => (
+                {isLoading ? <h1>Loading</h1> : topLevelFields.map((fieldData) => (
                     <FormField
                         clientData={clientData}
                         key={fieldData._id}
