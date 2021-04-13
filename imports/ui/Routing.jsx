@@ -53,9 +53,9 @@ export const Routing = () => (
                 <Route path="/about">
                     About
                 </Route>
-                <Route path="/users">
+                <PrivateRoute path="/users">
                     <UserForm />
-                </Route>
+                </PrivateRoute>
                 <Route exact path="/signup">
                     <SignUp />
                 </Route>
