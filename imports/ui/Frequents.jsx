@@ -28,9 +28,9 @@ import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
+import Tooltip from "@material-ui/core/Tooltip";
 import { ClientForm } from "./MainPage/ClientForm";
 import { Client } from "./MainPage/Client";
-import Tooltip from "@material-ui/core/Tooltip";
 
 export function Copyright() {
     return (

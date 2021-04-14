@@ -17,10 +17,6 @@ export const AttachmentsCollection = new FilesCollection({
     },
 });
 
-if (Meteor.isClient) {
-    Meteor.subscribe(attachmentsCollectionName);
-}
-
 if (Meteor.isServer) {
     // Deny all client-side updates on the Lists collection
     AttachmentsCollection.deny({

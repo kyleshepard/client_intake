@@ -1,17 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { ClientsCollection } from "../imports/db/ClientsCollection";
+import "../imports/db/ClientsCollection";
 import { FormsCollection } from "/imports/db/FormsCollection";
-import { FormFilesCollection } from "/imports/db/FormFilesCollection";
+import "../imports/db/FormFilesCollection";
 import { documentFields } from "../imports/api/formConstants";
 import "./userConfig";
-import '/imports/api/clientsMethods';
-import '/imports/api/formsMethods';
-import '/imports/api/usersMethods';
-import '/imports/api/attachmentsMethods';
-import '/imports/api/clientsPublications';
-
-const insertClient = (taskText) => ClientsCollection.insert({ text: taskText });
+import '../imports/api/clientsMethods';
+import '../imports/api/formsMethods';
+import '../imports/api/usersMethods';
+import '../imports/api/attachmentsMethods';
 
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
