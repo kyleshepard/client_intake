@@ -28,5 +28,9 @@ if (Meteor.isServer) {
         update() { return true; },
         remove() { return true; },
     });
-    Meteor.publish(attachmentsCollectionName, () => AttachmentsCollection.find().cursor);
+    Meteor.publish(attachmentsCollectionName, () => {
+        const user = Meteor.users.findOne({ _id: this.userId });
+        if (user.isActive) return AttachmentsCollection.find();
+        return [];
+    });
 }

@@ -22,10 +22,10 @@ Meteor.startup(() => {
             username: SEED_USERNAME,
             password: SEED_PASSWORD,
             isActive: true,
-            isAdmin: true
+            isAdmin: true,
         });
     }
-    
+
     function uploadToMeteor(dataArray, collection, parentId) {
         dataArray.forEach(({
             description,
@@ -41,7 +41,7 @@ Meteor.startup(() => {
         });
     }
 
-    Meteor.call('forms.remove',{});
+    Meteor.call('forms.remove', {});
     if (FormsCollection.find({}).fetch().length === 0) {
         uploadToMeteor(documentFields, FormsCollection);
     }
