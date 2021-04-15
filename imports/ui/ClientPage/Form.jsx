@@ -1,14 +1,17 @@
-import { useTracker } from "meteor/react-meteor-data";
-import { List, Typography, ListSubheader } from "@material-ui/core";
+import { List, Typography } from "@material-ui/core";
 import React from "react";
-import { ClientsCollection } from "../../api/ClientsCollection";
-import { FormsCollection } from "../../api/FormsCollection";
+import { ClientsCollection } from "/imports/db/ClientsCollection";
+import { FormsCollection } from "/imports/db/FormsCollection";
+import { useParams } from 'react-router-dom';
 import { FormField } from "./FormField";
+import { useTrackerSubscription } from "../../api/customHooks";
 
-export function Form({ clientId }) {
-    const clientData = useTracker(() => ClientsCollection.findOne({ _id: clientId }));
-    const topLevelFields = useTracker(() => FormsCollection.find({ parentId: undefined }).fetch());
-    return (
+export function Form() {
+    const { clientId } = useParams();
+    const { data: clientData } = useTrackerSubscription('clients', () => ClientsCollection.findOne({ _id: clientId }));
+    const { data: topLevelFields } = useTrackerSubscription('Forms', () => FormsCollection.find({ parentId: undefined }).fetch());
+
+    return clientData ? (
         <>
 
             <List>
@@ -23,5 +26,9 @@ export function Form({ clientId }) {
             </List>
         </>
 
+    ) : (
+        <div>
+            Client Not Found
+        </div>
     );
 }

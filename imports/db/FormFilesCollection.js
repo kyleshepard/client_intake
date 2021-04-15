@@ -12,15 +12,14 @@ export const FormFilesCollection = new FilesCollection({
         if (file.size <= 10485760) { // TODO: Idk if we need this
             return true;
         }
-        return true;
         return 'Please upload file with size equal or less than 10MB';
     },
 });
 
-if (Meteor.isClient) {
-    Meteor.subscribe(imageCollectionName);
-}
-
 if (Meteor.isServer) {
-    Meteor.publish(imageCollectionName, () => FormFilesCollection.find().cursor);
+    Meteor.publish(imageCollectionName, () => {
+        const user = Meteor.users.findOne({ _id: this.userId });
+        if (user.isActive) return FormFilesCollection.find();
+        return [];
+    });
 }

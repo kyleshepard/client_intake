@@ -1,13 +1,15 @@
-import React  from "react";
-import { List, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import { ClientForm } from "./ClientForm";
-import { Client } from "./Client";
-import { ClientsCollection } from "/imports/db/ClientsCollection";
+import React from 'react';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Link from '@material-ui/core/Link';
+import TextField from '@material-ui/core/TextField';
+import Chart from './Files/ClientChart';
+import Deposits from './Files/ClientTotal';
+import Orders from './Files/ClientList';
 import { NavBar } from "../Frequents";
-import { useTrackerSubscription } from "../../api/customHooks";
 
 const drawerWidth = 240;
 
@@ -82,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
         display: 'flex',
+        overflow: 'auto',
         flexDirection: 'column',
     },
     fixedHeight: {
@@ -89,53 +92,65 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const toggleChecked = ({ _id, isChecked }) => {
-    Meteor.call('clients.set', _id, {
-        isChecked: !isChecked,
-    });
-};
-
-export const MainPage = () => {
-    /// //
-    // This part is for  logic
-    const deleteClient = ({ _id }) => Meteor.call('clients.remove', _id);
-    const { data: clients, isLoading } = useTrackerSubscription("clients",
-        () => ClientsCollection.find({}, { sort: { createdAt: -1 } }).fetch());
-
-    /// ////////////This part is for display
+export function UserForm() {
     const classes = useStyles();
+    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     return (
         <NavBar>
-            {/* Add New Clients */}
-            <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                    <ClientForm />
+            {/* Chart */}
+            <Grid item xs={12} md={8} lg={9}>
+                <Paper className={fixedHeightPaper}>
+                    <Chart />
                 </Paper>
             </Grid>
-            {/* Display Clients */}
+            {/* Recent Deposits */}
+            <Grid item xs={12} md={4} lg={3}>
+                <Paper className={fixedHeightPaper}>
+                    <Deposits />
+                </Paper>
+            </Grid>
+            {/* Recent Orders */}
             <Grid item xs={12}>
                 <Paper className={classes.paper}>
-                    <h1>
-                        Potential Clients
-                    </h1>
-                    <List style={{
-                        width: '100%',
-                    }}
-                    >
-                        { isLoading
-                            ? <Typography>Loading Information...</Typography>
-                            : clients.map((client) => (
-                                <Client
-                                    key={client._id}
-                                    clientData={client}
-                                    onCheckBoxClick={toggleChecked}
-                                    onDeleteClick={deleteClient}
-                                />
-                            ))}
-                    </List>
+                    <Orders />
                 </Paper>
+            </Grid>
+            <Grid>
+                <TextField
+                    label="Username"
+                    value="Average Joe"
+                    onChange={(e) => {
+                        e.preventDefault();
+                        setFullName(e.target.value);
+                    }}
+                />
+                <TextField
+                    label="Email"
+                    value="defaultemail@email.com"
+                    onChange={(e) => {
+                        e.preventDefault();
+                        setFullName(e.target.value);
+                    }}
+                />
+                <TextField
+                    label="Password"
+                    value="123456"
+                    onChange={(e) => {
+                        e.preventDefault();
+                        setFullName(e.target.value);
+                    }}
+                />
+                <TextField
+                    label="Location"
+                    value="NewCastle, UK"
+                    onChange={(e) => {
+                        e.preventDefault();
+                        setFullName(e.target.value);
+                    }}
+                />
             </Grid>
         </NavBar>
+
     );
-};
+}

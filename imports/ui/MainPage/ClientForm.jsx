@@ -4,8 +4,9 @@ import {
 } from '@material-ui/core';
 import { useTracker } from "meteor/react-meteor-data";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import { ClientsCollection } from '../../api/ClientsCollection';
-import { FormsCollection } from '../../api/FormsCollection';
+// import { ClientsCollection } from '../api/ClientsCollection';
+import { Meteor } from 'meteor/meteor';
+import { FormsCollection } from '/imports/db/FormsCollection';
 import { fieldTypes } from "../../api/formConstants";
 
 export const ClientForm = () => {
@@ -18,8 +19,7 @@ export const ClientForm = () => {
         e.preventDefault();
         const client = {
             fullName: fullName,
-            data: {},
-            createdAt: Date(),
+            data: {}
         };
         let finishFlag = true;
         fields.forEach((field) => {
@@ -38,7 +38,8 @@ export const ClientForm = () => {
             }
         });
 
-        ClientsCollection.insert(client);
+        // ClientsCollection.insert(client);
+        Meteor.call('clients.insert', client);
         setPrimaryData({});
         setFullName("");
     };

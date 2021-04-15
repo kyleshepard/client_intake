@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import {
     Button, CircularProgress, LinearProgress,
 } from '@material-ui/core';
-import { FormFilesCollection } from "../../api/FormFilesCollection";
+import { FormFilesCollection } from "/imports/db/FormFilesCollection";
 
 export function FileUpload({ clientId, fieldId }) {
     const images = useTracker(() => FormFilesCollection.find(
@@ -56,12 +56,17 @@ export function FileUpload({ clientId, fieldId }) {
             )}
             <ul>
                 {images.map((item) => {
-                    const link = FormFilesCollection.findOne({ _id: item._id }).link('original', window.location.href);
+                    const link = FormFilesCollection.findOne({ _id: item._id }).link('original', window.origin);
+                    const isImage = `${item.type}`.includes('image');
                     return (
                         <div key={item._id}>
-                            <a href={link} target="_blank" rel="noreferrer">
-                                <img alt={link} src={link} style={{ width: 100, aspectRatio: 1 }} />
-                            </a>
+                            {isImage
+                                ? (
+                                    <a href={link} target="_blank" rel="noreferrer">
+                                        <img alt={link} src={link} style={{ width: 100, aspectRatio: 1 }} />
+                                    </a>
+                                )
+                                : <Button href={link} target="_blank" rel="noreferrer">{item.name}</Button>}
 
                             <Button type="button" onClick={() => remove(item)}>
                                 Delete
