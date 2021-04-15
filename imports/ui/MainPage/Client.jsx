@@ -54,7 +54,7 @@ export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => {
                         <LinkButton to={`/client/${clientData._id}`}>Open Client</LinkButton>
                     </Grid>
                     <Grid item sm={4}>
-                        <Button onClick={() => window.confirm("Are you sure you wish to delete this client : " + clientData.fullName + " ?") && onDeleteClick(clientData)}>
+                        <Button onClick={() => window.confirm("Are you sure you wish to delete this client : " + clientData.fullName + "?") && onDeleteClick(clientData)}>
                             Delete Client
                         </Button>
                     </Grid>
