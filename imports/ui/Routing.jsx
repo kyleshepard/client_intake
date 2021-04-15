@@ -8,6 +8,7 @@ import { LoginForm } from "./LoginForm.jsx";
 import { SignUp } from "./SignUp";
 import { ClientPage } from "./ClientPage/ClientPage";
 import { UserForm } from "./UserPage/UserForm.jsx";
+import { FormPage } from "./FormPage/FormPage.jsx";
 
 const authContext = createContext(null);
 
@@ -60,7 +61,7 @@ export const Routing = () => (
                     <SignUp />
                 </Route>
                 <PrivateRoute path="/forms">
-                    Forms
+                    <FormPage />
                 </PrivateRoute>
                 <PrivateRoute path="/client/:clientId">
                     <ClientPage />
