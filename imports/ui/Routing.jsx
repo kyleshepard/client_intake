@@ -7,7 +7,8 @@ import { MainPage } from "./MainPage/MainPage.jsx";
 import { LoginForm } from "./LoginForm.jsx";
 import { SignUp } from "./SignUp";
 import { ClientPage } from "./ClientPage/ClientPage";
-import { UserForm } from "./UserPage/UserForm.jsx";
+import { AccountForm } from "./AccountPage/AccountForm.jsx";
+import { UsersForm } from "./UsersPage/UsersForm.jsx";
 
 const authContext = createContext(null);
 
@@ -53,8 +54,8 @@ export const Routing = () => (
                 <Route path="/about">
                     About
                 </Route>
-                <PrivateRoute path="/users">
-                    <UserForm />
+                <PrivateRoute path="/account">
+                    <AccountForm />
                 </PrivateRoute>
                 <Route exact path="/signup">
                     <SignUp />
@@ -64,6 +65,9 @@ export const Routing = () => (
                 </PrivateRoute>
                 <PrivateRoute path="/client/:clientId">
                     <ClientPage />
+                </PrivateRoute>
+                <PrivateRoute path="/users">
+                    <UsersForm />
                 </PrivateRoute>
                 <Route path="/login">
                     <LoginForm />
