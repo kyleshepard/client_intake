@@ -9,6 +9,7 @@ export const useToggle = (initState = false):[boolean, ()=>void] => {
 
 export const useTrackerSubscription = (subscriptionName:string, queryCallback) => useTracker(() => {
     const handler = Meteor.subscribe(subscriptionName);
+    console.log(subscriptionName);
     if (!handler.ready()) {
         return { data: undefined, isLoading: true };
     }

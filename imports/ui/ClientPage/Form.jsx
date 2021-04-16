@@ -8,21 +8,25 @@ import { useTrackerSubscription } from "../../api/customHooks";
 
 export function Form() {
     const { clientId } = useParams();
-    const { data: clientData } = useTrackerSubscription('clients', () => ClientsCollection.findOne({ _id: clientId }));
-    const { data: topLevelFields } = useTrackerSubscription('Forms', () => FormsCollection.find({ parentId: undefined }).fetch());
+    const { data: clientData, isLoading: isLoadingClient } = useTrackerSubscription('clients', () => ClientsCollection.findOne({ _id: clientId }));
+    const { data: topLevelFields, isLoading: isLoadingFields } = useTrackerSubscription('forms', () => FormsCollection.find({ parentId: undefined }).fetch());
 
     return clientData ? (
         <>
 
             <List>
                 <Typography variant="h4">{clientData.fullName}</Typography>
-                {topLevelFields.map((fieldData) => (
-                    <FormField
-                        clientData={clientData}
-                        key={fieldData._id}
-                        fieldData={fieldData}
-                    />
-                ))}
+                {
+                    (isLoadingClient || isLoadingFields)
+                        ? <Typography>Loading Information...{`${isLoadingClient}, ${isLoadingFields}`}</Typography>
+                        : topLevelFields.map((fieldData) => (
+                            <FormField
+                                clientData={clientData}
+                                key={fieldData._id}
+                                fieldData={fieldData}
+                            />
+                        ))
+                }
             </List>
         </>
 

@@ -12,7 +12,7 @@ if (Meteor.isServer) {
         },
     });
 
-    Meteor.publish('clients', function publishTasks() {
+    Meteor.publish('clients', function publishClients() {
         const user = Meteor.users.findOne({ _id: this.userId });
         console.log("USER", user);
         if (user && user.isActive) return ClientsCollection.find({});
