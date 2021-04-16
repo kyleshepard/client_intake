@@ -9,6 +9,7 @@ Accounts.onCreateUser((options, user) => {
     user.fname = options.fname;
     user.lname = options.lname;
     user.isActive = options.isActive;
+    user.isAdmin = options.isAdmin;
     return user;
 });
 
