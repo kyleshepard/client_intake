@@ -33,7 +33,6 @@ export function Form() {
     });
     return clientData ? (
         <>
-
             <List>
                 <Typography variant="h4">{clientData.fullName}</Typography>
                 {isLoading ? <h1>Loading</h1> : topLevelFields.map((fieldData) => (

@@ -32,12 +32,12 @@ export const FormField = ({ fieldData, clientData }) => {
     }
     return (
         <ListItem>
-            <Paper style={{ padding: 5, width: '100%' }} elevation={3}>
+            <Paper variant="outlined" style={{ padding: 5, width: '100%' }} elevation={3}>
                 <Grid container direction="column">
                     <Grid item container direction="row" alignItems="center" spacing={1}>
-                        <Grid item>
+                        {/*<Grid item>
                             <EditIcon />
-                        </Grid>
+                        </Grid>*/}
                         <Grid item>
                             {`${fieldData.name}: `}
                         </Grid>
@@ -51,7 +51,6 @@ export const FormField = ({ fieldData, clientData }) => {
                         </List>
                     </Grid>
                 </Grid>
-
             </Paper>
         </ListItem>
     );

@@ -23,12 +23,7 @@ export const namesToBoolFields = (namesArray:Array<string>):Array<Field> => name
 export const documentFields: Array<Field> = [
     {
         type: fieldTypes.file,
-        name: "File Upload_1",
-        _id: randString(),
-    },
-    {
-        type: fieldTypes.file,
-        name: "File Upload_2",
+        name: "File Upload",
         _id: randString(),
     },
     {
