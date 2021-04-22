@@ -17,10 +17,6 @@ export const AttachmentsCollection = new FilesCollection({
     },
 });
 
-if (Meteor.isClient) {
-    Meteor.subscribe(attachmentsCollectionName);
-}
-
 if (Meteor.isServer) {
     // Deny all client-side updates on the Lists collection
     AttachmentsCollection.deny({
@@ -28,5 +24,9 @@ if (Meteor.isServer) {
         update() { return true; },
         remove() { return true; },
     });
-    Meteor.publish(attachmentsCollectionName, () => AttachmentsCollection.find().cursor);
+    Meteor.publish(attachmentsCollectionName, () => {
+        const user = Meteor.users.findOne({ _id: this.userId });
+        if (user.isActive) return AttachmentsCollection.find();
+        return [];
+    });
 }

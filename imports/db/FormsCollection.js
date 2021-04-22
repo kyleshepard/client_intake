@@ -1,11 +1,12 @@
 import { Mongo } from 'meteor/mongo';
+import { Meteor } from "meteor/meteor";
 
 export const FormsCollection = new Mongo.Collection('forms');
 
 if (Meteor.isServer) {
-    // This listens for events in the collection
-    // Forms.find({}).observe({
-    //
-    // });
-    Meteor.publish("Forms", () => FormsCollection.find({}));
+    Meteor.publish("forms", function publishForms() {
+        const user = Meteor.users.findOne({ _id: this.userId });
+        if (user.isActive) return FormsCollection.find({});
+        return [];
+    });
 }

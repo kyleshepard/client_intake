@@ -1,17 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { ClientsCollection } from "../imports/db/ClientsCollection";
+import "../imports/db/ClientsCollection";
 import { FormsCollection } from "/imports/db/FormsCollection";
-import { FormFilesCollection } from "/imports/db/FormFilesCollection";
+import "../imports/db/FormFilesCollection";
 import { documentFields } from "../imports/api/formConstants";
 import "./userConfig";
-import '/imports/api/clientsMethods';
-import '/imports/api/formsMethods';
-import '/imports/api/usersMethods';
-import '/imports/api/attachmentsMethods';
-import '/imports/api/clientsPublications';
-
-const insertClient = (taskText) => ClientsCollection.insert({ text: taskText });
+import '../imports/api/clientsMethods';
+import '../imports/api/formsMethods';
+import '../imports/api/usersMethods';
+import '../imports/api/attachmentsMethods';
 
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
@@ -22,10 +19,10 @@ Meteor.startup(() => {
             username: SEED_USERNAME,
             password: SEED_PASSWORD,
             isActive: true,
-            isAdmin: true
+            isAdmin: true,
         });
     }
-    
+
     function uploadToMeteor(dataArray, collection, parentId) {
         dataArray.forEach(({
             description,
@@ -41,7 +38,7 @@ Meteor.startup(() => {
         });
     }
 
-    Meteor.call('forms.remove',{});
+    Meteor.call('forms.remove', {});
     if (FormsCollection.find({}).fetch().length === 0) {
         uploadToMeteor(documentFields, FormsCollection);
     }

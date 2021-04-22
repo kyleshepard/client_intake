@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Drawer from "@material-ui/core/Drawer";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Divider from "@material-ui/core/Divider";
@@ -28,9 +29,9 @@ import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
+import Tooltip from "@material-ui/core/Tooltip";
 import { ClientForm } from "./MainPage/ClientForm";
 import { Client } from "./MainPage/Client";
-import Tooltip from "@material-ui/core/Tooltip";
 
 export function Copyright() {
     return (
@@ -56,7 +57,7 @@ export const LinkButton = ({ to, onClick = () => {}, ...props }) => {
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
@@ -178,12 +179,20 @@ export const NavBar = ({ children }) => {
                         Dashboard
                     </Typography>
 
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
+                    <IconButton color="inherit" onClick={() => {history.push("/account")}}>
+                        <Tooltip title="Account Management" placement="bottom">
+                            <PersonIcon />
+                        </Tooltip>
+                        {/* <Badge badgeContent={4} color="secondary">
+                            <PersonIcon />
+                        </Badge> */}
                     </IconButton>
-                    <Button onClick={Meteor.logout} variant="contained">Log out</Button>
+                    <IconButton color="inherit" onClick={Meteor.logout}>
+                        <Tooltip title="Log Out" placement="bottom">
+                            <ExitToAppIcon/>
+                        </Tooltip>
+                    </IconButton>
+                    {/* <Button onClick={Meteor.logout} variant="contained">Log out</Button> */}
 
                 </Toolbar>
             </AppBar>
@@ -212,11 +221,11 @@ export const NavBar = ({ children }) => {
                         </ListItem>
                         <ListItem button onClick={() => history.push(`/users`)}>
                             <ListItemIcon>
-                                <Tooltip title={open ? "" : "Users"} placement="right">
+                                <Tooltip title={open ? "" : "Manage Users"} placement="right">
                                     <BarChartIcon />
                                 </Tooltip>
                             </ListItemIcon>
-                            <ListItemText primary="Software Users" />
+                            <ListItemText primary="Users" />
                         </ListItem>
                         <ListItem button onClick={() => history.push(`/forms`)}>
                             <ListItemIcon>

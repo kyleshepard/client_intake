@@ -16,10 +16,10 @@ export const FormFilesCollection = new FilesCollection({
     },
 });
 
-if (Meteor.isClient) {
-    Meteor.subscribe(imageCollectionName);
-}
-
 if (Meteor.isServer) {
-    Meteor.publish(imageCollectionName, () => FormFilesCollection.find().cursor);
+    Meteor.publish(imageCollectionName, () => {
+        const user = Meteor.users.findOne({ _id: this.userId });
+        if (user.isActive) return FormFilesCollection.find();
+        return [];
+    });
 }
