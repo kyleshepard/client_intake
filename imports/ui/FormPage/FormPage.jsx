@@ -71,6 +71,9 @@ export function FormPage() {
       <NavBar>
         <CssBaseline />
         <main>
+          <Button>
+            Add Form
+          </Button>
           <Container className={classes.cardGrid} maxWidth="md">
             <Grid container spacing={4}>
               {cards.map((card) => (
@@ -95,6 +98,9 @@ export function FormPage() {
                       </Button>
                       <Button size="small" color="primary">
                         Edit
+                      </Button>
+                      <Button size="small" color="primary">
+                        Delete
                       </Button>
                     </CardActions>
                   </Card>
