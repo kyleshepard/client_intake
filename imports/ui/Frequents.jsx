@@ -23,15 +23,11 @@ import PersonIcon from "@material-ui/icons/Person";
 import ListItemText from "@material-ui/core/ListItemText";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
 import Tooltip from "@material-ui/core/Tooltip";
-import { ClientForm } from "./MainPage/ClientForm";
-import { Client } from "./MainPage/Client";
 
 export function Copyright() {
     return (
