@@ -17,7 +17,7 @@ export const FormFilesCollection = new FilesCollection({
 });
 
 if (Meteor.isServer) {
-    Meteor.publish(imageCollectionName, () => {
+    Meteor.publish("publishImages", function publishFiles() {
         const user = Meteor.users.findOne({ _id: this.userId });
         if (user.isActive) return FormFilesCollection.find();
         return [];
