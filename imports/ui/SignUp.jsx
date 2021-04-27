@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
 import {
-    useFormik, Formik, Field, Form,
+    Formik, Field, Form,
 } from "formik";
 import Yup from 'yup';
 import { LinearProgress } from "@material-ui/core";
@@ -58,6 +58,7 @@ export const SignUp = () => {
                         lastName: '',
                         username: '',
                         password: '',
+                        passwordConfirm: '',
                     }}
                     validationSchema={Yup.object({
                         firstName: Yup.string()
@@ -70,19 +71,21 @@ export const SignUp = () => {
                             // .email('Invalid email address')
                             .required('Required'),
                         password: Yup.string()
+                            .min(8, "Password must be at least 8 characters")
+                            .required('Required'),
+                        passwordConfirm: Yup.string()
+                            .oneOf([Yup.ref('password')], 'Passwords must match')
                             .required('Required'),
                     })}
                     onSubmit={({
                         firstName, lastName, username, password, ...values
                     }) => {
-                        alert(JSON.stringify({firstName, lastName, username, password, ...values}, null, 2));
                         try {
                             Meteor.call('users.register',
                                 firstName,
                                 lastName,
                                 username,
                                 password);
-                            // return <Redirect exact to="/home" />;
                             history.push("/");
                         } catch (error) {
                             alert(error);
@@ -140,6 +143,19 @@ export const SignUp = () => {
                                         label="Password"
                                         type="password"
                                         id="password"
+                                        autoComplete="current-password"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Field
+                                        component={TextField}
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        name="passwordConfirm"
+                                        label="Confirm Password"
+                                        type="password"
+                                        id="passwordConfirm"
                                         autoComplete="current-password"
                                     />
                                 </Grid>
