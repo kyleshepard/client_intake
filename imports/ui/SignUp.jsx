@@ -16,7 +16,7 @@ import {
 import Yup from 'yup';
 import { LinearProgress } from "@material-ui/core";
 import { TextField } from 'formik-material-ui';
-import { Copyright } from "./Frequents";
+import { Copyright, LinkButton } from "./Frequents";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -172,9 +172,9 @@ export const SignUp = () => {
                             </Button>
                             <Grid container justify="flex-end">
                                 <Grid item>
-                                    <Link variant="body2">
+                                    <LinkButton isLink to="/login" variant="body2">
                                         Already have an account? Sign in
-                                    </Link>
+                                    </LinkButton>
                                 </Grid>
                             </Grid>
                         </Form>

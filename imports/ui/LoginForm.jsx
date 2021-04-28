@@ -15,9 +15,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Redirect, useHistory } from "react-router-dom";
 import { useTracker } from 'meteor/react-meteor-data';
-import SignUp from './SignUp';
 
-import { Copyright } from "./Frequents";
+import Yup from "yup";
+import { Field, Form, Formik } from "formik";
+import { LinearProgress } from "@material-ui/core";
+import {Copyright, LinkButton} from "./Frequents";
+import SignUp from './SignUp';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundImage: 'url(/assets/Spokane_logo_4C.PNG)',
         backgroundRepeat: 'no-repeat',
         backgroundColor: '#E0FEFF',
-            //theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+        // theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     },
@@ -52,18 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function LoginForm() {
     const classes = useStyles();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
 
-    const submit = (e) => {
-        e.preventDefault();
-
-        Meteor.loginWithPassword(username, password);
-    };
-    const user = useTracker(() => Meteor.user());
-    if (user) {
-        return <Redirect exact to="/" />;
-    }
     return (
 
         <Grid container component="main" className={classes.root}>
@@ -77,64 +69,78 @@ export function LoginForm() {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <form className={classes.form} noValidate onSubmit={submit}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoComplete="username"
-                            autoFocus
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            onChange={(e) => setPassword(e.target.value)}
+                    <Formik
+                        initialValues={{
+                            username: '',
+                            password: '',
+                        }}
+                        validationSchema={Yup.object({
+                            username: Yup.string()
+                                .required('Required'),
+                            password: Yup.string()
+                                .required('Required'),
+                        })}
+                        onSubmit={({
+                            username, password,
+                        }) => {
+                            console.log(username, password);
+                            try {
+                                Meteor.loginWithPassword(username, password);
+                                history.push("/");
+                            } catch (error) {
+                                alert(error);
+                            }
+                        }}
+                    >
+                        {({ submitForm, isSubmitting }) => (
+                            <Form>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        <Field
+                                            component={TextField}
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            label="Username"
+                                            name="username"
+                                            autoComplete="username"
 
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign In
-                        </Button>
-                        <Grid container>
-                            <Grid container justify="space-between">
-                                <Link href="signup" variant="body2">
-                                    Don't have an account? Sign Up
-                                </Link>
-                                {/*
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Field
+                                            component={TextField}
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            name="password"
+                                            label="Password"
+                                            type="password"
+                                            id="password"
+                                            autoComplete="current-password"
+                                        />
+                                    </Grid>
+                                </Grid>
+                                {isSubmitting && <LinearProgress />}
+                                <br />
                                 <Button
-                                    size="small"
+                                    variant="contained"
                                     color="primary"
+                                    disabled={isSubmitting}
+                                    onClick={submitForm}
                                 >
-                                    Theme
+                                    Sign in
                                 </Button>
-                                */}
-                            </Grid>
-                        </Grid>
-                        <Box mt={5}>
-                            <Copyright />
-                        </Box>
-                    </form>
+                                <Grid container justify="flex-end">
+                                    <Grid item>
+                                        <Link href={'/signup'} variant="body2">
+                                            Don't have an account? Sign up
+                                        </Link>
+                                    </Grid>
+                                </Grid>
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </Grid>
         </Grid>
