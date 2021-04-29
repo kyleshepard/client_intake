@@ -17,6 +17,8 @@ import Yup from 'yup';
 import { LinearProgress } from "@material-ui/core";
 import { TextField } from 'formik-material-ui';
 import { Copyright, LinkButton } from "./Frequents";
+import {useTracker} from "meteor/react-meteor-data";
+import {Meteor} from "meteor/meteor";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -41,7 +43,9 @@ const useStyles = makeStyles((theme) => ({
 export const SignUp = () => {
     const history = useHistory();
     const classes = useStyles();
-
+    if (useTracker(()=>Meteor.user())) {
+        history.push('/');
+    }
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
