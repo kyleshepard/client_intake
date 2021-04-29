@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { useState } from "react";
 import { List, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -8,6 +8,7 @@ import { Client } from "./Client";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
 import { NavBar } from "../Frequents";
 import { useTrackerSubscription } from "../../api/customHooks";
+import { SearchBar } from "/imports/ui/SearchBar";
 
 const drawerWidth = 240;
 
@@ -105,12 +106,20 @@ export const MainPage = () => {
     /// ////////////This part is for display
     const classes = useStyles();
 
+    const { search } = window.location;
+    const query = new URLSearchParams(search).get('s');
+    const [searchQuery, setSearchQuery] = useState(query || "");
+
     return (
         <NavBar>
             {/* Add New Clients */}
             <Grid item xs={12}>
                 <Paper className={classes.paper}>
                     <ClientForm />
+                    <SearchBar
+                        searchQuery={searchQuery}
+                        onSearchUpdate={setSearchQuery}
+                    />
                 </Paper>
             </Grid>
             {/* Display Clients */}
