@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { CronJob } from 'cron';
+import dayjs from 'dayjs';
 import "../imports/db/ClientsCollection";
 import { FormsCollection } from "/imports/db/FormsCollection";
 import "../imports/db/FormFilesCollection";
@@ -9,6 +11,7 @@ import '../imports/api/clientsMethods';
 import '../imports/api/formsMethods';
 import '../imports/api/usersMethods';
 import '../imports/api/attachmentsMethods';
+import { ClientsCollection } from '../imports/db/ClientsCollection';
 
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
@@ -45,4 +48,26 @@ Meteor.startup(() => {
     if (FormsCollection.find({}).fetch().length === 0) {
         uploadToMeteor(documentFields, FormsCollection);
     }
+
+    new CronJob({
+        cronTime: '0 * * * * *', //run once a minute
+        // use this wrapper if you want to work with mongo:
+        onTick: Meteor.bindEnvironment(() => {
+
+            var expireDate =  dayjs(new Date).subtract(1, 'month');
+            clients = ClientsCollection.find({}).fetch();
+            // console.log(`checking for clients last modified before : ${expireDate}`);
+
+            clients.forEach((client) => {
+
+                if(dayjs(client.modifiedAt) < expireDate){
+
+                    ClientsCollection.remove({_id: client._id});
+                    console.log("deleting " + client.fullName + "...");
+                }
+            });
+        }),
+        start: true,
+        timeZone: 'America/Los_Angeles',
+      });
 });
