@@ -26,7 +26,7 @@ export function AccountForm() {
 
     return (
         <NavBar>
-            {/* Password */}
+            {/* Password, Password Confirmation, First Name, Last Name*/}
             <Grid item xs={12} md={8} lg={9}>
                 <Paper style={{padding:15}}>
                 <Formik
@@ -80,7 +80,6 @@ export function AccountForm() {
                                         autoFocus
                                     />
                                 </Grid>
-
                                 <Grid item xs={12} sm={6}>
                                     <Field
                                         component={TextField}
@@ -147,6 +146,5 @@ export function AccountForm() {
                 </Paper>
             </Grid>
         </NavBar>
-
     );
 }
