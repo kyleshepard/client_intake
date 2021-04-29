@@ -1,4 +1,6 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
+import { useTrackerSubscription } from "/imports/api/customHooks";
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
@@ -146,7 +148,8 @@ export const NavBar = ({ children }) => {
         setOpen(false);
     };
     const history = useHistory();
-
+    const { data: user, isLoading: isLoadingUser } = useTrackerSubscription('users', () => Meteor.users.findOne({_id: Meteor.userId}));
+    // console.log(user);
     const ClientListItem = ({ client }) =>
         // console.log(client._id);
         (
@@ -219,14 +222,21 @@ export const NavBar = ({ children }) => {
                             </ListItemIcon>
                             <ListItemText primary="Clients" />
                         </ListItem>
-                        <ListItem button onClick={() => history.push(`/users`)}>
-                            <ListItemIcon>
-                                <Tooltip title={open ? "" : "Manage Users"} placement="right">
-                                    <BarChartIcon />
-                                </Tooltip>
-                            </ListItemIcon>
-                            <ListItemText primary="Users" />
-                        </ListItem>
+                        {
+                            (isLoadingUser ? false : user.isAdmin)
+                            ?
+                                <ListItem button onClick={() => history.push(`/users`)}>
+                                    <ListItemIcon>
+                                        <Tooltip title={open ? "" : "Manage Users"} placement="right">
+                                            <BarChartIcon />
+                                        </Tooltip>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Users" />
+                                </ListItem>
+                            :
+                                ""
+
+                        }
                         <ListItem button onClick={() => history.push(`/forms`)}>
                             <ListItemIcon>
                                 <Tooltip title={open ? "" : "Forms"} placement="right">
