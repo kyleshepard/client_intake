@@ -17,10 +17,11 @@ Accounts.onCreateUser((options, user) => {
 Meteor.publish("users", function publishForms() {
     const user = Meteor.users.findOne({ _id: this.userId });
     if (user.isActive && user.isAdmin){
-        return Meteor.users.find({}, { services: 0 }); //do not include password and login token data, doesn't matter if the user is an admin
+        return Meteor.users.find({}, { fields: { services: 0 }}); //do not include password and login token data, doesn't matter if the user is an admin
     }
     return [];
 });
 
 //should keep users from editing fields on client side
 Meteor.users.deny({ update: () => true, insert: () => true, remove: () => true });
+// Meteor.users.allow({ update: () => true, insert: () => true, remove: () => true });

@@ -24,6 +24,12 @@ Meteor.methods({
 
         }
     },
+    'users.remove'(_id){
+        const user = Meteor.user();
+        if(_id == user._id || user.isAdmin){
+            Meteor.users.remove({_id: _id});
+        }
+    },
     'users.set'(_id, set){
         //must be same user
         if(this.userId == _id){
