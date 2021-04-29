@@ -12,12 +12,15 @@ import '../imports/api/attachmentsMethods';
 
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';
+const FNAME = 'meteorite';
 
 Meteor.startup(() => {
     if (!Accounts.findUserByUsername(SEED_USERNAME)) {
         Accounts.createUser({
             username: SEED_USERNAME,
             password: SEED_PASSWORD,
+            fname: FNAME,
+            lname: "",
             isActive: true,
             isAdmin: true,
         });
