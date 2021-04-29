@@ -146,42 +146,6 @@ export function AccountForm() {
                     <Orders />
                 </Paper>
             </Grid>
-            <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                    <TextField
-                        label="Username"
-                        value="Average Joe"
-                        onChange={(e) => {
-                            e.preventDefault();
-                            setFullName(e.target.value);
-                        }}
-                    />
-                    <TextField
-                        label="Email"
-                        value="defaultemail@email.com"
-                        onChange={(e) => {
-                            e.preventDefault();
-                            setFullName(e.target.value);
-                        }}
-                    />
-                    <TextField
-                        label="Password"
-                        value="123456"
-                        onChange={(e) => {
-                            e.preventDefault();
-                            setFullName(e.target.value);
-                        }}
-                    />
-                    <TextField
-                        label="Location"
-                        value="NewCastle, UK"
-                        onChange={(e) => {
-                            e.preventDefault();
-                            setFullName(e.target.value);
-                        }}
-                    />
-                </Paper>
-            </Grid>
         </NavBar>
 
     );
