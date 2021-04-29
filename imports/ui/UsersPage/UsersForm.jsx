@@ -13,7 +13,7 @@ import { User } from "./User";
 
 const drawerWidth = 240;
 
-const toggleActive = ({_id, isActive}) => {
+const toggleActive = ({username, _id, isActive}) => {
     // Meteor.call('users.set', _id, {
     Meteor.call('users.setPrivileged', _id, {
         isActive: !isActive
@@ -27,8 +27,12 @@ const toggleAdmin = ({_id, isAdmin}) => {
     });
 }
 
+const deleteUser = ({_id}) => {
+    Meteor.call('users.remove', _id);
+}
+
 export function UsersForm() {
-    const { data: users, isLoading: isLoadingUsers } = useTrackerSubscription('users', () => Meteor.users.find({}, { sort: { isActive: -1}}));
+    const { data: users, isLoading: isLoadingUsers } = useTrackerSubscription('users', () => Meteor.users.find({}, { sort: { isActive: -1}}).fetch());
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
@@ -51,6 +55,7 @@ export function UsersForm() {
                                     userData={user}
                                     onActiveClick={toggleActive}
                                     onAdminClick={toggleAdmin}
+                                    onDeleteClick={deleteUser}
                                 />
                                 // <Client
                                 //     key={client._id}
