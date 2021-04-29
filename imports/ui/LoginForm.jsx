@@ -3,24 +3,18 @@ import { Meteor } from 'meteor/meteor';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import { useTracker } from "meteor/react-meteor-data";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import { Redirect, useHistory } from "react-router-dom";
-import { useTracker } from 'meteor/react-meteor-data';
-
+import { useHistory } from "react-router-dom";
 import Yup from "yup";
 import { Field, Form, Formik } from "formik";
 import { LinearProgress } from "@material-ui/core";
-import {Copyright, LinkButton} from "./Frequents";
-import SignUp from './SignUp';
+import { TextField } from 'formik-material-ui';
+import { LinkButton } from "./Frequents";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,7 +49,10 @@ const useStyles = makeStyles((theme) => ({
 
 export function LoginForm() {
     const classes = useStyles();
-
+    const history = useHistory();
+    if (useTracker(()=>Meteor.user())) {
+        history.push('/');
+    }
     return (
 
         <Grid container component="main" className={classes.root}>
@@ -76,14 +73,16 @@ export function LoginForm() {
                         }}
                         validationSchema={Yup.object({
                             username: Yup.string()
+                                // .email('Invalid email address')
                                 .required('Required'),
                             password: Yup.string()
+                                .min(8, "Password must be at least 8 characters")
                                 .required('Required'),
                         })}
                         onSubmit={({
                             username, password,
                         }) => {
-                            console.log(username, password);
+                            console.log("STUFF", username, password);
                             try {
                                 Meteor.loginWithPassword(username, password);
                                 history.push("/");
@@ -129,13 +128,13 @@ export function LoginForm() {
                                     disabled={isSubmitting}
                                     onClick={submitForm}
                                 >
-                                    Sign in
+                                    Sign In
                                 </Button>
                                 <Grid container justify="flex-end">
                                     <Grid item>
-                                        <Link href={'/signup'} variant="body2">
+                                        <LinkButton isLink to="/signup" variant="body2">
                                             Don't have an account? Sign up
-                                        </Link>
+                                        </LinkButton>
                                     </Grid>
                                 </Grid>
                             </Form>
