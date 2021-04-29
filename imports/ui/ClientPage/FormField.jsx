@@ -10,12 +10,12 @@ import { fieldTypes } from "../../api/formConstants";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
 import { FileUpload } from "./FileUpload";
 
-{/*
+/*
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
-*/}
+*/
 
 export const FormField = ({ fieldData, clientData }) => {
     const children = useTracker(() => FormsCollection.find({ parentId: fieldData._id }).fetch());
@@ -63,7 +63,7 @@ export const FormField = ({ fieldData, clientData }) => {
     );
 };
 
-{/*
+/*
 const useStyles = makeStyles({
   root: {
     height: 240,
@@ -98,4 +98,4 @@ export default function FileSystemNavigator() {
     </TreeView>
   );
 };
-*/}
+*/

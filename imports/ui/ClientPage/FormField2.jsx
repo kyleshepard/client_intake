@@ -114,7 +114,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function GmailTreeView() {
+export function GmailTreeView() {
   const classes = useStyles();
 
   return (
