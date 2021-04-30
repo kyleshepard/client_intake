@@ -3,7 +3,7 @@ import { FilesCollection } from 'meteor/ostrio:files';
 
 // https://github.com/VeliovGroup/Meteor-Files/wiki
 
-const imageCollectionName = 'images';
+export const imageCollectionName = 'images';
 export const FormFilesCollection = new FilesCollection({
     collectionName: 'Images',
     allowClientCode: true, // Allow remove files from Client
@@ -18,8 +18,8 @@ export const FormFilesCollection = new FilesCollection({
 
 if (Meteor.isServer) {
     Meteor.publish(imageCollectionName, () => {
-        const user = Meteor.users.findOne({ _id: this.userId });
-        if (user.isActive) return FormFilesCollection.find();
-        return [];
+        const user = Meteor.user();
+        if (user && user.isActive) return FormFilesCollection.find({}).cursor;
+        throw new Meteor.Error("Non-active user");
     });
 }
