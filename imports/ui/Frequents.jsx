@@ -32,6 +32,7 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
 import Tooltip from "@material-ui/core/Tooltip";
+import dayjs from 'dayjs';
 import { ClientForm } from "./MainPage/ClientForm";
 import { Client } from "./MainPage/Client";
 
@@ -149,6 +150,17 @@ export const NavBar = ({ children }) => {
     };
     const history = useHistory();
     const { data: user, isLoading: isLoadingUser } = useTrackerSubscription('users', () => Meteor.users.findOne({_id: Meteor.userId}));
+    const expireDate =  dayjs(new Date).subtract(1, 'month');
+    const clients = ClientsCollection.find().fetch();
+    var expiringClients =[];
+
+    clients.forEach((client) => {
+        console.log(`${expireDate} ${expireDate.add(7, 'days')}`);
+        if(dayjs(client.modifiedAt) > expireDate && dayjs(client.modifiedAt) < expireDate.add(7, 'days')){
+            console.log("--------------");
+            expiringClients.push(client);
+        }
+    });
     // console.log(user);
     const ClientListItem = ({ client }) =>
         // console.log(client._id);
@@ -249,9 +261,8 @@ export const NavBar = ({ children }) => {
                 </List>
                 <Divider />
                 <List>
-                    <ListSubheader inset>Recently Added Clients</ListSubheader>
-                    {ClientsCollection.find({}, { sort: { createdAt: -1 }, limit: 5 }).fetch()
-                        .map((client) => <ClientListItem key={client._id} client={client} />)}
+                    <ListSubheader inset>Clients Expiring Soon</ListSubheader>
+                    {expiringClients.map((client) => <ClientListItem key={client._id} client={client} />)}
                 </List>
             </Drawer>
             <main className={classes.content}>
