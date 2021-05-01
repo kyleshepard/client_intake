@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Meteor } from 'meteor/meteor';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -47,12 +47,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export function LoginForm() {
+export const LoginForm = () => {
     const classes = useStyles();
     const history = useHistory();
-    if (useTracker(()=>Meteor.user())) {
-        history.push('/');
-    }
+    const user = useTracker(() => Meteor.user())
+    useEffect(() => {
+        if (user) {
+            history.push('/');
+        }
+    });
     return (
 
         <Grid container component="main" className={classes.root}>
@@ -144,4 +147,4 @@ export function LoginForm() {
             </Grid>
         </Grid>
     );
-}
+};

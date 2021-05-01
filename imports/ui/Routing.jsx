@@ -9,6 +9,7 @@ import { SignUp } from "./SignUp";
 import { ClientPage } from "./ClientPage/ClientPage";
 import { AccountForm } from "./AccountPage/AccountForm.jsx";
 import { UsersForm } from "./UsersPage/UsersForm.jsx";
+import { FormManagementPage } from "./FormManagementPage/FormManagementPage";
 
 const authContext = createContext(null);
 
@@ -18,7 +19,6 @@ function useUser() {
 
 function ProvideUser({ children }) {
     const user = useTracker(() => Meteor.user());
-    console.log("USER2", user);
     return (
         <authContext.Provider value={user}>
             {children}
@@ -28,8 +28,9 @@ function ProvideUser({ children }) {
 
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
-function PrivateRoute({ children, authUser = (user, location) => user, ...rest }) {
+function PrivateRoute({ children, authUser = (user, location) => !!user, ...rest }) {
     const user = useUser();
+    console.log("USER", user);
     return (
         <Route
             {...rest}
@@ -51,18 +52,15 @@ export const Routing = () => (
     <ProvideUser>
         <Router>
             <Switch>
-                <Route path="/about">
-                    About
-                </Route>
+                <PrivateRoute path="/forms">
+                    <FormManagementPage />
+                </PrivateRoute>
                 <PrivateRoute path="/account">
                     <AccountForm />
                 </PrivateRoute>
                 <Route exact path="/signup">
                     <SignUp />
                 </Route>
-                <PrivateRoute path="/forms">
-                    Forms
-                </PrivateRoute>
                 <PrivateRoute path="/client/:clientId">
                     <ClientPage />
                 </PrivateRoute>
