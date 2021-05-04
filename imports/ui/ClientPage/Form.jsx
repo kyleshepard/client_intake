@@ -13,7 +13,6 @@ export function Form() {
 
     return clientData ? (
         <>
-
             <List>
                 <Typography variant="h4">{clientData.fullName}</Typography>
                 {

@@ -25,15 +25,11 @@ import PersonIcon from "@material-ui/icons/Person";
 import ListItemText from "@material-ui/core/ListItemText";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
 import Tooltip from "@material-ui/core/Tooltip";
-import { ClientForm } from "./MainPage/ClientForm";
-import { Client } from "./MainPage/Client";
 
 export function Copyright() {
     return (
@@ -51,10 +47,12 @@ export function Copyright() {
 
 // Treat this button like it was a materialUI button with the extra prop of to which is the path to route to
 // It will route after whatever onClick executes
-export const LinkButton = ({ to, onClick = () => {}, ...props }) => {
+export const LinkButton = ({
+    to, onClick = () => {}, isLink = false, ...props
+}) => {
     const history = useHistory();
 
-    return <Button onClick={() => { onClick(); history.push(to); }} {...props} />;
+    return isLink ? <Link href={''} onClick={() => { onClick(); history.push(to); }} {...props} /> : <Button onClick={() => { onClick(); history.push(to); }} {...props} />;
 };
 
 const drawerWidth = 240;
@@ -182,7 +180,7 @@ export const NavBar = ({ children }) => {
                         Dashboard
                     </Typography>
 
-                    <IconButton color="inherit" onClick={() => {history.push("/account")}}>
+                    <IconButton color="inherit" onClick={() => { history.push("/account"); }}>
                         <Tooltip title="Account Management" placement="bottom">
                             <PersonIcon />
                         </Tooltip>
@@ -192,7 +190,7 @@ export const NavBar = ({ children }) => {
                     </IconButton>
                     <IconButton color="inherit" onClick={Meteor.logout}>
                         <Tooltip title="Log Out" placement="bottom">
-                            <ExitToAppIcon/>
+                            <ExitToAppIcon />
                         </Tooltip>
                     </IconButton>
                     {/* <Button onClick={Meteor.logout} variant="contained">Log out</Button> */}

@@ -14,11 +14,14 @@
     "bcrypt": "^5.0.1",
     "cron": "^1.8.2",
     "dayjs": "^1.10.4",
+    "formik": "^2.2.6",
+    "formik-material-ui": "^3.0.1",
     "meteor-node-stubs": "^1.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "recharts": "^2.0.9"
+    "recharts": "^2.0.9",
+    "yup": "^0.32.9"
   },
   "meteor": {
     "mainModule": {
