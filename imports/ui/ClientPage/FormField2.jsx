@@ -4,15 +4,26 @@ import { makeStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import Typography from '@material-ui/core/Typography';
-import MailIcon from '@material-ui/icons/Mail';
-import DeleteIcon from '@material-ui/icons/Delete';
 import Label from '@material-ui/icons/Label';
+import Divider from '@material-ui/core/Divider';
+
+import MailIcon from '@material-ui/icons/Mail';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import InfoIcon from '@material-ui/icons/Info';
 import ForumIcon from '@material-ui/icons/Forum';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import RemoveIcon from '@material-ui/icons/Remove';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import MoneyOffIcon from '@material-ui/icons/MoneyOff';
+import DescriptionIcon from '@material-ui/icons/Description';
+import PublicIcon from '@material-ui/icons/Public';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
+import CallToActionIcon from '@material-ui/icons/CallToAction';
 
 const useTreeItemStyles = makeStyles((theme) => ({
   root: {
@@ -110,11 +121,11 @@ const useStyles = makeStyles({
   root: {
     height: 264,
     flexGrow: 1,
-    maxWidth: 400,
+    maxWidth: 800,
   },
 });
 
-export function GmailTreeView() {
+export function ClientTreeView() {
   const classes = useStyles();
 
   return (
@@ -125,43 +136,104 @@ export function GmailTreeView() {
       defaultExpandIcon={<ArrowRightIcon />}
       defaultEndIcon={<div style={{ width: 24 }} />}
     >
-      <StyledTreeItem nodeId="1" labelText="All Mail" labelIcon={MailIcon} />
-      <StyledTreeItem nodeId="2" labelText="Trash" labelIcon={DeleteIcon} />
-      <StyledTreeItem nodeId="3" labelText="Categories" labelIcon={Label}>
+      <StyledTreeItem nodeId="1" labelText="File Upload" labelIcon={AttachFileIcon} />
+      <Divider variant="middle"/>
+      <StyledTreeItem nodeId="2" labelText="WR/USCIS Payment" labelIcon={MonetizationOnIcon}>
+        <Divider variant="middle"/>
+        <StyledTreeItem nodeId="14" labelText="WR ILS Payment" labelIcon={AttachMoneyIcon}>
+          <Divider variant="middle"/>
+          <StyledTreeItem
+            nodeId="9"
+            labelText="DSHS Letter"
+            labelIcon={MailIcon}
+            labelInfo="90"
+            color="#1a73e8"
+            bgColor="#e8f0fe"
+          />
+          <StyledTreeItem
+            nodeId="10"
+            labelText="Apple Health"
+            labelIcon={InfoIcon}
+            labelInfo="2,294"
+            color="#e3742f"
+            bgColor="#fcefe3"
+          />
+          <StyledTreeItem
+            nodeId="11"
+            labelText="Fee Internal Fee Waiver"
+            labelIcon={DescriptionIcon}
+            labelInfo="3,566"
+            color="#a250f5"
+            bgColor="#f3e8fd"
+          />
+        </StyledTreeItem>
+        <StyledTreeItem nodeId="15" labelText="USCIS Payment" labelIcon={AttachMoneyIcon}>
+          <Divider variant="middle"/>
+          <StyledTreeItem
+            nodeId="16"
+            labelText="Fee Waiver"
+            labelIcon={DescriptionIcon}
+            labelInfo="90"
+            color="#1a73e8"
+            bgColor="#e8f0fe"
+          />
+          <StyledTreeItem
+            nodeId="17"
+            labelText="Reduced $405 (Tax&HH Pay Stubs)"
+            labelIcon={MoneyOffIcon}
+            labelInfo="2,294"
+            color="#e3742f"
+            bgColor="#fcefe3"
+          />
+          <StyledTreeItem
+            nodeId="18"
+            labelText="Fee $725"
+            labelIcon={ForumIcon}
+            labelInfo="3,566"
+            color="#a250f5"
+            bgColor="#f3e8fd"
+          />
+        </StyledTreeItem>
+      </StyledTreeItem>
+      <StyledTreeItem nodeId="3" labelText="Language/History & Civics screening" labelIcon={PublicIcon}>
+        <Divider variant="middle"/>
         <StyledTreeItem
           nodeId="5"
-          labelText="Social"
-          labelIcon={SupervisorAccountIcon}
+          labelText="Sufficient"
+          labelIcon={CheckIcon}
           labelInfo="90"
           color="#1a73e8"
           bgColor="#e8f0fe"
         />
         <StyledTreeItem
           nodeId="6"
-          labelText="Updates"
-          labelIcon={InfoIcon}
+          labelText="Not Sufficient"
+          labelIcon={ClearIcon}
           labelInfo="2,294"
           color="#e3742f"
           bgColor="#fcefe3"
         />
         <StyledTreeItem
           nodeId="7"
-          labelText="Forums"
-          labelIcon={ForumIcon}
+          labelText="N648 screening needed"
+          labelIcon={CallToActionIcon}
           labelInfo="3,566"
           color="#a250f5"
           bgColor="#f3e8fd"
         />
         <StyledTreeItem
           nodeId="8"
-          labelText="Promotions"
-          labelIcon={LocalOfferIcon}
+          labelText="Age language waiver"
+          labelIcon={DescriptionIcon}
           labelInfo="733"
           color="#3c8039"
           bgColor="#e6f4ea"
         />
       </StyledTreeItem>
-      <StyledTreeItem nodeId="4" labelText="History" labelIcon={Label} />
+      <StyledTreeItem nodeId="4" labelText="Over 18 and NOT a US Citizen" labelIcon={Label} />
+      <Divider variant="middle"/>
+      <StyledTreeItem nodeId="13" labelText="Selective Service Registration checked, completed, or Status Info Letter requested if under age 31 (Male applicants only)" labelIcon={Label} />
+      <Divider variant="middle"/>
     </TreeView>
   );
 }

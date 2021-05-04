@@ -1,11 +1,13 @@
-import { List, Typography } from "@material-ui/core";
+import { List, Typography, Paper, Divider, Box } from "@material-ui/core";
 import React from "react";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
 import { FormsCollection } from "/imports/db/FormsCollection";
 import { useParams } from 'react-router-dom';
 import { FormField } from "./FormField";
-import { GmailTreeView } from "./FormField2";
+import { ClientTreeView } from "./FormField2";
 import { useTrackerSubscription } from "../../api/customHooks";
+import { sizing } from '@material-ui/system';
+
 
 export function Form() {
     const { clientId } = useParams();
@@ -14,22 +16,23 @@ export function Form() {
 
     return clientData ? (
         <>
-            <GmailTreeView />
-            {/*<List>*/}
-                <Typography variant="h4">{clientData.fullName}</Typography>
-                {
-                    (isLoadingClient || isLoadingFields)
-                        ? <Typography>Loading Information...{`${isLoadingClient}, ${isLoadingFields}`}</Typography>
-                        : topLevelFields.map((fieldData) => (
-                          <FormField
-                              clientData={clientData}
-                              key={fieldData._id}
-                              fieldData={fieldData}
-                          />
+            <Box variant="outlined" bgcolor="grey.200" height={650}>
+              <Typography gutterBottom align="center" variant="h4">{clientData.fullName}</Typography>
+              <Divider variant="middle" />
+              <ClientTreeView />
+                  {/*
+                      (isLoadingClient || isLoadingFields)
+                          ? <Typography>Loading Information...{`${isLoadingClient}, ${isLoadingFields}`}</Typography>
+                          : topLevelFields.map((fieldData) => (
+                            <FormField
+                                clientData={clientData}
+                                key={fieldData._id}
+                                fieldData={fieldData}
+                            />
 
-                        ))
-                }
-            {/*</List>*/}
+                          ))
+                  */}
+            </Box>
         </>
 
     ) : (
