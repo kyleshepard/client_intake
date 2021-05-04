@@ -8,5 +8,8 @@ Meteor.methods({
     },
     'forms.remove'(form){
         FormsCollection.remove(form);
+    },
+    'forms.update'(...args){
+        FormsCollection.update(...args);
     }
 });
