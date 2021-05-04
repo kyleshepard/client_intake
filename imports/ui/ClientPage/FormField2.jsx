@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Label from '@material-ui/icons/Label';
 import Divider from '@material-ui/core/Divider';
 
+//icons
 import MailIcon from '@material-ui/icons/Mail';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
