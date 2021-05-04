@@ -13,11 +13,14 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "bcrypt": "^5.0.1",
+    "formik": "^2.2.6",
+    "formik-material-ui": "^3.0.1",
     "meteor-node-stubs": "^1.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "recharts": "^2.0.9"
+    "recharts": "^2.0.9",
+    "yup": "^0.32.9"
   },
   "meteor": {
     "mainModule": {

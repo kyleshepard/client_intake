@@ -4,7 +4,6 @@ import { ClientsCollection } from "/imports/db/ClientsCollection";
 import { FormsCollection } from "/imports/db/FormsCollection";
 import { useParams } from 'react-router-dom';
 import { FormField } from "./FormField";
-import { GmailTreeView } from "./FormField2";
 import { useTrackerSubscription } from "../../api/customHooks";
 
 export function Form() {
@@ -14,22 +13,20 @@ export function Form() {
 
     return clientData ? (
         <>
-            <GmailTreeView />
-            {/*<List>*/}
+            <List>
                 <Typography variant="h4">{clientData.fullName}</Typography>
                 {
                     (isLoadingClient || isLoadingFields)
                         ? <Typography>Loading Information...{`${isLoadingClient}, ${isLoadingFields}`}</Typography>
                         : topLevelFields.map((fieldData) => (
-                          <FormField
-                              clientData={clientData}
-                              key={fieldData._id}
-                              fieldData={fieldData}
-                          />
-
+                            <FormField
+                                clientData={clientData}
+                                key={fieldData._id}
+                                fieldData={fieldData}
+                            />
                         ))
                 }
-            {/*</List>*/}
+            </List>
         </>
 
     ) : (
