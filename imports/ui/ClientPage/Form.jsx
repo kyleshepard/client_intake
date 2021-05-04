@@ -3,8 +3,9 @@ import React from "react";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
 import { FormsCollection } from "/imports/db/FormsCollection";
 import { useParams } from 'react-router-dom';
-import { FormField } from "./FormField";
-import { ClientTreeView } from "./FormField2";
+//import { FormField } from "./FormField";
+//import { ClientTreeView } from "./FormField2";
+import { FormField3 } from "./FormField3";
 import { useTrackerSubscription } from "../../api/customHooks";
 import { sizing } from '@material-ui/system';
 
@@ -19,7 +20,7 @@ export function Form() {
             <Box variant="outlined" bgcolor="grey.200" height={650}>
               <Typography gutterBottom align="center" variant="h4">{clientData.fullName}</Typography>
               <Divider variant="middle" />
-              <ClientTreeView />
+              <FormField3 />
                   {/*
                       (isLoadingClient || isLoadingFields)
                           ? <Typography>Loading Information...{`${isLoadingClient}, ${isLoadingFields}`}</Typography>
