@@ -153,12 +153,14 @@ export const NavBar = ({ children }) => {
     const expireDate =  dayjs(new Date).subtract(1, 'month');
     const clients = ClientsCollection.find().fetch();
     var expiringClients =[];
+    var myClients = [];
 
     clients.forEach((client) => {
-        console.log(`${expireDate} ${expireDate.add(7, 'days')}`);
         if(dayjs(client.modifiedAt) > expireDate && dayjs(client.modifiedAt) < expireDate.add(7, 'days')){
-            console.log("--------------");
             expiringClients.push(client);
+        }
+        if(client.modifiedBy == Meteor.userId()){
+            myClients.push(client);
         }
     });
     // console.log(user);
@@ -263,6 +265,11 @@ export const NavBar = ({ children }) => {
                 <List>
                     <ListSubheader inset>Clients Expiring Soon</ListSubheader>
                     {expiringClients.map((client) => <ClientListItem key={client._id} client={client} />)}
+                </List>
+                <Divider />
+                <List>
+                    <ListSubheader inset>My Clients</ListSubheader>
+                    {myClients.map((client) => <ClientListItem key={client._id} client={client} />)}
                 </List>
             </Drawer>
             <main className={classes.content}>
