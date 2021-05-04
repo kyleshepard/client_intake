@@ -93,6 +93,17 @@ const useStyles = makeStyles((theme) => ({
 const toggleChecked = ({ _id, isChecked }) => {
     Meteor.call('clients.set', _id, {
         isChecked: !isChecked,
+    });  
+};
+
+const filterClients = (clients, query) => {
+    if (!query || clients === undefined) {
+        return clients;
+    }
+
+    return clients.filter((client) => {
+        const clientName = client.fullName.toLowerCase();
+        return clientName.includes(query.toLowerCase());
     });
 };
 
@@ -106,9 +117,10 @@ export const MainPage = () => {
     /// ////////////This part is for display
     const classes = useStyles();
 
-    const { search } = window.location;
-    const query = new URLSearchParams(search).get('s');
-    const [searchQuery, setSearchQuery] = useState(query || "");
+    // const { search } = window.location;
+    // const query = new URLSearchParams(search).get('s');
+    const [searchQuery, setSearchQuery] = useState("");
+    const filteredClients = filterClients(clients, searchQuery)
 
     return (
         <NavBar>
@@ -134,7 +146,7 @@ export const MainPage = () => {
                     >
                         { isLoading
                             ? <Typography>Loading Information...</Typography>
-                            : clients.map((client) => (
+                            : filteredClients.map((client) => (
                                 <Client
                                     key={client._id}
                                     clientData={client}

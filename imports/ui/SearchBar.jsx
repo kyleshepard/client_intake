@@ -12,8 +12,8 @@ import { ClientsCollection } from '../db/ClientsCollection';
 
 export const SearchBar = ({searchQuery, onSearchUpdate}) => {
     
-    const { search } = window.location;
-    const query = new URLSearchParams(search).get('s');
+    // const { search } = window.location;
+    // const query = new URLSearchParams(search).get('s');
     const [searchTerm, setSearchTerm] = useState(searchQuery || "")
     // const [searchQuery, setSearchQuery] = useState(query || "");
 
@@ -45,7 +45,7 @@ export const SearchBar = ({searchQuery, onSearchUpdate}) => {
                 <Grid item>
                     <Button 
                         type="submit"
-                        onClick={e => setSearchQuery(searchTerm)}
+                        onClick={e => {e.preventDefault(); onSearchUpdate(searchTerm);}}
                         >Search</Button>
                 </Grid>
 
