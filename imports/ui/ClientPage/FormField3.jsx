@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Label from '@material-ui/icons/Label';
 import Divider from '@material-ui/core/Divider';
 
-// Aiden's tree imports
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {
@@ -16,25 +15,6 @@ import {
 import { useTrackerSubscription } from "../../api/customHooks";
 import { FormsCollection } from "../../db/FormsCollection";
 import { fieldTypes } from "../../api/formConstants";
-
-//icons
-import MailIcon from '@material-ui/icons/Mail';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import InfoIcon from '@material-ui/icons/Info';
-import ForumIcon from '@material-ui/icons/Forum';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import RemoveIcon from '@material-ui/icons/Remove';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import MoneyOffIcon from '@material-ui/icons/MoneyOff';
-import DescriptionIcon from '@material-ui/icons/Description';
-import PublicIcon from '@material-ui/icons/Public';
-import CheckIcon from '@material-ui/icons/Check';
-import ClearIcon from '@material-ui/icons/Clear';
-import CallToActionIcon from '@material-ui/icons/CallToAction';
 
 const useTreeItemStyles = makeStyles((theme) => ({
   root: {
@@ -151,10 +131,14 @@ export function FormField3() {
     };
 
     const renderTree = (nodes) => (
+      <Grid container>
         <StyledTreeItem key={nodes._id} nodeId={nodes._id} labelText={nodes.name} labelIcon={Label}>
             {data.filter((f) => (f.parentId === nodes._id)).map((f) => renderTree(f))}
         </StyledTreeItem>
+        {/*input type element*/}
+      </Grid>
     );
+    const selectedJson = (data && data[data.findIndex((i) => i._id === selected)]) || {};
     return (
         <Grid container spacing={2}>
             <Grid item xs={8}>
