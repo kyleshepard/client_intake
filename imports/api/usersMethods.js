@@ -26,5 +26,16 @@ Meteor.methods({
     },
     'users.set'(set){
         // Accounts.update?
+    },
+    'users.update'(fName,lName,password){
+        const user = Meteor.user();
+        console.log("USER", user);
+        Accounts.setPassword(user._id, password, {logout:false});
+        Accounts.update(Session.get(fName)), {
+            $set: { fName }
+        }
+        Accounts.update(Session.get(lName)), {
+            $set: { lName }
+        } 
     }
 });

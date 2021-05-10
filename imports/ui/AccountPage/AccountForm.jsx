@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
-import TextField from '@material-ui/core/TextField';
 import {Button} from '@material-ui/core'
 import Chart from './Files/ClientChart';
 import Deposits from './Files/ClientTotal';
@@ -18,6 +17,8 @@ import {
 import Yup from 'yup';
 import { LinearProgress } from "@material-ui/core";
 import { Copyright } from "../Frequents";
+
+import { TextField } from 'formik-material-ui';
 const drawerWidth = 240;
 
 export function AccountForm() {
@@ -26,21 +27,21 @@ export function AccountForm() {
 
     return (
         <NavBar>
-            {/* Password, Password Confirmation, First Name, Last Name*/}
+            {/* Password, Password Confirmation, First Name, last Name*/}
             <Grid item xs={12} md={8} lg={9}>
                 <Paper style={{padding:15}}>
-                <Formik
+                {Meteor.user() && <Formik
                     initialValues={{
-                        firstName: '',
-                        lastName: '',
+                        fname : '',
+                        lname: '',
                         password: '',
                         passwordConfirm: '',
                     }}
                     validationSchema={Yup.object({
-                        firstName: Yup.string()
+                        fname: Yup.string()
                         // .max(15, 'Must be 15 characters or less')
                             .required('Required'),
-                        lastName: Yup.string()
+                        lname: Yup.string()
                         // .max(20, 'Must be 20 characters or less')
                             .required('Required'),
                         password: Yup.string()
@@ -51,12 +52,13 @@ export function AccountForm() {
                             .required('Required'),
                     })}
                     onSubmit={({
-                        firstName, lastName, password, ...values
+                        fname, lname, password, ...values
                     }) => {
+                        alert("SUBMIT", fname, lname, password);
                         try {
-                            Meteor.call('users.register',
-                                firstName,
-                                lastName,
+                            Meteor.call('users.update',
+                                fname,
+                                lname,
                                 password);
                             history.push("/");
                         } catch (error) {
@@ -71,24 +73,24 @@ export function AccountForm() {
                                     <Field
                                         component={TextField}
                                         autoComplete="fname"
-                                        name="firstName"
-                                        id="firstName"
+                                        name="fname"
+                                        id="fname"
                                         variant="outlined"
                                         required
                                         fullWidth
                                         label="First Name"
-                                        autoFocus
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <Field
                                         component={TextField}
+                                        autoComplete="lname"
+                                        name="lname"
+                                        id="lname"
                                         variant="outlined"
                                         required
                                         fullWidth
                                         label="Last Name"
-                                        name="lastName"
-                                        autoComplete="lname"
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -130,7 +132,7 @@ export function AccountForm() {
                             </Button>
                         </Form>
                     )}
-                </Formik>
+                </Formik>}
                 </Paper>
             </Grid>
             {/* Recent Deposits */}
