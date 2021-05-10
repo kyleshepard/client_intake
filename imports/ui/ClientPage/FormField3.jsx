@@ -11,11 +11,11 @@ import Divider from '@material-ui/core/Divider';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {
-    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select,
+    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select, Box
 } from "@material-ui/core";
 import { useTrackerSubscription } from "../../api/customHooks";
 import { FormsCollection } from "../../db/FormsCollection";
-import { NavBar } from "../Frequents.jsx";
+import { fieldTypes } from "../../api/formConstants";
 
 //icons
 import MailIcon from '@material-ui/icons/Mail';
@@ -150,14 +150,12 @@ export function FormField3() {
         setSelected(nodeIds[0]);
     };
 
-//maybe change this part of treerender to StyledTreeItem with respective fields pulling form node info
     const renderTree = (nodes) => (
-        <TreeItem key={nodes._id} nodeId={nodes._id} label={nodes.name}>
+        <StyledTreeItem key={nodes._id} nodeId={nodes._id} labelText={nodes.name} labelIcon={Label}>
             {data.filter((f) => (f.parentId === nodes._id)).map((f) => renderTree(f))}
-        </TreeItem>
+        </StyledTreeItem>
     );
     return (
-
         <Grid container spacing={2}>
             <Grid item xs={8}>
                 <TreeView
@@ -171,26 +169,6 @@ export function FormField3() {
                 >
                     {formFields && formFields.filter((f) => !f.parentId).map((f) => renderTree(f))}
                 </TreeView>
-
-            </Grid>
-            <Grid item container xs={4} spacing={3} direction="column">
-                <Grid item style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <InputLabel>Required</InputLabel>
-                    <Checkbox />
-                </Grid>
-                <Grid item>
-                    <InputLabel id="demo-simple-select-helper-label">Field Type</InputLabel>
-                    <Select labelId="demo-simple-select-helper-label" value={""}>
-                        <MenuItem value="">None</MenuItem>
-                        <MenuItem value="number">Number</MenuItem>
-                    </Select>
-                </Grid>
-                <Grid item>
-                    <Button>Add Child</Button>
-                </Grid>
-                <Grid item>
-                    <Button>Delete This</Button>
-                </Grid>
             </Grid>
         </Grid>
     );
