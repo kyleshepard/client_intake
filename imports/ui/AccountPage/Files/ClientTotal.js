@@ -23,10 +23,10 @@ export default function Deposits() {
         42
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        as of March 8, 2021
+        as of May 11, 2021
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
+        <Link color="primary" href="/" onClick={preventDefault}>
           View clients
         </Link>
       </div>
