@@ -27,7 +27,7 @@ export const documentFields: Array<Field> = [
         _id: randString(),
     },
     {
-        type: fieldTypes.bool,
+        type: fieldTypes.none,
         name: 'WR/USCIS Payment',
         _id: randString(),
         description: 'https://www.uscis.gov/feecalculator',
@@ -49,7 +49,7 @@ export const documentFields: Array<Field> = [
         ],
     },
     {
-        type: fieldTypes.bool,
+        type: fieldTypes.none,
         name: 'Language/History & Civics screening',
         childFields: namesToBoolFields(['Sufficient', 'Not Sufficient', 'N648 screening needed', 'Age language waiver']),
         childFieldsUnique: true,

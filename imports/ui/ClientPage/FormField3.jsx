@@ -15,6 +15,7 @@ import {
 import { useTrackerSubscription } from "../../api/customHooks";
 import { FormsCollection } from "../../db/FormsCollection";
 import { fieldTypes } from "../../api/formConstants";
+import { FileUpload } from "./FileUpload";
 
 const useTreeItemStyles = makeStyles((theme) => ({
   root: {
@@ -116,7 +117,7 @@ const useStyles = makeStyles({
   },
 });
 
-export function FormField3() {
+export const FormField3 = ({clientData }) => {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState([]);
     const [selected, setSelected] = React.useState([]);
@@ -129,19 +130,39 @@ export function FormField3() {
     const handleSelect = (event, nodeIds) => {
         setSelected(nodeIds[0]);
     };
+    const updateFunc = (newData) => {
+        const temp = clientData && clientData.data;
+        temp[fieldData._id] = newData;
+        Meteor.call('clients.set', clientData._id, {
+            data: temp
+        });
+    };
 
-    const renderTree = (nodes) => (
-      <Grid container>
-        <StyledTreeItem key={nodes._id} nodeId={nodes._id} labelText={nodes.name} labelIcon={Label}>
-            {data.filter((f) => (f.parentId === nodes._id)).map((f) => renderTree(f))}
-        </StyledTreeItem>
-        {/*input type element*/}
-      </Grid>
-    );
-    const selectedJson = (data && data[data.findIndex((i) => i._id === selected)]) || {};
+    const renderTree = (fieldData) => {
+      const value = clientData && clientData.data && clientData.data[fieldData._id];
+      let editor;
+      if (fieldData.type) {
+          if (fieldData.type === fieldTypes.string) {
+              editor = <Grid item><TextField value={value} onChange={(e) => updateFunc(e.target.value)} /></Grid>;
+          } else if (fieldData.type === fieldTypes.bool) {
+              editor = <Grid item><Checkbox checked={value} onChange={() => updateFunc(!value)} /></Grid>;
+          } else if (fieldData.type === fieldTypes.file) {
+              editor = <Grid item><FileUpload clientId={clientData._id} fieldId={fieldData._id} /></Grid>;
+          } else {
+              editor = <div/>;
+          }
+      }
+      return    <StyledTreeItem key={fieldData._id} nodeId={fieldData._id} labelText={fieldData.name} labelIcon={Label}>
+                    <Grid item>
+                      {data.filter((f) => (f.parentId === fieldData._id)).map((f) => renderTree(f))}
+                    </Grid>
+                    {editor}
+                    <Divider variant="middle" />
+                </StyledTreeItem>
+    };
     return (
         <Grid container spacing={2}>
-            <Grid item xs={8}>
+            <Grid item>
                 <TreeView
                     className={classes.root}
                     defaultCollapseIcon={<ExpandMoreIcon />}
