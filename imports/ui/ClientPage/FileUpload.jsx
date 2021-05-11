@@ -1,13 +1,12 @@
-import { useTracker } from "meteor/react-meteor-data";
 import React, { useState } from "react";
 import {
-    Button, CircularProgress, LinearProgress,
+    Button, CircularProgress, LinearProgress, Typography
 } from '@material-ui/core';
 import { FormFilesCollection, imageCollectionName } from "/imports/db/FormFilesCollection";
 import { useTrackerSubscription } from "../../api/customHooks";
 
 export function FileUpload({ clientId, fieldId }) {
-    const { data: files } = useTrackerSubscription(imageCollectionName, () => FormFilesCollection.find(
+    const { data: files, isLoading: isLoadingImages } = useTrackerSubscription(imageCollectionName, () => FormFilesCollection.find(
         clientId && fieldId && { meta: { client_id: clientId, field_id: fieldId } },
     ).fetch());
     const images = files || [];
@@ -59,7 +58,7 @@ export function FileUpload({ clientId, fieldId }) {
                 />
             )}
             <ul>
-                {images.map((item) => {
+                {(isLoadingImages) ? <Typography>Loading Images</Typography> : images.map((item) => {
                     const link = FormFilesCollection.findOne({ _id: item._id }).link('original', window.origin);
                     const isImage = `${item.type}`.includes('image');
                     return (

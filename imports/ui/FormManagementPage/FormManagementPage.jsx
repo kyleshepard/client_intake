@@ -6,7 +6,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 
 import {
-    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select, TextField,
+    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select,
 } from "@material-ui/core";
 import { useTrackerSubscription } from "../../api/customHooks";
 import { FormsCollection } from "../../db/FormsCollection";
@@ -32,11 +32,11 @@ export function FormManagementPage() {
     };
 
     const handleSelect = (event, nodeIds) => {
-        setSelected(nodeIds);
+        setSelected(nodeIds[0]);
     };
 
     const renderTree = (nodes) => (
-        <TreeItem key={nodes._id} nodeId={nodes._id} label={nodes.name || "Unnamed Field"}>
+        <TreeItem key={nodes._id} nodeId={nodes._id} label={nodes.name}>
             {data.filter((f) => (f.parentId === nodes._id)).map((f) => renderTree(f))}
         </TreeItem>
     );
@@ -61,7 +61,6 @@ export function FormManagementPage() {
                         </TreeView>
 
                     </Grid>
-
                     <Grid item container xs={4} spacing={3} direction="column">
                         <Grid item>
                             <Button
@@ -128,7 +127,7 @@ export function FormManagementPage() {
                         </Grid>
                     </Grid>
                 </Grid>
-            </div>
+            </Paper>
         </NavBar>
     );
 }

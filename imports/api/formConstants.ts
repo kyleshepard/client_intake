@@ -23,16 +23,11 @@ export const namesToBoolFields = (namesArray:Array<string>):Array<Field> => name
 export const documentFields: Array<Field> = [
     {
         type: fieldTypes.file,
-        name: "File Upload_1",
+        name: "File Upload",
         _id: randString(),
     },
     {
-        type: fieldTypes.file,
-        name: "File Upload_2",
-        _id: randString(),
-    },
-    {
-        type: fieldTypes.bool,
+        type: fieldTypes.none,
         name: 'WR/USCIS Payment',
         _id: randString(),
         description: 'https://www.uscis.gov/feecalculator',
@@ -54,7 +49,7 @@ export const documentFields: Array<Field> = [
         ],
     },
     {
-        type: fieldTypes.bool,
+        type: fieldTypes.none,
         name: 'Language/History & Civics screening',
         childFields: namesToBoolFields(['Sufficient', 'Not Sufficient', 'N648 screening needed', 'Age language waiver']),
         childFieldsUnique: true,
