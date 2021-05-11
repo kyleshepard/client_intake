@@ -6,7 +6,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 
 import {
-    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select,
+    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select,TextField
 } from "@material-ui/core";
 import { useTrackerSubscription } from "../../api/customHooks";
 import { FormsCollection } from "../../db/FormsCollection";
@@ -127,7 +127,7 @@ export function FormManagementPage() {
                         </Grid>
                     </Grid>
                 </Grid>
-            </Paper>
+            </div>
         </NavBar>
     );
 }
