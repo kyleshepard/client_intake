@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
-import {Button} from '@material-ui/core'
+import {Button, useScrollTrigger} from '@material-ui/core'
 import Chart from './Files/ClientChart';
 import Deposits from './Files/ClientTotal';
 import Orders from './Files/ClientList';
@@ -32,8 +32,8 @@ export function AccountForm() {
                 <Paper style={{padding:15}}>
                 {Meteor.user() && <Formik
                     initialValues={{
-                        fname : '',
-                        lname: '',
+                        fname : Meteor.user().fname,
+                        lname: Meteor.user().lname,
                         password: '',
                         passwordConfirm: '',
                     }}
@@ -45,11 +45,11 @@ export function AccountForm() {
                         // .max(20, 'Must be 20 characters or less')
                             .required('Required'),
                         password: Yup.string()
-                            .min(8, "Password must be at least 8 characters")
-                            .required('Required'),
+                            .min(8, "Password must be at least 8 characters"),
+                            //.required('Required'),
                         passwordConfirm: Yup.string()
-                            .oneOf([Yup.ref('password')], 'Passwords must match')
-                            .required('Required'),
+                            .oneOf([Yup.ref('password')], 'Passwords must match'),
+                            //.required('Required'),
                     })}
                     onSubmit={({
                         fname, lname, password, ...values
@@ -60,7 +60,6 @@ export function AccountForm() {
                                 fname,
                                 lname,
                                 password);
-                            history.push("/");
                         } catch (error) {
                             alert(error);
                         }
