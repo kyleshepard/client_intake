@@ -1,4 +1,6 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
+import { useTrackerSubscription } from "/imports/api/customHooks";
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
@@ -45,10 +47,12 @@ export function Copyright() {
 
 // Treat this button like it was a materialUI button with the extra prop of to which is the path to route to
 // It will route after whatever onClick executes
-export const LinkButton = ({ to, onClick = () => {}, ...props }) => {
+export const LinkButton = ({
+    to, onClick = () => {}, isLink = false, ...props
+}) => {
     const history = useHistory();
 
-    return <Button onClick={() => { onClick(); history.push(to); }} {...props} />;
+    return isLink ? <Link href={''} onClick={() => { onClick(); history.push(to); }} {...props} /> : <Button onClick={() => { onClick(); history.push(to); }} {...props} />;
 };
 
 const drawerWidth = 240;
@@ -142,7 +146,8 @@ export const NavBar = ({ children }) => {
         setOpen(false);
     };
     const history = useHistory();
-
+    const { data: user, isLoading: isLoadingUser } = useTrackerSubscription('users', () => Meteor.users.findOne({_id: Meteor.userId}));
+    // console.log(user);
     const ClientListItem = ({ client }) =>
         // console.log(client._id);
         (
@@ -175,7 +180,7 @@ export const NavBar = ({ children }) => {
                         Dashboard
                     </Typography>
 
-                    <IconButton color="inherit" onClick={() => {history.push("/account")}}>
+                    <IconButton color="inherit" onClick={() => { history.push("/account"); }}>
                         <Tooltip title="Account Management" placement="bottom">
                             <PersonIcon />
                         </Tooltip>
@@ -185,7 +190,7 @@ export const NavBar = ({ children }) => {
                     </IconButton>
                     <IconButton color="inherit" onClick={Meteor.logout}>
                         <Tooltip title="Log Out" placement="bottom">
-                            <ExitToAppIcon/>
+                            <ExitToAppIcon />
                         </Tooltip>
                     </IconButton>
                     {/* <Button onClick={Meteor.logout} variant="contained">Log out</Button> */}
@@ -215,14 +220,21 @@ export const NavBar = ({ children }) => {
                             </ListItemIcon>
                             <ListItemText primary="Clients" />
                         </ListItem>
-                        <ListItem button onClick={() => history.push(`/users`)}>
-                            <ListItemIcon>
-                                <Tooltip title={open ? "" : "Manage Users"} placement="right">
-                                    <BarChartIcon />
-                                </Tooltip>
-                            </ListItemIcon>
-                            <ListItemText primary="Users" />
-                        </ListItem>
+                        {
+                            (isLoadingUser ? false : user.isAdmin)
+                            ?
+                                <ListItem button onClick={() => history.push(`/users`)}>
+                                    <ListItemIcon>
+                                        <Tooltip title={open ? "" : "Manage Users"} placement="right">
+                                            <BarChartIcon />
+                                        </Tooltip>
+                                    </ListItemIcon>
+                                    <ListItemText primary="Users" />
+                                </ListItem>
+                            :
+                                ""
+
+                        }
                         <ListItem button onClick={() => history.push(`/forms`)}>
                             <ListItemIcon>
                                 <Tooltip title={open ? "" : "Forms"} placement="right">

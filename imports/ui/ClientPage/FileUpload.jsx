@@ -3,16 +3,20 @@ import React, { useState } from "react";
 import {
     Button, CircularProgress, LinearProgress,
 } from '@material-ui/core';
-import { FormFilesCollection } from "/imports/db/FormFilesCollection";
+import { FormFilesCollection, imageCollectionName } from "/imports/db/FormFilesCollection";
+import { useTrackerSubscription } from "../../api/customHooks";
 
 export function FileUpload({ clientId, fieldId }) {
-    const images = useTracker(() => FormFilesCollection.find(
+    const { data: files } = useTrackerSubscription(imageCollectionName, () => FormFilesCollection.find(
         clientId && fieldId && { meta: { client_id: clientId, field_id: fieldId } },
     ).fetch());
+    const images = files || [];
+    console.log("IMAGES", images, files);
     const [uploading, setUploading] = useState(false);
     const [fileProgress, setFileProgress] = useState(0);
     const startUploading = () => { setUploading(true); setFileProgress(0); };
     const stopUploading = () => { setUploading(false); setFileProgress(0); };
+    console.log("FILES", FormFilesCollection.find({}).fetch());
     const onUpload = (e) => {
         FormFilesCollection.insert(
             {

@@ -16,7 +16,9 @@ import {
 import Yup from 'yup';
 import { LinearProgress } from "@material-ui/core";
 import { TextField } from 'formik-material-ui';
-import { Copyright } from "./Frequents";
+import { Copyright, LinkButton } from "./Frequents";
+import {useTracker} from "meteor/react-meteor-data";
+import {Meteor} from "meteor/meteor";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -41,7 +43,9 @@ const useStyles = makeStyles((theme) => ({
 export const SignUp = () => {
     const history = useHistory();
     const classes = useStyles();
-
+    if (useTracker(()=>Meteor.user())) {
+        history.push('/');
+    }
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -172,9 +176,9 @@ export const SignUp = () => {
                             </Button>
                             <Grid container justify="flex-end">
                                 <Grid item>
-                                    <Link variant="body2">
+                                    <LinkButton isLink to="/login" variant="body2">
                                         Already have an account? Sign in
-                                    </Link>
+                                    </LinkButton>
                                 </Grid>
                             </Grid>
                         </Form>
