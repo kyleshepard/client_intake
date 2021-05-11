@@ -10,6 +10,8 @@ import { ClientPage } from "./ClientPage/ClientPage";
 import { AccountForm } from "./AccountPage/AccountForm.jsx";
 import { UsersForm } from "./UsersPage/UsersForm.jsx";
 import { FormManagementPage } from "./FormManagementPage/FormManagementPage";
+import { UserForm } from "./UserPage/UserForm.jsx";
+import { FormPage } from "./FormPage/FormPage.jsx";
 
 const authContext = createContext(null);
 
@@ -19,6 +21,7 @@ function useUser() {
 
 function ProvideUser({ children }) {
     const user = useTracker(() => Meteor.user());
+    console.log("USER2", user);
     return (
         <authContext.Provider value={user}>
             {children}
@@ -30,7 +33,6 @@ function ProvideUser({ children }) {
 // screen if you're not yet authenticated.
 function PrivateRoute({ children, authUser = (user, location) => !!user, ...rest }) {
     const user = useUser();
-    console.log("USER", user);
     return (
         <Route
             {...rest}

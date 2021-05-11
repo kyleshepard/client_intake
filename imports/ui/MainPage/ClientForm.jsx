@@ -102,7 +102,7 @@ export const ClientForm = () => {
                     </Grid>
                 ))}
                 <Grid item>
-                    <Button type="submit">Add Client</Button>
+                    <Button type="submit">Submit</Button>
                 </Grid>
             </Grid>
         </form>
