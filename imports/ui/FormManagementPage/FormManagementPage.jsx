@@ -65,6 +65,7 @@ export function FormManagementPage() {
                     <Grid item container xs={4} spacing={3} direction="column">
                         <Grid item>
                             <Button
+                                color={"primary"}
                                 variant="contained"
                                 onClick={() => {
                                     Meteor.call("forms.insert", {});
