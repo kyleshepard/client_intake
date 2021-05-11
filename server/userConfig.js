@@ -22,6 +22,10 @@ Meteor.publish("users", function publishForms() {
     return [];
 });
 
+Meteor.publish("user", function publishForms() {
+    return Meteor.users.find({ _id: this.userId }, { fields: { services: 0 }});
+});
+
 //should keep users from editing fields on client side
 Meteor.users.deny({ update: () => true, insert: () => true, remove: () => true });
 // Meteor.users.allow({ update: () => true, insert: () => true, remove: () => true });
