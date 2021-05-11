@@ -3,13 +3,13 @@ import { check } from 'meteor/check';
 import { FormsCollection } from "/imports/db/FormsCollection";
 
 Meteor.methods({
-    'forms.insert'(form){
+    'forms.insert': function (form) {
         FormsCollection.insert(form);
     },
-    'forms.remove'(form){
+    'forms.remove': function (form) {
         FormsCollection.remove(form);
     },
-    'forms.update'(...args){
+    'forms.update': function (...args) {
         FormsCollection.update(...args);
-    }
+    },
 });
