@@ -10,8 +10,6 @@ import { ClientPage } from "./ClientPage/ClientPage";
 import { AccountForm } from "./AccountPage/AccountForm.jsx";
 import { UsersForm } from "./UsersPage/UsersForm.jsx";
 import { FormManagementPage } from "./FormManagementPage/FormManagementPage";
-import { UserForm } from "./UserPage/UserForm.jsx";
-import { FormPage } from "./FormPage/FormPage.jsx";
 
 const authContext = createContext(null);
 
