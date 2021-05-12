@@ -32,11 +32,11 @@ export function FormManagementPage() {
     };
 
     const handleSelect = (event, nodeIds) => {
-        setSelected(nodeIds[0]);
+        setSelected(nodeIds);
     };
 
     const renderTree = (nodes) => (
-        <TreeItem key={nodes._id} nodeId={nodes._id} label={nodes.name}>
+        <TreeItem key={nodes._id} nodeId={nodes._id} label={nodes.name || "Untitled Node"}>
             {data.filter((f) => (f.parentId === nodes._id)).map((f) => renderTree(f))}
         </TreeItem>
     );

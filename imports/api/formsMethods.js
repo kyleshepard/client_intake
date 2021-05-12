@@ -4,7 +4,7 @@ import { FormsCollection } from "/imports/db/FormsCollection";
 
 Meteor.methods({
     'forms.insert': function (form) {
-        FormsCollection.insert(form);
+        FormsCollection.insert(form, () => console.log("FORM"));
     },
     'forms.remove': function (form) {
         FormsCollection.remove(form);
