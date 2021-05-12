@@ -48,14 +48,33 @@ function PrivateRoute({ children, authUser = (user, location) => !!user, ...rest
     );
 }
 
+function AdminRoute({ children, ...rest }) {
+    const user = useUser();
+    return (
+        <Route
+            {...rest}
+            render={({ location }) => (user && user.isAdmin ? (
+                children
+            ) : (
+                <Redirect
+                    to={{
+                        pathname: "/login",
+                        state: { from: location },
+                    }}
+                />
+            ))}
+        />
+    );
+}
+
 export const Routing = () => (
     <ProvideUser>
         <Router>
             <Switch>
-                <PrivateRoute path="/forms">
+                <AdminRoute exact path="/forms">
                     <FormManagementPage />
-                </PrivateRoute>
-                <PrivateRoute path="/account">
+                </AdminRoute>
+                <PrivateRoute exact path="/account">
                     <AccountForm />
                 </PrivateRoute>
                 <Route exact path="/signup">
@@ -64,9 +83,9 @@ export const Routing = () => (
                 <PrivateRoute path="/client/:clientId">
                     <ClientPage />
                 </PrivateRoute>
-                <PrivateRoute path="/users">
+                <AdminRoute path="/users">
                     <UsersForm />
-                </PrivateRoute>
+                </AdminRoute>
                 <Route path="/login">
                     <LoginForm />
                 </Route>
