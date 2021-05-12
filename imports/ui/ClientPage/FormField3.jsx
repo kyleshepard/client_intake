@@ -132,12 +132,11 @@ export const FormField3 = ({ clientData }) => {
     const handleSelect = (event, nodeIds) => {
         setSelected(nodeIds[0]);
     };
-    const updateFunc = (newData) => {
-        const temp = clientData && clientData.data;
-        temp[fieldData._id] = newData;
-        Meteor.call('clients.set', clientData._id, {
-            data: temp,
-        });
+    const updateFunc = (id, newData) => {
+        const obj = {};
+        obj[id] = newData;
+        console.log("OBJECT", obj);
+        Meteor.call('clients.set', clientData._id, obj);
     };
 
     const renderTree = (fieldData) => {
@@ -145,9 +144,9 @@ export const FormField3 = ({ clientData }) => {
         let editor;
         if (fieldData.type) {
             if (fieldData.type === fieldTypes.string) {
-                editor = <Grid item><TextField value={value} onChange={(e) => updateFunc(e.target.value)} /></Grid>;
+                editor = <Grid item><TextField value={value} onChange={(e) => updateFunc(fieldData._id, e.target.value)} /></Grid>;
             } else if (fieldData.type === fieldTypes.bool) {
-                editor = <Grid item><Checkbox checked={value} onChange={() => updateFunc(!value)} /></Grid>;
+                editor = <Grid item><Checkbox checked={value} onChange={() => updateFunc(fieldData._id,!value)} /></Grid>;
             } else if (fieldData.type === fieldTypes.file) {
                 editor = <Grid item><FileUpload clientId={clientData._id} fieldId={fieldData._id} /></Grid>;
             } else {
