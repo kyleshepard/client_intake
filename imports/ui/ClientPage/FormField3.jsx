@@ -10,7 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {
-    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select, Box
+    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select, Box,
 } from "@material-ui/core";
 import { useTrackerSubscription } from "../../api/customHooks";
 import { FormsCollection } from "../../db/FormsCollection";
@@ -18,106 +18,108 @@ import { fieldTypes } from "../../api/formConstants";
 import { FileUpload } from "./FileUpload";
 
 const useTreeItemStyles = makeStyles((theme) => ({
-  root: {
-    color: theme.palette.text.secondary,
-    '&:hover > $content': {
-      backgroundColor: theme.palette.action.hover,
+    root: {
+        color: theme.palette.text.secondary,
+        '&:hover > $content': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        '&:focus > $content, &$selected > $content': {
+            backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
+            color: 'var(--tree-view-color)',
+        },
+        '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
+            backgroundColor: 'transparent',
+        },
     },
-    '&:focus > $content, &$selected > $content': {
-      backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
-      color: 'var(--tree-view-color)',
+    content: {
+        color: theme.palette.text.secondary,
+        borderTopRightRadius: theme.spacing(2),
+        borderBottomRightRadius: theme.spacing(2),
+        paddingRight: theme.spacing(1),
+        fontWeight: theme.typography.fontWeightMedium,
+        '$expanded > &': {
+            fontWeight: theme.typography.fontWeightRegular,
+        },
     },
-    '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
-      backgroundColor: 'transparent',
+    group: {
+        marginLeft: 0,
+        '& $content': {
+            paddingLeft: theme.spacing(2),
+        },
     },
-  },
-  content: {
-    color: theme.palette.text.secondary,
-    borderTopRightRadius: theme.spacing(2),
-    borderBottomRightRadius: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-    fontWeight: theme.typography.fontWeightMedium,
-    '$expanded > &': {
-      fontWeight: theme.typography.fontWeightRegular,
+    expanded: {},
+    selected: {},
+    label: {
+        fontWeight: 'inherit',
+        color: 'inherit',
     },
-  },
-  group: {
-    marginLeft: 0,
-    '& $content': {
-      paddingLeft: theme.spacing(2),
+    labelRoot: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: theme.spacing(0.5, 0),
     },
-  },
-  expanded: {},
-  selected: {},
-  label: {
-    fontWeight: 'inherit',
-    color: 'inherit',
-  },
-  labelRoot: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0.5, 0),
-  },
-  labelIcon: {
-    marginRight: theme.spacing(1),
-  },
-  labelText: {
-    fontWeight: 'inherit',
-    flexGrow: 1,
-  },
+    labelIcon: {
+        marginRight: theme.spacing(1),
+    },
+    labelText: {
+        fontWeight: 'inherit',
+        flexGrow: 1,
+    },
 }));
 
 function StyledTreeItem(props) {
-  const classes = useTreeItemStyles();
-  const { labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, ...other } = props;
+    const classes = useTreeItemStyles();
+    const {
+        labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, ...other
+    } = props;
 
-  return (
-    <TreeItem
-      label={
-        <div className={classes.labelRoot}>
-          <LabelIcon color="inherit" className={classes.labelIcon} />
-          <Typography variant="body2" className={classes.labelText}>
-            {labelText}
-          </Typography>
-          <Typography variant="caption" color="inherit">
-            {labelInfo}
-          </Typography>
-        </div>
-      }
-      style={{
-        '--tree-view-color': color,
-        '--tree-view-bg-color': bgColor,
-      }}
-      classes={{
-        root: classes.root,
-        content: classes.content,
-        expanded: classes.expanded,
-        selected: classes.selected,
-        group: classes.group,
-        label: classes.label,
-      }}
-      {...other}
-    />
-  );
+    return (
+        <TreeItem
+            label={(
+                <div className={classes.labelRoot}>
+                    <LabelIcon color="inherit" className={classes.labelIcon} />
+                    <Typography variant="body2" className={classes.labelText}>
+                        {labelText}
+                    </Typography>
+                    <Typography variant="caption" color="inherit">
+                        {labelInfo}
+                    </Typography>
+                </div>
+            )}
+            style={{
+                '--tree-view-color': color,
+                '--tree-view-bg-color': bgColor,
+            }}
+            classes={{
+                root: classes.root,
+                content: classes.content,
+                expanded: classes.expanded,
+                selected: classes.selected,
+                group: classes.group,
+                label: classes.label,
+            }}
+            {...other}
+        />
+    );
 }
 
 StyledTreeItem.propTypes = {
-  bgColor: PropTypes.string,
-  color: PropTypes.string,
-  labelIcon: PropTypes.elementType.isRequired,
-  labelInfo: PropTypes.string,
-  labelText: PropTypes.string.isRequired,
+    bgColor: PropTypes.string,
+    color: PropTypes.string,
+    labelIcon: PropTypes.elementType.isRequired,
+    labelInfo: PropTypes.string,
+    labelText: PropTypes.string.isRequired,
 };
 
 const useStyles = makeStyles({
-  root: {
-    height: 264,
-    flexGrow: 1,
-    maxWidth: 800,
-  },
+    root: {
+        height: 264,
+        flexGrow: 1,
+        maxWidth: 800,
+    },
 });
 
-export const FormField3 = ({clientData }) => {
+export const FormField3 = ({ clientData }) => {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState([]);
     const [selected, setSelected] = React.useState([]);
@@ -134,31 +136,49 @@ export const FormField3 = ({clientData }) => {
         const temp = clientData && clientData.data;
         temp[fieldData._id] = newData;
         Meteor.call('clients.set', clientData._id, {
-            data: temp
+            data: temp,
         });
     };
 
     const renderTree = (fieldData) => {
-      const value = clientData && clientData.data && clientData.data[fieldData._id];
-      let editor;
-      if (fieldData.type) {
-          if (fieldData.type === fieldTypes.string) {
-              editor = <Grid item><TextField value={value} onChange={(e) => updateFunc(e.target.value)} /></Grid>;
-          } else if (fieldData.type === fieldTypes.bool) {
-              editor = <Grid item><Checkbox checked={value} onChange={() => updateFunc(!value)} /></Grid>;
-          } else if (fieldData.type === fieldTypes.file) {
-              editor = <Grid item><FileUpload clientId={clientData._id} fieldId={fieldData._id} /></Grid>;
-          } else {
-              editor = <div/>;
-          }
-      }
-      return    <StyledTreeItem key={fieldData._id} nodeId={fieldData._id} labelText={fieldData.name} labelIcon={Label}>
-                    <Grid item>
-                      {data.filter((f) => (f.parentId === fieldData._id)).map((f) => renderTree(f))}
+        const value = clientData && clientData.data && clientData.data[fieldData._id];
+        let editor;
+        if (fieldData.type) {
+            if (fieldData.type === fieldTypes.string) {
+                editor = <Grid item><TextField value={value} onChange={(e) => updateFunc(e.target.value)} /></Grid>;
+            } else if (fieldData.type === fieldTypes.bool) {
+                editor = <Grid item><Checkbox checked={value} onChange={() => updateFunc(!value)} /></Grid>;
+            } else if (fieldData.type === fieldTypes.file) {
+                editor = <Grid item><FileUpload clientId={clientData._id} fieldId={fieldData._id} /></Grid>;
+            } else {
+                editor = <div />;
+            }
+        }
+        return (
+            <TreeItem
+                key={fieldData._id}
+                nodeId={(
+                    fieldData._id
+                )}
+                label={(
+                    <Grid container spacing={3}>
+                        <Grid item xs={8}>
+                            <Typography>
+                                {fieldData.name}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                            {editor}
+                        </Grid>
+
                     </Grid>
-                    {editor}
-                    <Divider variant="middle" />
-                </StyledTreeItem>
+                )}
+            >
+
+                {data.filter((f) => (f.parentId === fieldData._id)).map((f) => renderTree(f))}
+
+            </TreeItem>
+        );
     };
     return (
         <Grid container spacing={2}>
@@ -177,4 +197,4 @@ export const FormField3 = ({clientData }) => {
             </Grid>
         </Grid>
     );
-}
+};
