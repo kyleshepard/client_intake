@@ -129,6 +129,8 @@ export const FormField3 = ({ clientData }) => {
         setExpanded(nodeIds);
     };
 
+    console.log("CLIENTDATA", clientData);
+
     const handleSelect = (event, nodeIds) => {
         setSelected(nodeIds[0]);
     };
@@ -141,12 +143,13 @@ export const FormField3 = ({ clientData }) => {
 
     const renderTree = (fieldData) => {
         const value = clientData && clientData.data && clientData.data[fieldData._id];
+        console.log('value', value, clientData.data);
         let editor;
         if (fieldData.type) {
             if (fieldData.type === fieldTypes.string) {
-                editor = <Grid item><TextField value={value} onChange={(e) => updateFunc(fieldData._id, e.target.value)} /></Grid>;
+                editor = <Grid item><TextField value={value || ''} onChange={(e) => updateFunc(`data.${fieldData._id}`, e.target.value)} /></Grid>;
             } else if (fieldData.type === fieldTypes.bool) {
-                editor = <Grid item><Checkbox checked={value} onChange={() => updateFunc(fieldData._id,!value)} /></Grid>;
+                editor = <Grid item><Checkbox checked={!!value} onChange={() => updateFunc(`data.${fieldData._id}`, !value)} /></Grid>;
             } else if (fieldData.type === fieldTypes.file) {
                 editor = <Grid item><FileUpload clientId={clientData._id} fieldId={fieldData._id} /></Grid>;
             } else {
