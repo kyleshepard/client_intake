@@ -1,22 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import {Button, useScrollTrigger} from '@material-ui/core'
-import Chart from './Files/ClientChart';
-import Deposits from './Files/ClientTotal';
-import Orders from './Files/ClientList';
 import { NavBar, useStyles } from "../Frequents";
-import { useHistory } from 'react-router-dom';
 import {
     Formik, Field, Form,
 } from "formik";
 import Yup from 'yup';
-import { LinearProgress } from "@material-ui/core";
-import { Copyright } from "../Frequents";
 import { useTrackerSubscription } from "/imports/api/customHooks";
 import { TextField } from 'formik-material-ui';
 const drawerWidth = 240;
@@ -43,12 +35,12 @@ export function AccountForm() {
                             passwordConfirm: '',
                         }}
                         validationSchema={Yup.object({
-                            fname: Yup.string()
-                            // .max(15, 'Must be 15 characters or less')
-                                .required('Required'),
-                            lname: Yup.string()
-                            // .max(20, 'Must be 20 characters or less')
-                                .required('Required'),
+                            fname: Yup.string(),
+                                // .max(15, 'Must be 15 characters or less')
+                                //.required('Required'),
+                            lname: Yup.string(),
+                                // .max(20, 'Must be 20 characters or less')
+                                //.required('Required'),
                             password: Yup.string()
                                 .min(8, "Password must be at least 8 characters"),
                                 //.required('Required'),
@@ -70,7 +62,7 @@ export function AccountForm() {
                             }
                         }}
                     >
-                        {({ submitForm, isSubmitting }) => (
+                        {({ submitForm }) => (
                             <Form>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
@@ -124,12 +116,10 @@ export function AccountForm() {
                                         />
                                     </Grid>
                                 </Grid>
-                                {isSubmitting && <LinearProgress />}
                                 <br />
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    disabled={isSubmitting}
                                     onClick={submitForm}
                                 >
                                     Submit
