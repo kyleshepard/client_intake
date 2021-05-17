@@ -1,7 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import { List, Typography } from "@material-ui/core";
+import { List, Typography, IconButton, Tooltip } from "@material-ui/core";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { DataGrid } from '@material-ui/data-grid';
@@ -13,9 +14,22 @@ import { useTrackerSubscription } from "/imports/api/customHooks";
 
 const drawerWidth = 240;
 
-const deleteUser = ({ _id }) => {
-    Meteor.call('users.remove', _id);
+const deleteUser = ({id}) => {
+    // alert(_id);
+    window.confirm(`Are you sure you want to delete this user?`) && Meteor.call('users.remove', id);
 };
+
+const onAdminClick = ({id, isAdmin}) => {
+    Meteor.call('users.setPrivileged', id, {
+        isAdmin: isAdmin,
+    });
+}
+
+const onActiveClick = ({id, isActive}) => {
+    Meteor.call('users.setPrivileged', id, {
+        isActive: isActive,
+    });
+}
 
 export function UsersForm() {
     const { data: users, isLoading: isLoadingUsers } = useTrackerSubscription('users', () => Meteor.users.find({}, { sort: { isActive: -1 } }).fetch());
@@ -23,23 +37,28 @@ export function UsersForm() {
     // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const handleFieldEdit = ({id, field, props}) => {
         // console.log(id, field, props);
-        // console.log(props.value);
+        console.log(props.value);
         switch(field){
             case "isAdmin":
-                Meteor.call('users.setPrivileged', id, {
-                    isAdmin: props.value,
-                });
+                if (id == Meteor.userId() && !props.value){
+                    window.confirm("Are you sure you want to remove your own admin privileges? This cannot be undone on this account.") && onAdminClick({id: id, isAdmin: props.value});
+                }
+                else{
+                    onAdminClick({id: id, isAdmin: props.value});
+                }
                 break;
             case "isActive":
-                Meteor.call('users.setPrivileged', id, {
-                    isActive: props.value,
-                });
+                if (id == Meteor.userId() && !props.value){
+                    window.confirm("Are you sure you want to set your own account as inactive?") && onActiveClick({id: id, isActive: props.value});
+                }
+                else{
+                    onActiveClick({id: id, isActive: props.value});
+                }
                 break;
         }
     };
 
     const columns = [
-        { field: '_id', headerName: 'ID', width: 70, hide: true, identity: true },
         { field: 'username', headerName: 'Username', width: 130 },
         { field: 'fname', headerName: 'First name', width: 130 },
         { field: 'lname', headerName: 'Last name', width: 130 },
@@ -57,6 +76,29 @@ export function UsersForm() {
           editable: true
         //   width: 90,
         },
+        {
+            field: '_id',
+            headerName: 'Actions',
+            width: 100,
+          //   hide: true, 
+            renderCell: (params) => (
+              <strong>
+                {/* {params.value.getFullYear()} */}
+                <IconButton
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  style={{ marginLeft: 16 }}
+                  value={params.value._id}
+                  onClick={() => {console.log(params); deleteUser({id: params.id})}}
+                >
+                    <Tooltip title="Delete User" placement="bottom">
+                        <DeleteOutlineIcon/>
+                    </Tooltip>
+                </IconButton>
+              </strong>
+            )
+           },
         // {
         //   field: 'fullName',
         //   headerName: 'Full name',
