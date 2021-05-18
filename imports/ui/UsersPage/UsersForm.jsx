@@ -112,11 +112,9 @@ export function UsersForm() {
                         : (
                             <div style={{ height: 400, width: '100%' }}>
                                 <DataGrid
-                                    rows={users}
+                                    rows={users.map((e) => ({ ...e, id: e._id }))}
                                     columns={columns}
                                     pageSize={5}
-                                    getRowId={(e) => e._id} // point to different key as unique id, in this case it is "_id" instead of "id"
-                                    // onEditCellChangeCommitted={({id}) => {console.log(id)}}
                                     onEditCellChange={handleFieldEdit}
                                 />
                             </div>

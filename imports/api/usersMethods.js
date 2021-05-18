@@ -37,8 +37,10 @@ Meteor.methods({
     },
     'users.remove': function (_id) {
         const user = Meteor.user();
-        if (_id == user._id || user.isAdmin) {
+        if (_id !== user._id && user.isAdmin) {
             Meteor.users.remove({ _id });
+        } else {
+            throw new Meteor.Error("Cannot delete this user");
         }
     },
     // 'users.set'(_id, set){

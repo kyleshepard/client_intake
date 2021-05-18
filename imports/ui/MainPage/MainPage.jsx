@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import { List, Typography, IconButton, Tooltip } from "@material-ui/core";
+import {
+    List, Typography, IconButton, Tooltip,
+} from "@material-ui/core";
 import { DataGrid } from '@material-ui/data-grid';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import { useHistory } from "react-router-dom";
 import { ClientForm } from "./ClientForm";
 import { Client } from "./Client";
 import { ClientsCollection } from "/imports/db/ClientsCollection";
 import { NavBar } from "../Frequents";
 import { useTrackerSubscription } from "../../api/customHooks";
 import { SearchBar } from "/imports/ui/SearchBar";
-import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -118,43 +120,45 @@ export const MainPage = () => {
     // const { search } = window.location;
     // const query = new URLSearchParams(search).get('s');
     const [searchQuery, setSearchQuery] = useState("");
-    const filteredClients = filterClients(clients, searchQuery)
+    const filteredClients = filterClients(clients, searchQuery);
     const columns = [
         { field: 'fullName', headerName: 'Full Name', width: 300 },
         {
             field: '_id',
             headerName: 'Actions',
             width: 150,
-          //   hide: true, 
+            //   hide: true,
             renderCell: (params) => (
-              <strong>
-                <IconButton
-                  variant="contained"
-                  size="small"
-                  style={{ marginLeft: 16 }}
-                  value={params.value._id}
-                  onClick={() => {history.push(`/client/${params.id}`)}}
-                >
-                    <Tooltip title="Edit Client" placement="bottom">
-                        <EditOutlinedIcon/>
-                    </Tooltip>
-                </IconButton>
-                <IconButton
-                  variant="contained"
-                  color="secondary"
-                  size="small"
-                  style={{ marginLeft: 16 }}
-                  value={params.value._id}
-                  onClick={() => {window.confirm(`Are you sure you wish to delete this client?`) && deleteClient({id: params.id})}}
-                >
-                    <Tooltip title="Delete Client" placement="bottom">
-                        <DeleteOutlineIcon/>
-                    </Tooltip>
-                </IconButton>
-              </strong>
-            )
-           },
-      ];
+                <strong>
+                    <IconButton
+                        variant="contained"
+                        size="small"
+                        style={{ marginLeft: 16 }}
+                        value={params.value._id}
+                        onClick={() => { history.push(`/client/${params.id}`); }}
+                    >
+                        <Tooltip title="Edit Client" placement="bottom">
+                            <EditOutlinedIcon />
+                        </Tooltip>
+                    </IconButton>
+                    <IconButton
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        style={{ marginLeft: 16 }}
+                        value={params.value._id}
+                        onClick={() => { window.confirm(`Are you sure you wish to delete this client?`) && deleteClient({ id: params.id }); }}
+                    >
+                        <Tooltip title="Delete Client" placement="bottom">
+                            <DeleteOutlineIcon />
+                        </Tooltip>
+                    </IconButton>
+                </strong>
+            ),
+        },
+    ];
+
+    console.log("Filt", filteredClients)
 
     return (
         <NavBar>
@@ -180,17 +184,15 @@ export const MainPage = () => {
                     >
                         { isLoading
                             ? <Typography>Loading Information...</Typography>
-                            :  (
+                            : (
                                 <div style={{ height: 400, width: '100%' }}>
-                                    <DataGrid 
-                                        rows={filteredClients}
+                                    <DataGrid
+                                        rows={filteredClients.map((e) => ({ ...e, id: e._id }))}
                                         columns={columns}
-                                        pageSize={5} 
-                                        getRowId={(e) => e._id} //point to different key as unique id, in this case it is "_id" instead of "id"
+                                        pageSize={5}
                                     />
                                 </div>
-                               )
-                        }
+                            )}
                     </List>
                 </Paper>
             </Grid>
