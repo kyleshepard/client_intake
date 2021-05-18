@@ -60,8 +60,8 @@ export function UsersForm() {
 
     const columns = [
         { field: 'username', headerName: 'Username', width: 130 },
-        { field: 'fname', headerName: 'First name', width: 130 },
-        { field: 'lname', headerName: 'Last name', width: 130 },
+        { field: 'fname', headerName: 'First Name', width: 130 },
+        { field: 'lname', headerName: 'Last Name', width: 130 },
         {
           field: 'isActive',
           headerName: 'Active',
@@ -99,15 +99,6 @@ export function UsersForm() {
               </strong>
             )
            },
-        // {
-        //   field: 'fullName',
-        //   headerName: 'Full name',
-        //   description: 'This column has a value getter and is not sortable.',
-        //   sortable: false,
-        //   width: 160,
-        //   valueGetter: (params) =>
-        //     `${params.getValue('firstName') || ''} ${params.getValue('lastName') || ''}`,
-        // },
       ];
 
     return (
