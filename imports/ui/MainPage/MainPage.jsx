@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { List, Typography } from "@material-ui/core";
+import { List, Typography, IconButton, Tooltip } from "@material-ui/core";
+import { DataGrid } from '@material-ui/data-grid';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -9,6 +12,7 @@ import { ClientsCollection } from "/imports/db/ClientsCollection";
 import { NavBar } from "../Frequents";
 import { useTrackerSubscription } from "../../api/customHooks";
 import { SearchBar } from "/imports/ui/SearchBar";
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -90,12 +94,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const toggleChecked = ({ _id, isChecked }) => {
-    Meteor.call('clients.set', _id, {
-        isChecked: !isChecked,
-    });  
-};
-
 const filterClients = (clients, query) => {
     if (!query || clients === undefined) {
         return clients;
@@ -108,9 +106,9 @@ const filterClients = (clients, query) => {
 };
 
 export const MainPage = () => {
-    /// //
+    const history = useHistory();
     // This part is for  logic
-    const deleteClient = ({ _id }) => Meteor.call('clients.remove', _id);
+    const deleteClient = ({ id }) => Meteor.call('clients.remove', id);
     const { data: clients, isLoading } = useTrackerSubscription("clients",
         () => ClientsCollection.find({}, { sort: { createdAt: -1 } }).fetch());
 
@@ -121,6 +119,42 @@ export const MainPage = () => {
     // const query = new URLSearchParams(search).get('s');
     const [searchQuery, setSearchQuery] = useState("");
     const filteredClients = filterClients(clients, searchQuery)
+    const columns = [
+        { field: 'fullName', headerName: 'Full Name', width: 300 },
+        {
+            field: '_id',
+            headerName: 'Actions',
+            width: 150,
+          //   hide: true, 
+            renderCell: (params) => (
+              <strong>
+                <IconButton
+                  variant="contained"
+                  size="small"
+                  style={{ marginLeft: 16 }}
+                  value={params.value._id}
+                  onClick={() => {history.push(`/client/${params.id}`)}}
+                >
+                    <Tooltip title="Edit Client" placement="bottom">
+                        <EditOutlinedIcon/>
+                    </Tooltip>
+                </IconButton>
+                <IconButton
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  style={{ marginLeft: 16 }}
+                  value={params.value._id}
+                  onClick={() => {window.confirm(`Are you sure you wish to delete this client?`) && deleteClient({id: params.id})}}
+                >
+                    <Tooltip title="Delete Client" placement="bottom">
+                        <DeleteOutlineIcon/>
+                    </Tooltip>
+                </IconButton>
+              </strong>
+            )
+           },
+      ];
 
     return (
         <NavBar>
@@ -146,14 +180,17 @@ export const MainPage = () => {
                     >
                         { isLoading
                             ? <Typography>Loading Information...</Typography>
-                            : filteredClients.map((client) => (
-                                <Client
-                                    key={client._id}
-                                    clientData={client}
-                                    onCheckBoxClick={toggleChecked}
-                                    onDeleteClick={deleteClient}
-                                />
-                            ))}
+                            :  (
+                                <div style={{ height: 400, width: '100%' }}>
+                                    <DataGrid 
+                                        rows={filteredClients}
+                                        columns={columns}
+                                        pageSize={5} 
+                                        getRowId={(e) => e._id} //point to different key as unique id, in this case it is "_id" instead of "id"
+                                    />
+                                </div>
+                               )
+                        }
                     </List>
                 </Paper>
             </Grid>
