@@ -12,9 +12,6 @@ import {
 } from "formik";
 import Yup from 'yup';
 import { TextField } from 'formik-material-ui';
-import Chart from './Files/ClientChart';
-import Deposits from './Files/ClientTotal';
-import Orders from './Files/ClientList';
 import { NavBar, useStyles, Copyright } from "../Frequents";
 
 import { useTrackerSubscription } from "/imports/api/customHooks";
