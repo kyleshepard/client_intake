@@ -19,7 +19,7 @@ Form Editor Page:
     ![FormEditor](Images/FormEditor.png)
 
 The Left Hand Tab:
-    The Left Hand Tab has the buttons Client, Users and Form Editior which are talked about in their corresponding sections but it also includes the sections Expiring Soon and My Clients, The Expiring Soon will show a user a client that has been untocuhed for one month of time, upon editing a client the timer will reset but if they remain untouched they will be auto deleted from the database. The My clients tab list recent clients viewed.
+    The Left Hand Tab has the buttons Client, Users and Form Editior which are talked about in their corresponding sections but it also includes the sections Expiring Soon and My Clients, The Expiring Soon will show a user a client that has been untocuhed for one month of time, upon editing a client the timer will reset but if they remain untouched they will be auto deleted from the database. The My clients tab lists all recent clients viewed if they are your client.
     ![LeftHandTab](Images/LeftHandTab.png)
 
 Logout:
