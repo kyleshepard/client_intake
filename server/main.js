@@ -18,6 +18,7 @@ const SEED_PASSWORD = 'password';
 const FNAME = 'meteorite';
 
 Meteor.startup(() => {
+    FormsCollection.remove({});
     if (!Accounts.findUserByUsername(SEED_USERNAME)) {
         Accounts.createUser({
             username: SEED_USERNAME,

@@ -10,7 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {
-    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select, Box,
+    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select, Box, TextField,
 } from "@material-ui/core";
 import { useTrackerSubscription } from "../../api/customHooks";
 import { FormsCollection } from "../../db/FormsCollection";
@@ -176,6 +176,9 @@ export const FormField3 = ({ clientData }) => {
                     </Grid>
                 )}
             >
+                <Typography>
+                    {fieldData.description}
+                </Typography>
 
                 {data.filter((f) => (f.parentId === fieldData._id)).map((f) => renderTree(f))}
 

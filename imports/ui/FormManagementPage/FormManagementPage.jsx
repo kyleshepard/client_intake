@@ -6,7 +6,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 
 import {
-    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select,TextField
+    Button, Checkbox, Grid, InputLabel, MenuItem, Paper, Select, TextField,
 } from "@material-ui/core";
 import { useTrackerSubscription } from "../../api/customHooks";
 import { FormsCollection } from "../../db/FormsCollection";
@@ -64,7 +64,7 @@ export function FormManagementPage() {
                     <Grid item container xs={4} spacing={3} direction="column">
                         <Grid item>
                             <Button
-                                color={"primary"}
+                                color="primary"
                                 variant="contained"
                                 onClick={() => {
                                     Meteor.call("forms.insert", {});
@@ -79,6 +79,18 @@ export function FormManagementPage() {
                                 value={selectedJson.name || ""}
                                 onChange={(e) => Meteor.call(
                                     'forms.update', { _id: selectedJson._id }, { $set: { name: e.target.value } },
+                                )}
+                            />
+
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                label="Description"
+                                multiline
+                                defaultValue={selectedJson.description || ""}
+                                InputLabelProps={{ shrink: true }}
+                                onChange={(e) => Meteor.call(
+                                    'forms.update', { _id: selectedJson._id }, { $set: { description: e.target.value } },
                                 )}
                             />
                         </Grid>
@@ -101,7 +113,7 @@ export function FormManagementPage() {
                         </Grid>
                         <Grid item>
                             <Button onClick={() => {
-                                Meteor.call("forms.insert", {parentId:selectedJson._id});
+                                Meteor.call("forms.insert", { parentId: selectedJson._id });
                             }}
                             >
                                 Add Child Field

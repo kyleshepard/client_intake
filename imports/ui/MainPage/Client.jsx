@@ -1,11 +1,13 @@
 import React from 'react';
-import {Button, Checkbox, FormControlLabel, Grid, ListItem, Paper, TextField,} from '@material-ui/core';
-import {useTracker} from "meteor/react-meteor-data";
-import {fieldTypes} from "../../api/formConstants";
-import {FormsCollection} from "/imports/db/FormsCollection";
-import {LinkButton} from "../Frequents";
+import {
+    Button, Checkbox, FormControlLabel, Grid, ListItem, Paper, TextField, Typography,
+} from '@material-ui/core';
+import { useTracker } from "meteor/react-meteor-data";
+import { fieldTypes } from "../../api/formConstants";
+import { FormsCollection } from "/imports/db/FormsCollection";
+import { LinkButton } from "../Frequents";
 
-export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => {
+export const Client = ({ clientData, onDeleteClick }) => {
     const fields = useTracker(() => FormsCollection.find({ primary: true }).fetch());
     return (
         <ListItem>
@@ -24,11 +26,11 @@ export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => {
                     alignItems="center"
                 >
 
-                    <Grid key="Full Name" item>
-                        <TextField
-                            label="Full Name"
-                            value={clientData.fullName}
-                        />
+                    <Grid key="Full Name" item xs={4}>
+                        <Typography>
+                            {clientData.fullName}
+                        </Typography>
+
                     </Grid>
                     {fields.map((field) => (
                         <Grid key={field._id} item>
@@ -54,7 +56,7 @@ export const Client = ({ clientData, onCheckBoxClick, onDeleteClick }) => {
                         <LinkButton to={`/client/${clientData._id}`}>Open Client</LinkButton>
                     </Grid>
                     <Grid item sm={4}>
-                        <Button onClick={() => window.confirm("Are you sure you wish to delete this client: " + clientData.fullName + "?") && onDeleteClick(clientData)}>
+                        <Button onClick={() => window.confirm(`Are you sure you wish to delete this client: ${clientData.fullName}?`) && onDeleteClick(clientData)}>
                             Delete Client
                         </Button>
                     </Grid>
