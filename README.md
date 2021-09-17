@@ -3,7 +3,7 @@ Description:
     This code is built for World Relief https://worldreliefspokane.org/ to help with organizing their client system for people who wish to become United States citizens. We have built and access portal to allow them to interface with a database that contains all potentail clients that they may have, the data base also contains the documentation for all the potential clients so it may be verified that they are ready to be picked up by a lawyer to try for citizenship.
 
 Client Page:
-    The Client page allows for a client to be added using their full name and upon clicking the submit button the Name is sent to the potential clients list and a upon clicking the OPEN CLIENT button the file tree is shown with the clients files. After clicking on a clients open button and veiwing their files tree the arrows on he left side can be used to expand the tree to view underlying requirements and if a file is nessecary then an upload file button will appear to allow an object to be placed in that section, if a file is uneeded then a checkbox will appear which can be clicked to show that the requirement has been completed .Upon clicking the DELETE CLIENT button an alert is shown and the user must accept the alert to actually remove the client from the Potential Client list.There is also a search bar under the client creation bar which allows you to search through the database for a certain client.
+    The Client page allows for a client to be added using their full name and upon clicking the submit button the Name is sent to the potential clients list and a upon clicking the pencil icon, the file tree is shown with the clients files. After clicking on a clients edit button and veiwing their files tree the arrows on the left side can be used to expand the tree to view underlying requirements and if a file is nessecary then an upload file button will appear to allow an object to be placed in that section, if a file is uneeded then a checkbox will appear which can be clicked to show that the requirement has been completed .Upon clicking the trash icon, an alert is shown and the user must accept the alert to remove the client from the Potential Client list. There is also a search bar under the client creation bar which allows you to search through the database for a certain client by name.
     ![ClientPage](Images/ClientPage.png)
 
 User Account Page:
@@ -11,8 +11,8 @@ User Account Page:
     ![UserAccountButton](Images/UserAccount.png)
     ![AccountPage](Images/AccountPage.png)
     
-Users Page:
-    The Users Page allows a user to see all the users on the database and their first and last name as well as if they are active and set to an admin account. To get to the Users Page you must click on the Users button on the tab located on the left side of the screen. Users are also allowed to take actions like deleting themselves and other users if they are an admin. but if a user is not an admin then they are only allowed to delete themselves.
+User Management Page:
+    The Users Page allows an admin user to see all the users on the database and their first and last name as well as if they are active and set as an admin account. This page will then give an admin user the ability to activate new user accounts and optionally grant admin privileges. To get to the Users Page you must click on the Users button on the tab located on the left side of the screen.
     ![UsersPage](Images/UsersPage.png)
 
 Form Editor Page:
